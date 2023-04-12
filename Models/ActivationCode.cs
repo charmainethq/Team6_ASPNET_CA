@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
-namespace TicTacToe.Models
+namespace Team6.Models
 {
     public class ActivationCode
     {
@@ -16,6 +16,8 @@ namespace TicTacToe.Models
 
         public string OrderID{ get; set; }
 
+        //Many Activation Code to one OrderItem
+        public virtual OrderItem OrderItem { get; set; }
 
     }
 }

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TicTacToe.Models
+namespace Team6.Models
 {
     public class OrderItem
     {
@@ -13,12 +13,11 @@ namespace TicTacToe.Models
         public int Quantity { get; set; }
         public float Price { get; set; }
 
-        // one Order Item can have multiple ActivationCode depending on the quantity purchased
-        public virtual List<ActivationCode> ActivationCodes { get; set; }
+        //an orderItem is linked to a single Product 
+        public virtual Product Products { get; set; }
 
-        public OrderItem()
-        {
-            ActivationCodes = new List<ActivationCode>();
-        }
+        // one Order Item can have multiple ActivationCode depending on the quantity purchased
+        public virtual ICollection<ActivationCode> ActivationCodes { get; set; }
+
     }
 }
