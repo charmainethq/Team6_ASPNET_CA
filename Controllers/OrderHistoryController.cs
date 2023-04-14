@@ -8,5 +8,11 @@ namespace Team6.Controllers
         {
             return View();
         }
+
+        [Route("OrderHistory/OrderItem/ActivationCode")]
+        public IActionResult ActivationCode() 
+        {
+            return View();
+        }
     }
 }

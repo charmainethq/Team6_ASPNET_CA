@@ -23,7 +23,7 @@ namespace Team6.Data
                 LastName = "Tan"
             };
 
-            db.Add(cust1);
+            db.Customer.Add(cust1);
             db.SaveChanges();
 
         }
