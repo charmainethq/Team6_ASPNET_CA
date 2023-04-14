@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Team6.Models
 {
+
+    // this is a test comment under the review model, from JL
     public class Review
     {
         public int Id { get; set; }
