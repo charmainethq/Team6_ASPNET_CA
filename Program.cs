@@ -7,11 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Add our database context (using AddScoped() under the hood).
-builder.Services.AddDbContext<ShopContext>(options => {
-    var conn_str = builder.Configuration.GetConnectionString("conn_str");
-    options.UseLazyLoadingProxies().UseSqlServer(conn_str);
-});
 
 var app = builder.Build();
 
@@ -34,19 +29,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-InitDB(app.Services);
 
 app.Run();
 
-void InitDB(IServiceProvider serviceProvider) {
-    using var scope = serviceProvider.CreateScope();
-    ShopContext db = scope.ServiceProvider.GetRequiredService<ShopContext>();
 
-    // for our debugging, we just start off by removing our old 
-    // database (if there is one).
-    db.Database.EnsureDeleted();
-
-    // create a new database.
-    db.Database.EnsureCreated();
-}
 
