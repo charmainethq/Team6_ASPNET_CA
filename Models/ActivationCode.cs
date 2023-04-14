@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace Team6.Models
 {
@@ -10,14 +9,11 @@ namespace Team6.Models
             Code = Guid.NewGuid();
         }
 
-        [Key]
+
         public Guid Code { get; set; }
         public string ProductID { get; set; }
 
         public string OrderID{ get; set; }
-
-        //Many Activation Code to one OrderItem
-        public virtual OrderItem OrderItem { get; set; }
 
     }
 }

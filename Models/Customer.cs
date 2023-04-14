@@ -7,7 +7,7 @@ namespace Team6.Models
     public class Customer
     {
 
-        [Key]
+
         public string CustomerID { get; set; }
 
         public string Username { get; set; }
