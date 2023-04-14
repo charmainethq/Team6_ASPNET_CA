@@ -12,6 +12,7 @@ namespace Team6.Controllers
         [Route("OrderHistory/OrderItem/ActivationCode")]
         public IActionResult ActivationCode() 
         {
+            //test edit 
             return View();
         }
     }
