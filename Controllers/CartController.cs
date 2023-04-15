@@ -4,6 +4,9 @@ using Team6.Models;
 using Team6.Extension;
 using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace Team6.Controllers
 {
@@ -58,12 +61,37 @@ namespace Team6.Controllers
             }
             return RedirectToAction("Index","Cart");
         }
-       
+
 
         //TODO: Remove from cart - linked to buttons from cart view
+        public IActionResult RemoveFromCart(int productId)
+        {
+            var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+            if (cart != null)
+            {
+                var itemToRemove = cart.FirstOrDefault(item => item.ProductID == productId);
+                if (itemToRemove != null)
+                {
+                    cart.Remove(itemToRemove);
+                }
+                HttpContext.Session.SetObjectAsJson("cart", cart);
+            }
+            return RedirectToAction("Index");
+        }
 
 
         //TODO: Checkout Cart. Create Order with OrderItems
+
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+
+
+
+
+
 
         //TODO: Calculator function for product total (2x Office 365 is $500)
 
