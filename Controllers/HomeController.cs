@@ -34,6 +34,10 @@ public class HomeController : Controller
         return View("Index");
     }
 
+    public IActionResult ProductReview()
+    {
+        return View();
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
