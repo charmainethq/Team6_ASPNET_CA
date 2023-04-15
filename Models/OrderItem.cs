@@ -12,6 +12,8 @@ namespace Team6.Models
         public int ProductID { get; set; }
         public int Quantity { get; set; }
         public float Price { get; set; }
+        public string ProductDescription { get; set; }
+        public string ProductName { get; set; }
         public List<ActivationCode> ActivationCodes { get; set; }
 
         public OrderItem() 
