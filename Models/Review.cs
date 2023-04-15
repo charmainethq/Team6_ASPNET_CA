@@ -9,7 +9,7 @@ namespace Team6.Models
         public int Id { get; set; }
         public int ProductID { get; set; }
         public string CustomerName { get; set; }
-        public string CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public int OrderId { get; set; }
         public int Rating { get; set; } 
         public string ReviewText { get; }   
