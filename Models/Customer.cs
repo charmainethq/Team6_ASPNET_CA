@@ -8,7 +8,7 @@ namespace Team6.Models
     {
 
 
-        public string CustomerID { get; set; }
+        public int CustomerID { get; set; }
 
         public string Username { get; set; }
 
