@@ -13,6 +13,8 @@ namespace Team6.Models
         // one to many Order to OrderItem
         public virtual ICollection<OrderItem> OrderItems { get; set; }
         public virtual Review Review { get; set; }
+        public DateTime OrderDate { get; set; }
+   
 
     }
 }
