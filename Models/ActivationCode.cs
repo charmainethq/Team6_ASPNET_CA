@@ -18,6 +18,13 @@ namespace Team6.Models
 
         //Many Activation Code to one OrderItem
         public virtual OrderItem OrderItem { get; set; }
+        public string ProductActivationCode { get; set; }
+        public ActivationCode(string pID, string oID)
+        {
+            ProductID = pID;
+            OrderID = oID;
+            ProductActivationCode = Guid.NewGuid().ToString();
+        }
 
     }
 }
