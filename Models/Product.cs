@@ -7,10 +7,10 @@ namespace Team6.Models
     public class Product
     {
 
-        public string ProductId { get; set; }
+        public string ProductID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public float Price { get; set; }
+        public double UnitPrice { get; set; }
 
 
     }

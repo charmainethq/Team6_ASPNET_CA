@@ -1,21 +1,13 @@
 ﻿function search() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
+    var input = document.getElementById("search-box");
+    var filter = input.value.toUpperCase();
+    var images = document.getElementsByClassName("image");
+    for (var i = 0; i < images.length; i++) {
+        var title = images[i].getAttribute("data-title");
+        if (title.toUpperCase().indexOf(filter) > -1) {
+            images[i].style.display = "";
+        } else {
+            images[i].style.display = "none";
         }
     }
 }
