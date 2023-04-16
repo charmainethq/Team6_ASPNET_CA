@@ -2,7 +2,7 @@
 {
     public class Session
     {
-        public string SessionId { get; set; }
+        public string SessionID { get; set; }
         public int CustomerID { get; set; }
         public DateTime Timestamp { get; set; }
 

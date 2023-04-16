@@ -10,14 +10,15 @@ namespace Team6.Controllers
         public IActionResult Index(string username, string password)
         {
             
-            // user is already inside a session, so redirect them
+            // user is already inside a session, do nothing and redirect
             if (HttpContext.Session.GetString("username") != null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            //TODO?: Generate error message for empty username
             else if (username == null)
-                return View();
+                return View();          
 
 
             else if (AuthenticateUser(username, password) == true)
@@ -27,24 +28,35 @@ namespace Team6.Controllers
                 //create session object
                 Session session = new Session() 
                 {
-                    SessionId = Guid.NewGuid().ToString(),
+                    SessionID = Guid.NewGuid().ToString(),
                     CustomerID = user.CustomerID
                 };
 
 
                 // set session cookies
-                HttpContext.Session.SetString("SessionId", session.SessionId);
+                HttpContext.Session.SetString("SessionId", session.SessionID);
                 HttpContext.Session.SetInt32("customerId", user.CustomerID);
                 HttpContext.Session.SetString("fullName", user.FirstName + " " + user.LastName);
 
                 TempData["fullName"] = user.FirstName + " " + user.LastName;
                 TempData["sessionId"] = HttpContext.Session.GetString("SessionId");
 
-                return RedirectToAction("Index");
+
+                //add or update user's session in database
+                if (SessionData.GetSessionByCustomerId(user.CustomerID) == null)
+                {
+                    SessionData.AddSession(session);
+                }
+                else 
+                {
+                    SessionData.DeleteSession(user.CustomerID);
+                    SessionData.AddSession(session);
+                }
+
+                return RedirectToAction("Index", "Home");
             }
 
             return View();
-
         }
 
         public Customer GetCustomer(string username)
@@ -71,5 +83,14 @@ namespace Team6.Controllers
 
         }
 
+
+        public IActionResult Logout()
+        {
+            int? custId = HttpContext.Session.GetInt32("customerId");
+            SessionData.DeleteSession(custId);  //delete from database
+            HttpContext.Session.Clear();        //clear session cookies
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
