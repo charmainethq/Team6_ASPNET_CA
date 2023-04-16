@@ -80,7 +80,8 @@ namespace Team6.Controllers
         }
 
 
-        //TODO: Checkout Cart. Create Order with OrderItems
+        //TODO: Checkout Cart. Create Order with OrderItems 
+        //same as my purchases?
 
         public IActionResult Checkout()
         {
