@@ -11,9 +11,6 @@ namespace Team6.Models
         // might need dictionary of orderitem:orderquantity
 
         public DateTime OrderDate { get; set; }
-
-
-
-
+        public List<OrderItem> OrderItems { get; internal set; }
     }
 }
