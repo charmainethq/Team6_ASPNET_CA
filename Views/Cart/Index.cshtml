@@ -18,13 +18,16 @@
         document.querySelector("#cart-total").textContent = cartTotal.toFixed(2);
     }
 </script>
-<table align="right">
+
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+
+<table  align="right">
     <tr>
         <td>Total:</td>
         <td id="cart-total">@Model.Sum(item => item.Price * item.Quantity).ToString("F2")</td>
     </tr>
 </table>
-</br>
+<br>
 
 <table>
     <thead style="text-align:center">
@@ -40,8 +43,6 @@
     <tbody>
         @foreach (var item in Model)
         {
-            
-
             <tr>
                 <td>@item.ProductName</td>
                 <td><img src="@item.ProductImage" alt="@item.ProductName" height="60" width="60" /></td>
