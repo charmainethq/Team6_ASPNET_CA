@@ -29,6 +29,7 @@
     <thead style="text-align:center">
         <tr>
             <th>Product Name</th>
+            <th>Product Image</th>
             <th>Product Description</th>
             <th>Unit Price</th>
             <th>Quantity</th>
@@ -40,6 +41,7 @@
         {
             <tr>
                 <td>@item.ProductName</td>
+                <td><img src="@(Url.Content(item.ProductImage))" alt="@item.ProductName" height="50" width="50" /></td>
                 <td>@item.ProductDescription</td>
                 <td>@item.Price</td>
                 <td>

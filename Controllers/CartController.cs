@@ -27,6 +27,7 @@ namespace Team6.Controllers
         {
             Product product = CartData.GetProductById(productId);
 
+
             if(productId == null)
             {
                 return View();
@@ -48,6 +49,7 @@ namespace Team6.Controllers
                     {
                         ProductID = product.ProductId,
                         ProductName = product.Name,
+                        ProductImage = product.ProductImage,
                         Quantity = quantity,
                         ProductDescription = product.Description,
                         Price = product.Price,
