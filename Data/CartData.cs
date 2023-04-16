@@ -10,7 +10,7 @@ namespace Team6.Data
 {
     public class CartData
     {
-        public static int CreateOrder(int customerId)
+        public static int CreateOrder(int customerId) //Inserts a new order into the Orders table with the given customerId and returns the ID of the new order.
         {
             int orderId = 0;
 
@@ -31,7 +31,7 @@ namespace Team6.Data
             return orderId;
         }
 
-        public static List<Order> GetOrdersByCustomer(int customerId)
+        public static List<Order> GetOrdersByCustomer(int customerId) //Retrieves all orders for the given customerId from the Orders table.
         {
             List<Order> orders = new List<Order>();
 
@@ -61,7 +61,7 @@ namespace Team6.Data
             }
             return orders;
         }
-        public static List<OrderItem> GetOrderItemsByOrder(int orderId)
+        public static List<OrderItem> GetOrderItemsByOrder(int orderId) //Retrieves all order items for the given orderId from the OrderItems table.
         {
             List<OrderItem> orderItems = new List<OrderItem>();
 
@@ -96,7 +96,7 @@ namespace Team6.Data
             return orderItems;
         }
 
-        public void CreateOrderItem(OrderItem orderItem)
+        public void CreateOrderItem(OrderItem orderItem) //Inserts a new order item into the OrderItems table based on the provided OrderItem object.
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
@@ -116,7 +116,7 @@ namespace Team6.Data
                 }
             }
         }
-        public void UpdateProductActivationCodes(int productId, int orderId, string activationCodes)
+        public void UpdateProductActivationCodes(int productId, int orderId, string activationCodes) //Updates the activation codes for a product in the ActivationCode table based on the provided productId and orderId.
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
@@ -133,7 +133,7 @@ namespace Team6.Data
             }
         }
 
-        public static List<Order> GetAllOrders()
+        public static List<Order> GetAllOrders() //Retrieves all orders and their associated order items from the Orders and OrderItems tables, and returns a list of Order objects containing their information.
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
@@ -181,7 +181,7 @@ namespace Team6.Data
                 return orders;
             }
         }
-        public static Product GetProductById(int productId)
+        public static Product GetProductById(int productId) //Retrieves a product from the Products table based on the provided productId.
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace Team6.Controllers
 {
@@ -83,21 +84,21 @@ namespace Team6.Controllers
         //TODO: Checkout Cart. Create Order with OrderItems 
         //same as my purchases?
 
-        public IActionResult Checkout()
+        public IActionResult Checkout(int customerId)
         {
-            return View();
+            // Get current customer ID
+            
+            // Create new order
+
+            // Add cart items as order items to the new order
+            
+
+            // Get all orders for current customer
+            List<Order> pastOrders = CartData.GetOrdersByCustomer(customerId);
+
+            // Display past orders to user
+            return View(pastOrders);
+            
         }
-
-
-
-
-
-
-
-        //TODO: Calculator function for product total (2x Office 365 is $500)
-
-        //TODO: Calculator function for cart total
-
-
     }
 }
