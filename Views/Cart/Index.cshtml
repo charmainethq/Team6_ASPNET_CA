@@ -25,6 +25,7 @@
     </tr>
 </table>
 </br>
+
 <table>
     <thead style="text-align:center">
         <tr>
@@ -39,9 +40,11 @@
     <tbody>
         @foreach (var item in Model)
         {
+            
+
             <tr>
                 <td>@item.ProductName</td>
-                <td><img src="@(Url.Content(item.ProductImage))" alt="@item.ProductName" height="50" width="50" /></td>
+                <td><img src="@item.ProductImage" alt="@item.ProductName" height="60" width="60" /></td>
                 <td>@item.ProductDescription</td>
                 <td>@item.Price</td>
                 <td>

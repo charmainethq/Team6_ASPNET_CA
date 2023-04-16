@@ -200,6 +200,7 @@ namespace Team6.Data
                         {
                             ProductId = (int)reader["ProductId"],
                             Name = (string)reader["Name"],
+                            ProductImage = (string)reader["ProductImage"],
                             Description = (string)reader["Description"],
                             Price = (float)(double)reader["UnitPrice"]
                         };

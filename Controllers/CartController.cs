@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 namespace Team6.Controllers
 {
@@ -26,9 +27,9 @@ namespace Team6.Controllers
         public IActionResult Details(int productId, int quantity)
         {
             Product product = CartData.GetProductById(productId);
+            Debug.WriteLine("Product Image: " + product.ProductImage);
 
-
-            if(productId == null)
+            if (productId == null)
             {
                 return View();
             }
