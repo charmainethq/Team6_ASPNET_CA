@@ -24,7 +24,7 @@ namespace Team6.Data
                 {
                     Customer customer = new Customer()
                     {
-                        CustomerID = (string)reader["CustomerID"],
+                        CustomerID = (int)reader["CustomerID"],
                         Username = (string)reader["Username"],
                         Password = (string)reader["Password"],
                         FirstName = (string)reader["FirstName"],
