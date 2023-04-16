@@ -2,6 +2,6 @@
 {
     public class ConnectString
     {
-        public static string connectionString = @"Server=localhost;Database=ShoppingDB;Integrated Security=true;encrypt=false";
+        public static string connectionString = @"Server=DESKTOP-V506CE1\SQLEXPRESS;Database=ShoppingDB;Integrated Security=true;encrypt=false";
     }
 }
