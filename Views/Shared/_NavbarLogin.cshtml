@@ -2,10 +2,27 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    @*var firstname = ViewBag.FirstName*@
+    var fullname = TempData["fullName"];
+    var sessionId = TempData["sessionId"];
 }
 
-@if (ViewBag.sessionId == null)
+@if (sessionId != null)
+{
+    <li> Hi @fullname! </li>
+
+
+    //TODO: Add Purchase History Action
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="" asp-action="">My Purchases</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Login" asp-action="Logout">| Log Out</a>
+    </li>
+
+}
+
+else
 {
     <li class="nav-item">
         <a class="nav-link text-dark"> Hi, Guest! </a>
@@ -18,23 +35,8 @@
 
     //TODO: Add login action
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="" asp-action=""> Login</a>
+        <a class="nav-link text-dark" asp-controller="Login" asp-action="Index"> Login </a>
     </li>
 }
-else
-{
-    <li> Hi @ViewData["firstname"]! </li>
 
-
-                //TODO: Add Purchase History Action
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="" asp-action="">My Purchases</a>
-    </li>
-
-    //TODO: Add logout action
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="" asp-action="">| Log Out</a>
-    </li>
-
-}
 
