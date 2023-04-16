@@ -84,8 +84,8 @@ namespace Team6.Data
                             OrderID = Convert.ToInt32(reader["OrderId"]),
                             ProductID = Convert.ToInt32(reader["ProductId"]),
                             Quantity = Convert.ToInt32(reader["Quantity"]),
-                            Price = (float)(reader["Price"]),
-                            ActivationCodes = (ActivationCode)(reader["ActivationCodes"]), //not sure 
+                            Price = (float)(double)(reader["UnitPrice"]),
+                            ActivationCodes = (List<ActivationCode>)(reader["ActivationCodes"]), //not sure 
                         };
 
                         orderItems.Add(orderItem);
@@ -122,7 +122,7 @@ namespace Team6.Data
             {
                 conn.Open();
 
-                using (var cmd = new SqlCommand("UPDATE ActivationCode SET Code = @activationCodes WHERE ProductID = @productId AND OrderID = @orderId", connection))
+                using (var cmd = new SqlCommand("UPDATE ActivationCode SET Code = @activationCodes WHERE ProductID = @productId AND OrderID = @orderId", conn))
                 {
                     cmd.Parameters.AddWithValue("@activationCodes", activationCodes);
                     cmd.Parameters.AddWithValue("@productId", productId);
@@ -170,7 +170,7 @@ namespace Team6.Data
                                 OrderItemId = Convert.ToInt32(reader["OrderItemId"]),
                                 ProductID = Convert.ToInt32(reader["ProductId"]),
                                 Quantity = Convert.ToInt32(reader["Quantity"]),
-                                Price = (float) (reader["Price"])
+                                Price = (float)(double)(reader["UnitPrice"])
                             };
 
                             order.OrderItems.Add(orderItem);
@@ -188,7 +188,7 @@ namespace Team6.Data
             {
                 conn.Open();
 
-                string sql = "SELECT * FROM Products WHERE ProdId = @productId";
+                string sql = "SELECT * FROM Products WHERE ProductId = @productId";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@productId", productId);
 
@@ -198,10 +198,10 @@ namespace Team6.Data
                     {
                         Product product = new Product
                         {
-                            ProductId = (int)reader["ProdId"],
+                            ProductId = (int)reader["ProductId"],
                             Name = (string)reader["Name"],
                             Description = (string)reader["Description"],
-                            Price = (float)reader["Price"]
+                            Price = (float)(double)reader["UnitPrice"]
                         };
                         return product;
                     }
