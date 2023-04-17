@@ -1,0 +1,36 @@
+﻿@{
+	ViewData["Title"] = "Purchase Order History";
+}
+
+@{
+	//var orders = (List<Dictionary<Order, OrderItem>>)ViewData["orders"];
+	var orders = (List<OrderItem>)ViewData["orders"];
+}
+@if(orders==null)
+{
+	<h5>Your Purchase History is empty</h5>
+	
+}
+
+@foreach (var oh in orders)
+{
+	<table>
+		<tr>
+			<td>Purchase On: date</td>
+		</tr>
+		<tr>
+			<td>Qty: @oh.ProductID </td>
+		</tr>
+		
+	</table>
+}
+@foreach(var ac in orders)
+{
+	<table>
+		
+		<tr>
+			<td>Activation Code: @**ac.Values.First().ActivationCodes**@ </td>
+		</tr>
+	</table>
+
+}
