@@ -5,10 +5,6 @@
     var ratingCounts = ViewData["rtgCnts"];
     var reviewDetails = (List<ProductReview>) ViewData["rvDts"];
 }
-@section Scripts
-{
-    <script src="/js/review.js"></script> @*testing review display from javascript*@
-}
 
 <head>
     <meta charset="UTF-8">
@@ -21,60 +17,41 @@
 </head>
 
 <body>
-    Rating: @averageRating <br />
-    Counts: @ratingCounts <br />
-    Review Details:
-    <table>
-        <tr>
-            <th>Customer Name</th>
-            <th>Rating</th>
-            <th>Review Text</th>
-        </tr>
-        @foreach (var reviewDetail in reviewDetails)
-        {
-            <tr>
-                <td>@reviewDetail.CustomerName</td>
-                <td>@reviewDetail.Rating</td>
-                <td>@reviewDetail.ReviewText</td>
-            </tr>
-        }
-    </table>
-
-
     <div class="container">
         <div class="post">
             <h3 class="title">Products Review</h3>
         </div>
-        <div class="CreateReview">
-            @*testing a review button display*@
-            <label> How is the product: </label>
-            <form>
-                <div style="width:50%">
-                    <p style="font-size:14px"></p>
-                    <input type="radio" name="rate" id="5-star">
-                    <label for="5-star">★★★★★</label><br />
-
-                    <input type="radio" name="rate" id="4-star">
-                    <label for="4-star">★★★★</label><br />
-
-                    <input type="radio" name="rate" id="3-star">
-                    <label for="3-star">★★★</label><br />
-
-                    <input type="radio" name="rate" id="2-star">
-                    <label for="2-star">★★</label><br />
-
-                    <input type="radio" name="rate" id="1-star">
-                    <label for="1-star">★</label><br />
-
-                    <label> Enter Reivew: </label> <br />
-                    <div class="textarea">
-                        <textarea cols="50" placeholder="Describe your experience.."></textarea>
-                    </div>
-                    <div class="btn">
-                        <button type="submit">Submit</button>
-                    </div>
-                </div>
-            </form>
+        <br />
+        <div class="ProductAverageRating">
+@*            @for (int i = 0; i < averageRating; i++)
+            {
+                <span class="ratingStars > input:checked"></span>
+            }*@
+            Rating: @averageRating <br />
+        </div>
+        <br />
+        <div class="ProductRatingCount">
+            Counts: @ratingCounts <br />
+        </div>
+        <br />
+        <div class="RatingDetails">
+            Review Details:
+            <table>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Rating</th>
+                    <th>Review Text</th>
+                </tr>
+                @foreach (var reviewDetail in reviewDetails)
+                {
+                    <tr>
+                        <td>@reviewDetail.CustomerName</td>
+                        <td>@reviewDetail.Rating</td>
+                        <td>@reviewDetail.ReviewText</td>
+                    </tr>
+                }
+            </table>
         </div>
     </div>
+
 </body>

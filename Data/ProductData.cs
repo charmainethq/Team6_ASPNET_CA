@@ -74,8 +74,8 @@ namespace Team6.Data
             }
             return reviewDetails;
         }
-        //update database when "submit" button is clicked
-        public static void submitReview(int? ratingStars, string? reviewDescription, int OrderItemId)
+        //update product review into database
+        public static void submitReview(int ratingStars, string reviewDescription, int OrderItemId)
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {

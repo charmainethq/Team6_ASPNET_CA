@@ -16,7 +16,7 @@ namespace Team6.Controllers
         
 
 
-        public IActionResult CreateReview(string? submitReviewButton, int? ratingStars, string? reviewDescription, int OrderItemId) 
+        public IActionResult CreateReview(string? submitReviewButton, int ratingStars, string? reviewDescription, int OrderItemId) 
         {
             //when "submit" button page is clicked on the create review page
             if (submitReviewButton == null)
@@ -28,8 +28,9 @@ namespace Team6.Controllers
                 //test sample update
                 OrderItemId = 20081;
                 ProductData.submitReview(ratingStars, reviewDescription, OrderItemId);
-                return View();
-                // return RedirectToAction("ProductReview");
+                //return View();
+                // Redirect back to Order History after review has been submitted
+                return RedirectToAction("Index", "OrderHistory");
             }
         }
     }
