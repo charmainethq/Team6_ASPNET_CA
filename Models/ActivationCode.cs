@@ -11,9 +11,9 @@ namespace Team6.Models
 
 
         public Guid Code { get; set; }
-        public string ProductID { get; set; }
+        public int ProductID { get; set; }
 
-        public string OrderID{ get; set; }
+        public int OrderID{ get; set; }
 
     }
 }
