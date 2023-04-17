@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Team6.Data;
+using Team6.Models;
 
 namespace Team6.Controllers
 {
@@ -14,12 +16,21 @@ namespace Team6.Controllers
         
 
 
-        public IActionResult CreateReview()
+        public IActionResult CreateReview(string? submitReviewButton, int? ratingStars, string? reviewDescription, int OrderItemId) 
         {
-            //take in rating and message(optional) to create a Review object. Display should be at the bottom of the product page
-            //View: have 5 buttons, each represented by a star without fill. On clicking one button, the value (eg. 4 ) should be recorded
-            //and the icons for buttons 1-4 should switch to filled 
-            return View();
+            //when "submit" button page is clicked on the create review page
+            if (submitReviewButton == null)
+            {
+                return View();
+            }
+            else
+            {
+                //test sample update
+                OrderItemId = 20081;
+                ProductData.submitReview(ratingStars, reviewDescription, OrderItemId);
+                return View();
+                // return RedirectToAction("ProductReview");
+            }
         }
     }
 }

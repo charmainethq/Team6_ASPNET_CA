@@ -1,6 +1,10 @@
-﻿@*
+﻿@{
     ViewData["Title"] = "Review Page";
-*@
+    @* testing display of product review summary (average rating and counts)*@
+    var averageRating = ViewData["avgRtg"];
+    var ratingCounts = ViewData["rtgCnts"];
+    var reviewDetails = (List<ProductReview>) ViewData["rvDts"];
+}
 @section Scripts
 {
     <script src="/js/review.js"></script> @*testing review display from javascript*@
@@ -17,6 +21,26 @@
 </head>
 
 <body>
+    Rating: @averageRating <br />
+    Counts: @ratingCounts <br />
+    Review Details:
+    <table>
+        <tr>
+            <th>Customer Name</th>
+            <th>Rating</th>
+            <th>Review Text</th>
+        </tr>
+        @foreach (var reviewDetail in reviewDetails)
+        {
+            <tr>
+                <td>@reviewDetail.CustomerName</td>
+                <td>@reviewDetail.Rating</td>
+                <td>@reviewDetail.ReviewText</td>
+            </tr>
+        }
+    </table>
+
+
     <div class="container">
         <div class="post">
             <h3 class="title">Products Review</h3>
@@ -42,7 +66,7 @@
                     <input type="radio" name="rate" id="1-star">
                     <label for="1-star">★</label><br />
 
-                    <br>
+                    <label> Enter Reivew: </label> <br />
                     <div class="textarea">
                         <textarea cols="50" placeholder="Describe your experience.."></textarea>
                     </div>

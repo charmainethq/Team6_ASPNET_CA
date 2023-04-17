@@ -36,6 +36,17 @@ public class HomeController : Controller
 
     public IActionResult ProductReview()
     {
+        
+        // sample product review (average, counts, summary of details)
+        int ProductID = 1000; // sample test: 1000
+        int averageRating = ProductData.AverageRating(ProductID);
+        int ratingCounts = ProductData.CountRating(ProductID);
+        List<ProductReview> reviewDetails = ProductData.ReviewDetails(ProductID);
+
+        ViewData["avgRtg"] = averageRating;
+        ViewData["rtgCnts"] = ratingCounts;
+        ViewData["rvDts"] = reviewDetails;
+
         return View();
     }
 

@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Create Review";
+}
+@*section Scripts
+    {
+    <script src="/js/review.js"></script> testing review display from javascript
+}*@
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="post">
+            <h3 class="title">Products Review</h3>
+        </div>
+        <div class="CreateReview">
+            @*testing a review submission page*@
+            <label> How is the product: </label>
+            <form>
+                <div style="width:50%">
+                    <p style="font-size:14px"></p>
+
+                    @*review ratings*@
+                    <label for="ratingStars"> Rating: (Required) <br />
+                        ★★★★★: <input type="radio" name="ratingStars" value="5"> <br />
+                        ★★★★: <input type="radio" name="ratingStars" value="4"> <br />
+                        ★★★: <input type="radio" name="ratingStars" value="3"> <br />
+                        ★★: <input type="radio" name="ratingStars" value="2"> <br />
+                        ★: <input type="radio" name="ratingStars" value="1"> <br />
+                    </label>
+
+                    <br>
+                    @*review text*@
+                    <span style="margin-bottom: 50px">
+                        <label for = "reviewDescription"> Enter your review: (Required) </label>
+                        <input type="text" name="reviewDescription" id="reviewDescription" required> <br>
+                    </span>
+
+                    <br>
+                    @*submit button*@
+                    <input type="submit" name="submitReviewButton" style="padding:5px">
+
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
