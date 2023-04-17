@@ -3,8 +3,8 @@
 }
 
 @{
-	var orders = (List<OrderHistory>)ViewData["orders"];
-	
+
+	var orders = (List < OrderHistory >) ViewData["ordersbycustomer"];
 }
 @if(orders==null)
 {
@@ -12,28 +12,41 @@
 	
 }
 
-@foreach (var oh in orders)
-{
-	<table>
-		<tr>
-			<td>Purchase On: @oh.PurchaseOn</td>
-		</tr>
-		<tr>
-			<td>Qty: @oh.Qty </td>
-		</tr>
-		<tr>
-			<td>Code: @oh.Activation_Code </td>
-		</tr>
-		
-	</table>
-}
-@foreach(var ac in orders)
-{
-	<table>
-		
-		<tr>
-			<td>Activation Code: @**ac.Values.First().ActivationCodes**@ </td>
-		</tr>
-	</table>
+<table>
+	@foreach (var o in orders)
+	{
+		<table>
 
-}
+			<tr>
+				<th rowspan="4"> img here </th> <!--keep rowspan 1 less than number of rows on the right so that the description stays on the left -->
+				<td>@o.ProductName</td>
+				
+			</tr>
+
+			<tr>
+				<td> dadsa </td>
+			</tr>
+
+			<tr>
+				<td>Row 3</td>
+			</tr>
+
+			<tr>
+				<td>
+					<select class="form-select" aria-label="Default select example">
+						@foreach (var ac in o.Activation_Code)
+						{
+							<option>@ac</option>
+						}
+					</select></td>
+			</tr>
+
+			<tr>
+				<td>@o.ProductDescription</td>
+			</tr>
+		</table>
+	}
+
+</table>
+
+
