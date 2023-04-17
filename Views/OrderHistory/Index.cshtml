@@ -3,8 +3,8 @@
 }
 
 @{
-	//var orders = (List<Dictionary<Order, OrderItem>>)ViewData["orders"];
-	var orders = (List<OrderItem>)ViewData["orders"];
+	var orders = (List<OrderHistory>)ViewData["orders"];
+	
 }
 @if(orders==null)
 {
@@ -16,10 +16,13 @@
 {
 	<table>
 		<tr>
-			<td>Purchase On: date</td>
+			<td>Purchase On: @oh.PurchaseOn</td>
 		</tr>
 		<tr>
-			<td>Qty: @oh.ProductID </td>
+			<td>Qty: @oh.Qty </td>
+		</tr>
+		<tr>
+			<td>Code: @oh.Activation_Code </td>
 		</tr>
 		
 	</table>

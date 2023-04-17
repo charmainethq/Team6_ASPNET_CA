@@ -1,63 +1,52 @@
-﻿namespace Team6.Data
+﻿using Azure.Core;
+using Azure;
+using Microsoft.Data.SqlClient;
+using Team6.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.EntityFrameworkCore.Storage;
+namespace Team6.Data
 {
 	public class OrderData
 	{
-
-
-		/**public static List<Dictionary<Order, OrderItem>> PurchaseHistory()
+		public static List<OrderHistory> PurchaseHistory(int customerID)
 		{
-			List<Dictionary<Order, OrderItem>> orders = new List<Dictionary<Order, OrderItem>>();
 
-			foreach (var order in orders)
+			using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
 			{
-				var orderItems = OrderItems.Where(oi => oi.OrderID == order.OrderID).ToList();
-
-				var myOrder = new Order()
+				conn.Open();
+				string sql = @"SELECT OI.ProductID AS ProductID, O.OrderDate AS OrderDate,OI.Quantity AS Quantity, A.ActivationCode AS Code
+								FROM Orders O, OrderItems OI, ActivationCodes A
+								WHERE O.OrderID=OI.OrderID 
+								AND OI.OrderItemId = A.OrderItemID
+								ANd O.CustomerID ="+customerID;
+				
+				List<OrderHistory> allOrdersByCustomer = new List<OrderHistory>();
+				using (var cmd = new SqlCommand(sql, conn))
 				{
-					OrderID = order.OrderID,
-					OrderDate = order.OrderDate,
-					CustomerID = order.CustomerID
-				};
+					using (var reader = cmd.ExecuteReader())
+					{
+						while (reader.Read())
+						{
 
-				var myOrderItem = new OrderItem()
-				{
-					OrderID = orderItems.FirstOrDefault().OrderID,
-					ProductID = orderItems.FirstOrDefault().ProductID,
-					Quantity = orderItems.FirstOrDefault().Quantity,
-					Price = orderItems.FirstOrDefault().Price
-				};
+							OrderHistory order = new OrderHistory()
+							{
+								ProductId = (int)reader["ProductID"],
+								PurchaseOn = (DateTime)reader["OrderDate"],
+								Qty = (int)reader["Quantity"],
+								Activation_Code = (string)reader["Code"]
+							};
 
-				orders.Add(new Dictionary<Order, OrderItem>() { { myOrder, myOrderItem } });
+							allOrdersByCustomer.Add(order);
+
+						}
+					}
+					return allOrdersByCustomer;
+				}
+				
 			}
-
-			return orders;
-		}**/
+		}
 	}
-
-
-	//List<Dictionary<Order, OrderItem>> orders = new List<Dictionary<Order, OrderItem>>();
-	//using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
-	//{
-	//	conn.Open();
-	//	string sql = @"SELECT O.OrderDate,OI.Quantity,OI.ActivationCode
-	//                            FROM Order O, OrderItem OI,
-	//                             WHERE O.OrderID=OI.OrderID";
-	//	SqlCommand cmd = new SqlCommand(sql, conn);
-	//	SqlDataReader reader = cmd.ExecuteReader();
-	//	while (reader.Read())
-	//	{
-	//		var myOrder = new Order()
-	//		{
-	//			OrderDate = (DateTime)reader["Purchase On"],
-
-	//		};
-	//		var  myOrderItem = new OrderItem()
-	//		{
-	//			Quantity = (int)reader["Qty"],
-	//			ActivationCodes = (List<ActivationCode>)reader["Activation Code"],
-	//		};
-	//		orders.Add(new Dictionary<Order, OrderItem>() { { myOrder, myOrderItem } } );
-	//	}
-	//}
-	//return orders;
 }
+	
+
