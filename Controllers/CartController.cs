@@ -49,7 +49,7 @@ namespace Team6.Controllers
                         ProductName = product.Name,
                         Quantity = quantity,
                         ProductDescription = product.Description,
-                        Price = product.Price,
+                        Price = product.UnitPrice,
                     };
                     cart.Add(cartItem);
                 }
