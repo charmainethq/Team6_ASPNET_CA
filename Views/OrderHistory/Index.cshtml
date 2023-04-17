@@ -6,6 +6,16 @@
 
 	var orders = (List < OrderHistory >) ViewData["ordersbycustomer"];
 }
+
+<head>
+	<style>
+		table{
+			margin-left: auto;
+			margin-right: auto;
+			width: 80%;
+		}
+	</style>
+</head>
 @if(orders==null)
 {
 	<h5>Your Purchase History is empty</h5>
