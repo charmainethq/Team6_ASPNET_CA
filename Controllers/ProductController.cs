@@ -16,8 +16,11 @@ namespace Team6.Controllers
         
 
 
-        public IActionResult CreateReview(string? submitReviewButton, int ratingStars, string? reviewDescription, int OrderItemId) 
+        public IActionResult CreateReview(string? submitReviewButton, int ratingStars, string? reviewDescription, int OrderItemId, string customerName) 
         {
+            //sample test to display customerName
+            customerName = "Johnny Walked";
+            ViewData["customerName"] = customerName;
             //when "submit" button page is clicked on the create review page
             if (submitReviewButton == null)
             {

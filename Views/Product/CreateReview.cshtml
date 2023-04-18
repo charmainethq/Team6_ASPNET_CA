@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Create Review";
+    //sample customer name
+    var customerName = ViewData["customerName"];
 }
 
 <head>
@@ -9,7 +11,7 @@
 
 <body>
     <form>
-        <h2>Dear "insert name here"</h2> <br />
+        <h2>Dear @customerName</h2> <br />
         <h3 class="title">We appreciate your review</h3> <br />
         <h5>Your review will help us to improve our products</h5> <br />
         <label> How is the product: </label> <br /> <br />

@@ -18,9 +18,7 @@
         <h3 class="title">Product Reviews</h3>
         <br />
 
-        @*need to insert image here*@
-
-        <p>Average rating of @averageRating, based on @ratingCounts reviews.</p>
+        <h6> Based on @ratingCounts reviews, the average rating is: </h6> <br />
 
         @*html syntax to display average rating in stars (for tanya home page)*@
         <div class="stars">
@@ -32,34 +30,46 @@
             {
                 <i class="fa fa-star checked" style="font-size:30px;color:lightgrey;"></i>
             }
-            
-        </div> <br /> <br /> <br /> <br />
+        </div> <br />
+        <h6> @averageRating out of 5 stars </h6> 
 
         @*html syntax to display average rating in stars (for tanya home page)*@
-        <div class="ProductRatingCount">
+@*        <div class="ProductRatingCount">
             Counts: @ratingCounts <br />
-        </div> <br />
+        </div> <br />*@
 
         @*display a summary page of the details*@
         <hr style="border:1.5px solid #888888">
 
         <div class="RatingDetails">
-            Review Details:
-            <table>
-                <tr>
-                    <th>Customer Name</th>
-                    <th>Rating</th>
-                    <th>Review Text</th>
-                </tr>
-                @foreach (var reviewDetail in reviewDetails)
-                {
-                    <tr>
-                        <td>@reviewDetail.CustomerName</td>
-                        <td>@reviewDetail.Rating</td>
-                        <td>@reviewDetail.ReviewText</td>
-                    </tr>
-                }
-            </table>
+            <h4> Review Details: </h4> <br />
+            @foreach (var reviewDetail in reviewDetails)
+            {
+                <div>
+                    <div>
+                        @*display customer name*@
+                        <div> 
+                            <h6>Customer Name: @reviewDetail.CustomerName</h6>
+
+                            @*display invididual review star rating*@
+                            <div> Rating: 
+                                @for (int i = 0; i < (int)@reviewDetail.Rating; i++)
+                                {
+                                    <i class="fa fa-star checked" style="font-size:15px;color:gold;"></i>
+                                }
+                                @for (int i = (int)@reviewDetail.Rating; i < 5; i++)
+                                {
+                                    <i class="fa fa-star checked" style="font-size:15px;color:lightgrey;"></i>
+                                }
+                            </div>
+                        </div>
+
+                        @*display individual review description*@
+                        <p>Review: @reviewDetail.ReviewText</p>
+                        <br />
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </body>
