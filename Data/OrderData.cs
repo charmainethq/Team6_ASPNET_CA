@@ -9,6 +9,7 @@ using Castle.Components.DictionaryAdapter.Xml;
 
 namespace Team6.Data
 {
+
     public class OrderData
     {
         public static List<OrderHistory> OrderList(int customerID)
@@ -98,6 +99,7 @@ namespace Team6.Data
 
 
     }
+
 }
 	
 

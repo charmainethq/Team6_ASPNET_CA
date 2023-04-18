@@ -1,4 +1,4 @@
-﻿namespace Team6.Models
+namespace Team6.Models
 {
 	public class OrderHistory
 	{	
@@ -14,6 +14,7 @@
 		public DateTime PurchaseOn { get; set; }
 		public int Qty { get; set; }
 		public List<string> Activation_Code { get; set; }
+    
 		public OrderHistory()
 		{
 			this.Activation_Code = new List<string>();
