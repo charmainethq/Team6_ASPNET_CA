@@ -93,8 +93,7 @@ namespace Team6.Controllers
             
             // Create new order
 
-            // Add cart items as order items to the new order
-            
+            // Add cart items as order items to the new order           
 
             // Get all orders for current customer
             List<Order> pastOrders = CartData.GetOrdersByCustomer(customerId);
