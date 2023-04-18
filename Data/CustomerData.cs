@@ -5,7 +5,7 @@ namespace Team6.Data
 {
     public class CustomerData
     {
-        public static Customer GetCustomerById(string custId)
+        public static Customer GetCustomerById(int custId)
         {
 
             string connectionString = ConnectString.connectionString;
