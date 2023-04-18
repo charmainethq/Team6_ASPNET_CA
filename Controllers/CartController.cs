@@ -53,7 +53,7 @@ namespace Team6.Controllers
                         ProductImage = product.ProductImage,
                         Quantity = quantity,
                         ProductDescription = product.Description,
-                        Price = product.Price,
+                        Price = product.UnitPrice,
                     };
                     cart.Add(cartItem);
                 }
