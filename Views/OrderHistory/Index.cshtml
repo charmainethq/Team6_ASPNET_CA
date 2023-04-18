@@ -1,16 +1,64 @@
-﻿@{
+@{
 	ViewData["Title"] = "Purchase Order History";
+  	var orders = (List < OrderHistory >) ViewData["ordersbycustomer"];
 }
 
-@{
-	var orders = (List<OrderHistory>)ViewData["orders"];
-	
-}
+
+
+<head>
+	<style>
+		table{
+			margin-left: auto;
+			margin-right: auto;
+			width: 80%;
+		}
+	</style>
+</head>
+
 @if(orders==null)
 {
 	<h5>Your Purchase History is empty</h5>
 	
 }
+
+
+<table>
+	@foreach (var o in orders)
+	{
+		<table>
+
+			<tr>
+				<th rowspan="4"> img here </th> <!--keep rowspan 1 less than number of rows on the right so that the description stays on the left -->
+				<td>@o.ProductName</td>
+				
+			</tr>
+
+			<tr>
+				<td> dadsa </td>
+			</tr>
+
+			<tr>
+				<td>Row 3</td>
+			</tr>
+
+			<tr>
+				<td>
+					<select class="form-select" aria-label="Default select example">
+						@foreach (var ac in o.Activation_Code)
+						{
+							<option>@ac</option>
+						}
+					</select></td>
+			</tr>
+
+			<tr>
+				<td>@o.ProductDescription</td>
+			</tr>
+		</table>
+	}
+
+</table>
+
 
 @**<div class="image" data-title="@product.Name @product.Description">
     <img src="@product.ProductImage" alt="@product.Name">
@@ -105,3 +153,4 @@
 	
 
 }
+
