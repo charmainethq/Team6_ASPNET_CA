@@ -51,7 +51,7 @@ namespace Team6.Controllers
                         ProductImage = product.ProductImage,
                         Quantity = quantity,
                         ProductDescription = product.Description,
-                        Price = product.Price,
+                        Price = product.UnitPrice,
                     };
                     cart.Add(cartItem);
                 }
@@ -91,8 +91,7 @@ namespace Team6.Controllers
             
             // Create new order
 
-            // Add cart items as order items to the new order
-            
+            // Add cart items as order items to the new order           
 
             // Get all orders for current customer
             List<Order> pastOrders = CartData.GetOrdersByCustomer(customerId);

@@ -202,7 +202,7 @@ namespace Team6.Data
                             Name = (string)reader["Name"],
                             ProductImage = (string)reader["ProductImage"],
                             Description = (string)reader["Description"],
-                            Price = (float)(double)reader["UnitPrice"]
+                            UnitPrice = (float)(double)reader["UnitPrice"]
                         };
                         return product;
                     }
