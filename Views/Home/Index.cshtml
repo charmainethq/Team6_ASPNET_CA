@@ -3,7 +3,6 @@
     var products = ViewBag.products;
 }
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" initial-scale=1.0>
@@ -20,7 +19,7 @@
             @foreach (Product product in products)
             {
                 <div class="image" data-title="@product.Name @product.Description">
-                    <img src="/images/testimg.png" alt="@product.Name">
+                    <img src="@product.ProductImage" alt="@product.Name">
                     <h3>@product.Name</h3>
                     <p style="text-align:left">@product.Description</p>
                     <button class="button">$@product.UnitPrice - Add To Cart</button>
@@ -29,6 +28,7 @@
         </div>
     </div>
 
+    @*js dynamic search*@
     <script>
         function search() {
             var input = document.getElementById("search-box");

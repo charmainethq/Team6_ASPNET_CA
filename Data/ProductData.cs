@@ -24,10 +24,11 @@ namespace Team6.Data
                 {
                     Product product = new Product()
                     {
-                        ProductID = (string)reader["ProductID"],
+                        ProductId = (int)reader["ProductID"],
                         Name = (string)reader["Name"],
                         Description = (string)reader["Description"],
-                        UnitPrice = (double)reader["UnitPrice"],
+                        UnitPrice = (float)(double)reader["UnitPrice"],
+                        ProductImage = (string)reader["ProductImage"],
 
                     };
                     products.Add(product);
