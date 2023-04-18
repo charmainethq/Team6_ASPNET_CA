@@ -89,11 +89,19 @@ namespace Team6.Controllers
         [HttpGet]
         public IActionResult Checkout(int customerId)
         {
-            // Get current customer ID
+            // Check if the customer is logged in
+            int? currentCustomerId = HttpContext.Session.GetInt32("CustomerId");
+
+            if (currentCustomerId == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
 
             // Create new order
 
+
             // Add cart items as order items to the new order
+
 
 
             // Get all orders for current customer
@@ -101,7 +109,7 @@ namespace Team6.Controllers
 
             // Display past orders to user
             return View(pastOrders);
-
         }
+
     }
 }

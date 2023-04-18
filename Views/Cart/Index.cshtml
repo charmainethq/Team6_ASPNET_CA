@@ -4,8 +4,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 <style>
-    table{
-        border-collapse: collapse;
+    table {
         width: 100%;
         border-color: #eeee;
         line-height: 2;
@@ -13,10 +12,11 @@
         margin-left: auto;
         margin-right: auto;
     }
-    td,tr{
-        padding-left: 50px;
-        padding-right: 10px;
-        font-size: 18px;
+
+    td,
+    tr {
+        padding-left: 20px;
+        font-size: 16px;
     }
 </style>
 
@@ -32,16 +32,17 @@ else
     <br />
     <table style="background-color: aliceblue">
         <tr style="font-weight:bold">
-            <td>Total:</td>
-            <td id="cart-total">@Model.Sum(item => item.UnitPrice * item.Quantity).ToString("F2")</td>           
+            <td>Cart Total:</td>
+            <td id="cart-total">@("$" + Model.Sum(item => item.UnitPrice * item.Quantity).ToString("F2"))</td>
+
         </tr>
     </table>
-    <br/>
+    <br />
     @foreach (var item in Model)
     {
         <table>
             <tr>
-                <td rowspan="4">
+                <td rowspan="6">
                     <div class="card" style="width: 20rem;">
                         <img class="card-img-top" src="@item.ProductImage" alt="@item.ProductName">
                         <div class="card-body">
@@ -51,19 +52,21 @@ else
                     </div>
                 </td>
             </tr>
-
+            <tr></tr>
             <tr>
-                <td>Unit Price:</td>
+                <td>Price:</td>
                 <td>$@item.UnitPrice</td>
+            </tr>
+            <tr>
                 <td>Quantity:</td>
                 <td>
                     <input type="number" class="quantity" value="@item.Quantity" min="0" step="1"
-                            onchange="updateTotalPrice(this, @item.UnitPrice)"
-                            onkeyup="updateTotalPrice(this, @item.UnitPrice)">
+                           onchange="updateTotalPrice(this, @item.UnitPrice)"
+                           onkeyup="updateTotalPrice(this, @item.UnitPrice)">
                 </td>
 
-                <td>Price:</td>
-                <td class="total-price">@((item.UnitPrice * item.Quantity).ToString("F2"))</td>
+                <td>Total Price:</td>
+                <td class="total-price">@("$" + (item.UnitPrice * item.Quantity).ToString("F2"))</td>
             </tr>
             <tr>
                 <td>
@@ -73,7 +76,7 @@ else
                     </form>
                 </td>
             </tr>
-        </table>               
+        </table>
     }
 
 }
@@ -83,7 +86,7 @@ else
         var quantity = parseInt(input.value);
         var totalPrice = quantity * price;
         var row = input.closest("tr");
-        row.querySelector(".total-price").textContent = totalPrice.toFixed(2);
+        row.querySelector(".total-price").textContent = "$" + totalPrice.toFixed(2);
         updateCartTotal();
     }
 
@@ -91,10 +94,8 @@ else
         var cartTotal = 0;
         var totalPrices = document.querySelectorAll(".total-price");
         for (var i = 0; i < totalPrices.length; i++) {
-            cartTotal += parseFloat(totalPrices[i].textContent);
+            cartTotal += parseFloat(totalPrices[i].textContent.replace("$", ""));
         }
-        document.querySelector("#cart-total").textContent = cartTotal.toFixed(2);
+        document.querySelector("#cart-total").textContent = "$" + cartTotal.toFixed(2);
     }
 </script>
-
-
