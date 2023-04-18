@@ -2,7 +2,7 @@
   font-size: 14px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1500px) {
   html {
     font-size: 16px;
   }
@@ -28,10 +28,6 @@ th{
     background-color: aliceblue;
 }
 
-tr, td {
-  border: 1px solid #efefef;
-  text-align: center;
-}
 
 .cell {
   width: 100px;
@@ -79,3 +75,4 @@ tr, td {
 .myUL li a:hover:not(.header) {
     background-color: #eee;
 }
+
