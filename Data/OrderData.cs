@@ -15,11 +15,16 @@ namespace Team6.Data
 			using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
 			{
 				conn.Open();
-				string sql = @"SELECT OI.ProductID AS ProductID, O.OrderDate AS OrderDate,OI.Quantity AS Quantity, A.ActivationCode AS Code
-								FROM Orders O, OrderItems OI, ActivationCodes A
-								WHERE O.OrderID=OI.OrderID 
+				string sql = @"SELECT OI.OrderItemId, OI.ProductID AS ProductID, 
+								O.OrderDate AS OrderDate,oi.Quantity AS OrderQty,
+								A.ActivationCode As Code,
+								P.Name as ProductName,P.Description as ProductDescription,
+								P.ProductImage as ProductImage
+								FROM Orders O, OrderItems OI, ActivationCodes A,Products P
+								where O.OrderID=OI.OrderID 
 								AND OI.OrderItemId = A.OrderItemID
-								ANd O.CustomerID ="+customerID;
+								And p.ProductID=oi.ProductID
+								ANd O.CustomerID =" + customerID+"Order by O.OrderDate";
 				
 				List<OrderHistory> allOrdersByCustomer = new List<OrderHistory>();
 				using (var cmd = new SqlCommand(sql, conn))
@@ -33,8 +38,12 @@ namespace Team6.Data
 							{
 								ProductId = (int)reader["ProductID"],
 								PurchaseOn = (DateTime)reader["OrderDate"],
-								Qty = (int)reader["Quantity"],
-								Activation_Code = (string)reader["Code"]
+								Qty = (int)reader["OrderQty"],
+								Activation_Code = (string)reader["Code"],
+								Name= (string)reader["ProductName"],
+								Description= (string)reader["ProductDescription"],
+								ProductImage = (string)reader["ProductImage"]
+
 							};
 
 							allOrdersByCustomer.Add(order);

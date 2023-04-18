@@ -12,8 +12,22 @@
 	
 }
 
-@foreach (var oh in orders)
+@**<div class="image" data-title="@product.Name @product.Description">
+    <img src="@product.ProductImage" alt="@product.Name">
+    <h3>@product.Name</h3>
+    <p style="text-align:left">@product.Description</p>
+    <button class="button">$@product.UnitPrice - Add To Cart</button>
+</div>*@
+
+@*@foreach (var oh in orders)
 {
+	<div class="image" data-title="@oh.Name @oh.Description">
+		<img src="@oh.ProductImage " alt="@oh.Name" width="250" height="200">
+		<h3>@oh.Name</h3>
+    <p style="text-align:left">@oh.Description</p>	
+		<button class="center_button"><h5>Download</h5></button>
+		</div>
+
 	<table>
 		<tr>
 			<td>Purchase On: @oh.PurchaseOn</td>
@@ -22,18 +36,72 @@
 			<td>Qty: @oh.Qty </td>
 		</tr>
 		<tr>
-			<td>Code: @oh.Activation_Code </td>
+			<td>
+				<select class="form-select" aria-label="Default select example">
+					<option selected>@oh.Activation_Code</option>
+					<option value="1">@oh.Activation_Code</option>
+					<option value="2">@oh.Activation_Code</option>
+				</select>
+			</td>
+				
+				
+
 		</tr>
 		
 	</table>
-}
-@foreach(var ac in orders)
+}*@
+@foreach (var cc in orders)
 {
-	<table>
-		
-		<tr>
-			<td>Activation Code: @**ac.Values.First().ActivationCodes**@ </td>
-		</tr>
-	</table>
+	@*<div class="row">
+		<div class="col">
+			<div class="card text-center mb-3" style="width: 18rem;">
+				<img src="@cc.ProductImage" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">@cc.Name</h5>
+					<p class="card-text">@cc.Description</p>
+					<a href="#" class="btn btn-primary ">Download</a>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="col-md-8 d-flex flex-column  align-items-between justify-content-center m-11">
+			<div class="mb-2">Purchased on:@cc.PurchaseOn</div>
+			<div>Quantity: @cc.Qty</div>
+				<div class="form-group col-md-4 d-flex flex-row align-items-start justify-content-between">
+                <label for="inputState">Activation Code</label>
+                <select id="inputState" class="form-control">
+				<option value="1">@cc.Activation_Code</option>
+				<option value="2">@cc.Activation_Code</option>
+                </select>
+            </div>
+        </div>*@
+
+			<div class="row">
+				<div class="col">
+					<div class="card text-center mb-3" style="width: 14rem;">
+				<img src="@cc.ProductImage" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">@cc.Name</h5>
+							<p class="card-text">@cc.Description</p>
+							<a href="#" class="btn btn-primary">Download</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8 d-flex flex-column align-items-between justify-content-center m-11">
+					<div class="mb-2">Purchased on: @cc.PurchaseOn</div>
+					<div>Quantity: @cc.Qty</div>
+					<div class="form-group col-md-4 d-flex flex-row align-items-start justify-content-between">
+						<label for="activation-code-@cc.Activation_Code">Activation Code</label>
+						<select id="activation-code-@cc.Activation_Code" name="activation-code" class="form-control">
+							<option select value="@cc.Activation_Code">@cc.Activation_Code</option>
+							<option value ="1">@cc.Activation_Code</option>
+							<option value="2">@cc.Activation_Code</option>
+							
+							<!-- Add additional options here if needed -->
+						</select>
+					</div>
+				</div>
+			</div>
+	
 
 }
