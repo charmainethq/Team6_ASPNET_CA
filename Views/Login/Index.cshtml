@@ -1,56 +1,51 @@
 ﻿@{
     ViewData["Title"] = "Login";
-    var wrongPassFlag = ViewBag.wrongPassword;
-    var wrongCredFlag = ViewBag.wrongCred;
+    string error = (string)ViewData["error"];
 
-    var fullname = TempData["fullName"];
-    var sessionId = TempData["sessionId"];
+
 }
+<head>
+    <link rel="stylesheet" href="~/css/login.css" />
+    <script>
 
-<h2>Login</h2>
+    </script>
+</head>
 
-<form action="Login" method="post">
+<body>
+    <h2>Login</h2>   
+    <br/>
 
-    <div class="form-group row">
+    <form>
+    <div class="container" align="center">
+        <div class="col-md-6" align="left">
+            <div class="form-group" align="left">
+                <label for="username">Username</label><br/>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+            </div>
 
-        <div class="col-sm-2">
-            <label for="username">Username</label>
-        </div>
+            <br />
 
-        <div class="col-sm-6">
-            <input name="username" class="form-control" id="username" placeholder="Username" />
-        </div>
+            <div class="form-group" align="left">
+                 <label for="password">Password</label><br/>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                </small>
+            </div>
 
-    </div>
+            <br/>
 
-    <div class="form-group row">
+                <button type="submit" class="button-3" onclick="loginCheck()">Login</button>
 
-        <div class="col-sm-2">
-            <label for="password">Password</label>
-        </div>
-
-
-        <div class="col-sm-6">
-           <input name="password" class="form-control" id="password" placeholder="Password" />
-        </div>
-
-        <div class="col-sm-2">
-            <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
-        </div>
-
-        <div>
-            @if (wrongPassFlag == true)
-            {
-                <p> Wrong password. </p>
-            }
-            @if (wrongCredFlag == true)
-            {
-                <p> Please enter valid credentials. </p>
-            }
         </div>
     </div>
+    </form>
 
-</form>
-@sessionId
+    <br/>
 
+    @if (!String.IsNullOrEmpty(error))
+    {
+        @:
+        <script type="text/javascript">alert('@error')</script>
+    }
+
+</body>
 

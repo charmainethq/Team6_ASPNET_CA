@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
 using Team6.Data;
 using Team6.Models;
 
@@ -70,11 +71,11 @@ namespace Team6.Controllers
 
             Customer userCredentials = CustomerData.GetCustomerByUsername(username);
 
-            if (userCredentials == null)
-                ViewBag.wrongCred = true;
+			if (userCredentials == null)
+                ViewData["error"] = "Username is incorrect";
 
             else if (password != userCredentials.Password)
-                ViewBag.wrongPassword = true;
+				ViewData["error"] = "Wrong password";
 
             else if (password == userCredentials.Password)
                 authenticateFlag = true;
