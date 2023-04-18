@@ -48,12 +48,13 @@ namespace Team6.Controllers
                 {
                     cartItem = new OrderItem
                     {
+
                         ProductID = product.ProductId,
                         ProductName = product.Name,
                         ProductImage = product.ProductImage,
                         Quantity = quantity,
                         ProductDescription = product.Description,
-                        Price = product.UnitPrice,
+                        UnitPrice = product.UnitPrice,
                     };
                     cart.Add(cartItem);
                 }
@@ -87,21 +88,46 @@ namespace Team6.Controllers
         //TODO: Checkout Cart. Create Order with OrderItems 
         //same as my purchases?
 
-        public IActionResult Checkout(int customerId)
+        public IActionResult Checkout()
         {
-            // Get current customer ID
-            
-            // Create new order
+            int? customerId = HttpContext.Session.GetInt32("customerId");
 
-            // Add cart items as order items to the new order
-            
+            if (!customerId.HasValue)
+            {
+                RedirectToAction("Index", "Login");
+            }
 
-            // Get all orders for current customer
-            List<Order> pastOrders = CartData.GetOrdersByCustomer(customerId);
+            else
+            {
+                var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+                foreach (OrderItem cartItem in cart)
+                {
+                    int guid1 = Convert.ToInt32(Guid.NewGuid().ToString().Replace("-", ""));
 
-            // Display past orders to user
-            return View(pastOrders);
-            
+                    cartItem.OrderID = guid1;
+                    cartItem.OrderItemId = Convert.ToInt32(Guid.NewGuid().ToString().Replace("-", ""));
+
+                    //insert into Orders table
+                    CartData.CreateOrder(cartItem, customerId, DateTime.Now);
+                    //insert into OrderItem table
+                    CartData.CreateOrderItem(cartItem);
+                    //insert into ActivationCode table
+
+                }
+
+                // Create new order
+
+                // Add cart items as order items to the new order
+
+
+                // Get all orders for current customer
+                //List<Order> pastOrders = CartData.GetOrdersByCustomer(customerId);
+
+                // Display past orders to user
+                return View("Index");
+            }
+
+            return View("Index");
         }
     }
 }

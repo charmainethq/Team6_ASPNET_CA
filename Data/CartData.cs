@@ -96,20 +96,41 @@ namespace Team6.Data
             return orderItems;
         }
 
-        public void CreateOrderItem(OrderItem orderItem) //Inserts a new order item into the OrderItems table based on the provided OrderItem object.
+        public static void CreateOrderItem(OrderItem orderItem) //Inserts a new order item into the OrderItems table based on the provided OrderItem object.
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
-                string sql = "INSERT INTO OrderItems (OrderId, ProductId, Quantity, Price, ActivationCodes) " +
-                               "VALUES (@orderId, @productId, @quantity, @price, @activationCodes)";
+                string sql = @"
+                       INSERT INTO OrderItems (OrderItemId, OrderId, ProductId, Quantity)
+                       VALUES(@OrderItemId, , @ProductId, @Quantity)";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@orderId", orderItem.OrderID);
-                    cmd.Parameters.AddWithValue("@productId", orderItem.ProductID);
-                    cmd.Parameters.AddWithValue("@quantity", orderItem.Quantity);
-                    cmd.Parameters.AddWithValue("@price", orderItem.Price);
-                    cmd.Parameters.AddWithValue("@activationCodes", orderItem.ActivationCodes);
+                    cmd.Parameters.AddWithValue("@OrderItemId", orderItem.OrderItemId);
+                    cmd.Parameters.AddWithValue("@ProductId", orderItem.ProductID);
+                    cmd.Parameters.AddWithValue("@Quantity", orderItem.Quantity);
+                    cmd.Parameters.AddWithValue("@OrderId", orderItem.OrderID);
+
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void CreateOrder(OrderItem orderItem, int? customerId, DateTime time) //Inserts a new order  into the Orders table based on the provided OrderItem object.
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
+            {
+                string sql = @"
+                       INSERT INTO OrderItems (OrderId, CustomerId, OrderDate)
+                       VALUES(@OrderItemId, @ProductId, @OrderDate)";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@OrderId", orderItem.OrderID);
+                    cmd.Parameters.AddWithValue("@ProductId", customerId);
+                    cmd.Parameters.AddWithValue("@OrderDate", time);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
