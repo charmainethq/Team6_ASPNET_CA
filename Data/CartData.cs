@@ -84,7 +84,7 @@ namespace Team6.Data
                             OrderID = Convert.ToInt32(reader["OrderId"]),
                             ProductID = Convert.ToInt32(reader["ProductId"]),
                             Quantity = Convert.ToInt32(reader["Quantity"]),
-                            Price = (float)(double)(reader["UnitPrice"]),
+                            UnitPrice = (float)(double)(reader["UnitPrice"]),
                             ActivationCodes = (List<ActivationCode>)(reader["ActivationCodes"]),
                         };
 
@@ -170,7 +170,7 @@ namespace Team6.Data
                                 OrderItemId = Convert.ToInt32(reader["OrderItemId"]),
                                 ProductID = Convert.ToInt32(reader["ProductId"]),
                                 Quantity = Convert.ToInt32(reader["Quantity"]),
-                                Price = (float)(double)(reader["UnitPrice"])
+                                UnitPrice = (float)(double)(reader["UnitPrice"])
                             };
 
                             order.OrderItems.Add(orderItem);
