@@ -5,6 +5,7 @@ using Team6.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore.Storage;
+using Castle.Core.Resource;
 
 namespace Team6.Data
 {
@@ -102,7 +103,7 @@ namespace Team6.Data
             {
                 string sql = @"
                        INSERT INTO OrderItems (OrderItemId, OrderId, ProductId, Quantity)
-                       VALUES(@OrderItemId, , @ProductId, @Quantity)";
+                       VALUES(@OrderItemId, @OrderId, @ProductId, @Quantity)";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -123,8 +124,8 @@ namespace Team6.Data
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
                 string sql = @"
-                       INSERT INTO OrderItems (OrderId, CustomerId, OrderDate)
-                       VALUES(@OrderItemId, @ProductId, @OrderDate)";
+                       INSERT INTO Orders (OrderId, CustomerId, OrderDate)
+                       VALUES(@OrderId, @ProductId, @OrderDate)";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -137,18 +138,20 @@ namespace Team6.Data
                 }
             }
         }
-        public void UpdateProductActivationCodes(int productId, int orderId, string activationCodes) //Updates the activation codes for a product in the ActivationCode table based on the provided productId and orderId.
+        public static void AddActivationCode(int orderItemId, string activationCode) //Updates the activation codes for a product in the ActivationCode table based on the provided productId and orderId.
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
-                conn.Open();
+                string sql = @"
+                       INSERT INTO ActivationCodes (OrderItemID, ActivationCode)
+                       VALUES(@OrderItemID, @ActivationCode)";
 
-                using (var cmd = new SqlCommand("UPDATE ActivationCode SET Code = @activationCodes WHERE ProductID = @productId AND OrderID = @orderId", conn))
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@activationCodes", activationCodes);
-                    cmd.Parameters.AddWithValue("@productId", productId);
-                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@OrderItemID", orderItemId);
+                    cmd.Parameters.AddWithValue("@ActivationCode", activationCode);
 
+                    conn.Open();
                     cmd.ExecuteNonQuery();
                 }
             }

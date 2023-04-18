@@ -54,7 +54,7 @@ namespace Team6.Controllers
                         ProductImage = product.ProductImage,
                         Quantity = quantity,
                         ProductDescription = product.Description,
-                        UnitPrice = product.UnitPrice,
+                        Price = product.UnitPrice,
                     };
                     cart.Add(cartItem);
                 }
@@ -100,34 +100,47 @@ namespace Team6.Controllers
             else
             {
                 var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+
+                //dictionary of OrderItemId :  Quantity
+                Dictionary<int, int> qtyPerOid = new Dictionary<int, int>();
+                
                 foreach (OrderItem cartItem in cart)
                 {
-                    int guid1 = Convert.ToInt32(Guid.NewGuid().ToString().Replace("-", ""));
-
-                    cartItem.OrderID = guid1;
-                    cartItem.OrderItemId = Convert.ToInt32(Guid.NewGuid().ToString().Replace("-", ""));
+                    cartItem.OrderID = NewId();
+                    cartItem.OrderItemId = NewId();
 
                     //insert into Orders table
                     CartData.CreateOrder(cartItem, customerId, DateTime.Now);
+
                     //insert into OrderItem table
                     CartData.CreateOrderItem(cartItem);
-                    //insert into ActivationCode table
+
+                    qtyPerOid.Add(cartItem.OrderItemId, cartItem.Quantity);
 
                 }
 
-                // Create new order
+                foreach(KeyValuePair<int,int> OidQtyPair in qtyPerOid)
+                {
+                    for (int i = 0; i < OidQtyPair.Value; i++)
+                    {
+                        CartData.AddActivationCode(OidQtyPair.Key, Guid.NewGuid().ToString());
+                    }
+                }
 
-                // Add cart items as order items to the new order
-
-
-                // Get all orders for current customer
-                //List<Order> pastOrders = CartData.GetOrdersByCustomer(customerId);
 
                 // Display past orders to user
-                return View("Index");
+                return View("Index","Login");
             }
 
-            return View("Index");
+            return View("Index", "Login");
+        }
+
+        public int NewId()
+        {
+            string guidString = Guid.NewGuid().ToString().Replace("-", "");
+            int guidNumber = int.Parse(guidString.Substring(0, 8), System.Globalization.NumberStyles.HexNumber);
+
+            return guidNumber;
         }
     }
 }
