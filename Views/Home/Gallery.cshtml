@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var products = ViewBag.products;
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" initial-scale=1.0>
+    <link rel="stylesheet" href="/css/galleryStyle.css">
+</head>
+
+<body>
+    <div class="container">
+        <form>
+            <input type="text" id="search-box" name="searchStr" onkeyup="search()" placeholder="Enter your search here...">
+        </form>
+
+        <div class="image-container" id="container">
+            @foreach (Product product in products)
+            {
+                <div class="image" data-title="@product.Name @product.Description">
+                    <img src="@product.ProductImage" alt="@product.Name">
+                    <h3>@product.Name</h3>
+                    <p style="text-align:left">@product.Description</p>
+                    <button class="button">$@product.Price - Add To Cart</button>
+                </div>
+            }
+        </div>
+    </div>
+
+    @*js dynamic search*@
+    <script>
+        function search() {
+            var input = document.getElementById("search-box");
+            var filter = input.value.toUpperCase();
+            var images = document.getElementsByClassName("image");
+            for (var i = 0; i < images.length; i++) {
+                var title = images[i].getAttribute("data-title");
+                if (title.toUpperCase().indexOf(filter) > -1) {
+                    images[i].style.display = "";
+                } else {
+                    images[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+</body>
