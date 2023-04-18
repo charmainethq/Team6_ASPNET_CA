@@ -94,7 +94,7 @@ namespace Team6.Controllers
 
             if (!customerId.HasValue)
             {
-                RedirectToAction("Index", "Login");
+                return RedirectToAction("Index", "Login");
             }
 
             else
@@ -129,10 +129,8 @@ namespace Team6.Controllers
 
 
                 // Display past orders to user
-                return View("Index","Login");
+                return RedirectToAction("Index", "OrderHistory");
             }
-
-            return View("Index", "Login");
         }
 
         public int NewId()
