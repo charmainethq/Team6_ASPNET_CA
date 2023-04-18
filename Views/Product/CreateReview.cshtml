@@ -8,49 +8,36 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="post">
-            <h3 class="title">Submit Review</h3>
+    <form>
+        <h2>Dear "insert name here"</h2> <br />
+        <h3 class="title">We appreciate your review</h3> <br />
+        <h5>Your review will help us to improve our products</h5> <br />
+        <label> How is the product: </label> <br /> <br />
+
+        @*star selector*@
+        <div class="ratingStars">
+            <header> Rating: (Required) </header>
+            <input type="radio" id="star5" name="ratingStars" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="ratingStars" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="ratingStars" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="ratingStars" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="ratingStars" value="1" />
+            <label for="star1" title="text">1 star</label>
+        </div> <br /> <br /> <br />
+
+        @*text box to enter description*@
+        <div class="reviewDescription">
+            <header>Enter your review: </header>
+            <input type="text" name="reviewDescription" id="reviewDescription" required> <br>
+        </div> <br>
+
+        @*submit button*@
+        <div class="submitReviewButton">
+            <input type="submit" name="submitReviewButton" style="padding:5px">
         </div>
-        <div class="CreateReview">
-            
-            <label> How is the product: </label>
-            <form>
-                <div style="width:50%">
-                    <p style="font-size:14px"></p>
-
-                    @*star selector*@
-                    <div class="ratingStars">
-                        Rating: (Required) <br />
-                        <input type="radio" id="star5" name="ratingStars" value="5" />
-                        <label for="star5" title="text">5 stars</label>
-                        <input type="radio" id="star4" name="ratingStars" value="4" />
-                        <label for="star4" title="text">4 stars</label>
-                        <input type="radio" id="star3" name="ratingStars" value="3" />
-                        <label for="star3" title="text">3 stars</label>
-                        <input type="radio" id="star2" name="ratingStars" value="2" />
-                        <label for="star2" title="text">2 stars</label>
-                        <input type="radio" id="star1" name="ratingStars" value="1" />
-                        <label for="star1" title="text">1 star</label>
-                    </div>
-
-                    <br />
-                    <br />
-                    <br />
-
-                    @*text box to enter description*@
-                    <div class="reviewDescription">
-                        Enter your review: (Required) <br />
-                        <input type="text" name="reviewDescription" id="reviewDescription" required> <br>
-                    </div>
-                    @*submit button*@
-                    <br>
-                    <div class="submitReviewButton">
-                        <input type="submit" name="submitReviewButton" style="padding:5px">
-                    </div>
-
-                </div>
-            </form>
-        </div>
-    </div>
+    </form>
 </body>

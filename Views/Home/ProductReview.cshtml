@@ -8,32 +8,41 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--custom css file linlk-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/reviewstyle.css">
+    @*html stylesheet for the displaying of stars*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 
 <body>
     <div class="container">
-        <div class="post">
-            <h3 class="title">Products Review</h3>
-        </div>
+        <h3 class="title">Product Reviews</h3>
         <br />
-        <div class="ProductAverageRating">
-@*            @for (int i = 0; i < averageRating; i++)
+
+        @*need to insert image here*@
+
+        <p>Average rating of @averageRating, based on @ratingCounts reviews.</p>
+
+        @*html syntax to display average rating in stars (for tanya home page)*@
+        <div class="stars">
+            @for (int i = 0; i < (int)averageRating; i++)
             {
-                <span class="ratingStars > input:checked"></span>
-            }*@
-            Rating: @averageRating <br />
-        </div>
-        <br />
+                <i class="fa fa-star checked" style="font-size:30px;color:gold;"></i>
+            }
+            @for (int i = (int)averageRating; i < 5; i++)
+            {
+                <i class="fa fa-star checked" style="font-size:30px;color:lightgrey;"></i>
+            }
+            
+        </div> <br /> <br /> <br /> <br />
+
+        @*html syntax to display average rating in stars (for tanya home page)*@
         <div class="ProductRatingCount">
             Counts: @ratingCounts <br />
-        </div>
-        <br />
+        </div> <br />
+
+        @*display a summary page of the details*@
+        <hr style="border:1.5px solid #888888">
+
         <div class="RatingDetails">
             Review Details:
             <table>
@@ -53,5 +62,4 @@
             </table>
         </div>
     </div>
-
 </body>
