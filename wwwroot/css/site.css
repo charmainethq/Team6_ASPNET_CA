@@ -79,3 +79,6 @@ tr, td {
 .myUL li a:hover:not(.header) {
     background-color: #eee;
 }
+.center_button{
+    text-align:center
+}
