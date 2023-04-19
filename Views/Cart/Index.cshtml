@@ -62,7 +62,8 @@ else
                 <td>
                     <input type="number" class="quantity" value="@item.Quantity" min="0" step="1"
                            onchange="updateTotalPrice(this, @item.UnitPrice)"
-                           onkeyup="updateTotalPrice(this, @item.UnitPrice)">
+                           onkeyup="updateTotalPrice(this, @item.UnitPrice)"
+                           data-product-id="@item.ProductID.ToString()">
                 </td>
 
                 <td>Total Price:</td>
@@ -80,22 +81,62 @@ else
     }
 
 }
-
 <script>
+    // Get the saved item quantities, prices and total prices from localStorage
+    var savedQuantities = JSON.parse(localStorage.getItem("savedQuantities")) || {};
+    var savedPrices = JSON.parse(localStorage.getItem("savedPrices")) || {};
+    var savedTotalPrices = JSON.parse(localStorage.getItem("savedTotalPrices")) || {};
+
     function updateTotalPrice(input, price) {
         var quantity = parseInt(input.value);
         var totalPrice = quantity * price;
         var row = input.closest("tr");
         row.querySelector(".total-price").textContent = "$" + totalPrice.toFixed(2);
-        updateCartTotal();
+
+        // Save the updated quantity, price and total price to localStorage
+        var productId = input.getAttribute("data-product-id");
+        savedQuantities[productId] = quantity;
+        savedPrices[productId] = price;
+        savedTotalPrices[productId] = totalPrice;
+        localStorage.setItem("savedQuantities", JSON.stringify(savedQuantities));
+        localStorage.setItem("savedPrices", JSON.stringify(savedPrices));
+        localStorage.setItem("savedTotalPrices", JSON.stringify(savedTotalPrices));
+
+        updateCartTotal(); // Recalculate cart total immediately after updating item total price
     }
+
+
+    // Initialize the quantities and total prices when the page loads
+    window.onload = function () {
+        var quantityInputs = document.querySelectorAll(".quantity");
+        for (var i = 0; i < quantityInputs.length; i++) {
+            var input = quantityInputs[i];
+            var productId = input.getAttribute("data-product-id");
+            var savedQuantity = savedQuantities[productId];
+            var savedPrice = savedPrices[productId];
+            var savedTotalPrice = savedTotalPrices[productId];
+            if (savedQuantity != null) {
+                input.value = savedQuantity;
+                input.setAttribute("data-unit-price", savedPrice);
+                updateTotalPrice(input, savedPrice);
+            }
+        }
+        updateCartTotal();
+    };
 
     function updateCartTotal() {
         var cartTotal = 0;
         var totalPrices = document.querySelectorAll(".total-price");
         for (var i = 0; i < totalPrices.length; i++) {
-            cartTotal += parseFloat(totalPrices[i].textContent.replace("$", ""));
+            var productId = totalPrices[i].closest("tr").querySelector(".quantity").getAttribute("data-product-id");
+            var savedTotalPrice = savedTotalPrices[productId];
+            if (savedTotalPrice !== undefined) {
+                cartTotal += parseFloat(savedTotalPrice);
+            }
         }
         document.querySelector("#cart-total").textContent = "$" + cartTotal.toFixed(2);
     }
 </script>
+
+
+
