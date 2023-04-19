@@ -1,8 +1,8 @@
-﻿html {
+html {
   font-size: 14px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1500px) {
   html {
     font-size: 16px;
   }
@@ -17,16 +17,38 @@ body {
   margin-bottom: 60px;
 }
 
-tr, td {
-  border: 1px solid #efefef;
+table {
+    margin: 0 auto;
+    border: 2px solid grey;
+    border-collapse: collapse;
+
 }
 
+th{
+    background-color: aliceblue;
+}
+
+tr, td {
+  border: 1px solid #efefef;
+  text-align: center;
+}
+
+=======
 .cell {
   width: 100px;
   height: 100px;
   cursor: pointer;
 }
 
+.quantity {
+    width: 50px;
+    height: 25px;
+    text-align: center;
+}
+
+.total-price {
+    font-weight: bold;
+}
 .myInput {
     background-image: url('/css/searchicon.png');
     background-position: 10px 12px;
@@ -58,6 +80,8 @@ tr, td {
 .myUL li a:hover:not(.header) {
     background-color: #eee;
 }
+
 .center_button{
     text-align:center
 }
+

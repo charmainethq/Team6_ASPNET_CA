@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Team6.Controllers
 {
@@ -25,8 +28,9 @@ namespace Team6.Controllers
         public IActionResult Details(int productId, int quantity)
         {
             Product product = CartData.GetProductById(productId);
+            Debug.WriteLine("Product Image: " + product.ProductImage);
 
-            if(productId == null)
+            if (productId == null)
             {
                 return View();
             }
@@ -47,9 +51,10 @@ namespace Team6.Controllers
                     {
                         ProductID = product.ProductId,
                         ProductName = product.Name,
+                        ProductImage = product.ProductImage,
                         Quantity = quantity,
                         ProductDescription = product.Description,
-                        Price = product.Price,
+                        Price = product.UnitPrice,
                     };
                     cart.Add(cartItem);
                 }
@@ -80,23 +85,24 @@ namespace Team6.Controllers
         }
 
 
-        //TODO: Checkout Cart. Create Order with OrderItems
+        //TODO: Checkout Cart. Create Order with OrderItems 
+        //same as my purchases?
 
-        public IActionResult Checkout()
+        public IActionResult Checkout(int customerId)
         {
-            return View();
+            // Get current customer ID
+            
+            // Create new order
+
+            // Add cart items as order items to the new order
+            
+
+            // Get all orders for current customer
+            List<Order> pastOrders = CartData.GetOrdersByCustomer(customerId);
+
+            // Display past orders to user
+            return View(pastOrders);
+            
         }
-
-
-
-
-
-
-
-        //TODO: Calculator function for product total (2x Office 365 is $500)
-
-        //TODO: Calculator function for cart total
-
-
     }
 }

@@ -15,7 +15,7 @@ namespace Team6.Models
         public string ProductDescription { get; set; }
         public string ProductName { get; set; }
         public List<ActivationCode> ActivationCodes { get; set; }
-
+        public string ProductImage { get; set; }
         public OrderItem() 
         {
             // ActivationCodes = new List<ActivationCode>();
