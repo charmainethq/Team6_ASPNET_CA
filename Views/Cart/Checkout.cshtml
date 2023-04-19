@@ -1,5 +1,62 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model List<Order>
+
+<h1>My Purchases</h1>
+
+@if (Model.Count == 0)
+{
+    <p>No past purchases found.</p>
 }
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Activation Codes</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderID</td>
+                    <td>@order.OrderDate.ToShortDateString()</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                @foreach (var orderItem in order.OrderItems)
+                {
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>@orderItem.ProductName</td>
+                        <td>@orderItem.ProductDescription</td>
+                        <td>@orderItem.Quantity</td>
+                        <td>@orderItem.Price</td>
+                        <td>
+                            @foreach (var code in orderItem.ActivationCodes)
+                            {
+                                @code.Code
+
+                                <br />
+                            }
+                        </td>
+                        <td>@(orderItem.Quantity * orderItem.Price)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+

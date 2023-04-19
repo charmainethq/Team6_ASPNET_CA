@@ -28,7 +28,7 @@ namespace Team6.Data
                         Name = (string)reader["Name"],
                         Description = (string)reader["Description"],
                         UnitPrice = (float)(double)reader["UnitPrice"],
-
+                        ProductImage = (string)reader["ProductImage"],
                     };
                     products.Add(product);
                     
