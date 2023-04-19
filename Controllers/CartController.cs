@@ -1,4 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Team6.Data;
+using Team6.Models;
+using Team6.Extension;
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Team6.Controllers
 {
@@ -7,22 +18,91 @@ namespace Team6.Controllers
         //TODO: View all items in cart
         public IActionResult Index()
         {
-           
-            return View();
+            var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+
+            return View(cart);
         }
 
+
         //TODO: Add to cart - linked to button input from gallery
+        public IActionResult Details(int productId, int quantity)
+        {
+            Product product = CartData.GetProductById(productId);
+            Debug.WriteLine("Product Image: " + product.ProductImage);
+
+            if (productId == null)
+            {
+                return View();
+            }
+            else
+            {
+                //Get current cart
+                var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+                if (cart == null)
+                {
+                    cart = new List<OrderItem>();
+                }
+
+                //check if item already in cart
+                var cartItem = cart.FirstOrDefault(ci => ci.ProductID == productId);
+                if (cartItem == null)
+                {
+                    cartItem = new OrderItem
+                    {
+                        ProductID = product.ProductId,
+                        ProductName = product.Name,
+                        ProductImage = product.ProductImage,
+                        Quantity = quantity,
+                        ProductDescription = product.Description,
+                        Price = product.UnitPrice,
+                    };
+                    cart.Add(cartItem);
+                }
+                else
+                {
+                    cartItem.Quantity += quantity;
+                }
+                HttpContext.Session.SetObjectAsJson("cart", cart);
+            }
+            return RedirectToAction("Index","Cart");
+        }
+
 
         //TODO: Remove from cart - linked to buttons from cart view
+        public IActionResult RemoveFromCart(int productId)
+        {
+            var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+            if (cart != null)
+            {
+                var itemToRemove = cart.FirstOrDefault(item => item.ProductID == productId);
+                if (itemToRemove != null)
+                {
+                    cart.Remove(itemToRemove);
+                }
+                HttpContext.Session.SetObjectAsJson("cart", cart);
+            }
+            return RedirectToAction("Index");
+        }
 
 
-        //TODO: Checkout Cart. Create Order with OrderItems
+        //TODO: Checkout Cart. Create Order with OrderItems 
+        //same as my purchases?
 
-        //TODO: Calculator function for product total (2x Office 365 is $500)
+        public IActionResult Checkout(int customerId)
+        {
+            // Get current customer ID
+            
+            // Create new order
 
-        //TODO: Calculator function for cart total
+            // Add cart items as order items to the new order
+            
 
+            // Get all orders for current customer
+            List<Order> pastOrders = CartData.GetOrdersByCustomer(customerId);
 
-
+            // Display past orders to user
+            return View(pastOrders);
+            
+        }
     }
 }

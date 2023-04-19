@@ -1,0 +1,119 @@
+﻿*{
+
+}
+
+body {
+    background-color: #eee;
+}
+
+.container {
+    padding: 20px;
+    text-align: center;
+}
+
+    .container .heading {
+        font-size: 30px;
+        padding-bottom: 25px;
+    }
+
+    .container #search-box {
+        background-image: url('/images/SearchIcon.png'); /*no suitable image yet*/
+        background-position: 10px 12px;
+        background-repeat: no-repeat; /* Do not repeat the icon image */
+        width: 600px;
+        font-size: 16px;
+        padding: 12px 15px;
+        border: 1.5px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 12px; /* Add some space below the input */
+    }
+
+    .container .image-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 25px;
+        padding-top: 30px;
+    }
+
+        .container .image-container .image {
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            border: 1px solid #ddd;
+            width: 280px;
+            border-radius: 5px;
+            animation: fadeIn .2s linear;
+        }
+            .container .image-container .image:not(:hover) {
+                opacity: 0.8;
+            }
+            .container .image-container .image:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                opacity: 1;
+            }
+
+@keyframes fadeIn {
+    0% {
+        transform: scale(.5) translateY(-10px);
+        opacity: 0;
+    }
+}
+
+.container .image-container .image img {
+    height: 150px !important;
+    width: auto;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+
+.container .image-container .image h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.container .image-container .image button {
+    background-color: #eee;
+    border: 1px solid #f8f9fa;
+    border-radius: 4px;
+    color: #3c4043;
+    cursor: pointer;
+    font-family: arial,sans-serif;
+    font-size: 14px;
+    height: 36px;
+    line-height: 27px;
+    min-width: 54px;
+    padding: 0 16px;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: pre;
+    opacity: 1;
+}
+
+    .container .image-container .image button:hover {
+        border-color: #dadce0;
+        box-shadow: rgba(0, 0, 0, .1) 0 1px 1px;
+        color: #202124;
+    }
+
+@media (max-width:768px) {
+    .container #search-box {
+        width: 100%;
+    }
+}
+
+@media (max-width:450px) {
+
+    .container {
+        padding: 25px 20px;
+    }
+
+        .container .image-container .image {
+            width: 100%;
+        }
+}

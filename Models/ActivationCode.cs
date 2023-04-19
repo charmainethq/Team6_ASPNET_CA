@@ -11,9 +11,16 @@ namespace Team6.Models
 
 
         public Guid Code { get; set; }
-        public string ProductID { get; set; }
+        public int ProductID { get; set; }
 
-        public string OrderID{ get; set; }
+        public int OrderID{ get; set; }
+        public string ProductActivationCode { get; set; }
+        public ActivationCode(int pID,int oID)
+        {
+            ProductID= pID;
+            OrderID= oID;
+            ProductActivationCode=Guid.NewGuid().ToString();
+        }
 
     }
 }

@@ -1,0 +1,67 @@
+﻿@model List<OrderItem>
+
+<script>
+    function updateTotalPrice(input, price) {
+        var quantity = parseInt(input.value);
+        var totalPrice = quantity * price;
+        var row = input.closest("tr");
+        row.querySelector(".total-price").textContent = totalPrice.toFixed(2);
+        updateCartTotal();
+    }
+
+    function updateCartTotal() {
+        var cartTotal = 0;
+        var totalPrices = document.querySelectorAll(".total-price");
+        for (var i = 0; i < totalPrices.length; i++) {
+            cartTotal += parseFloat(totalPrices[i].textContent);
+        }
+        document.querySelector("#cart-total").textContent = cartTotal.toFixed(2);
+    }
+</script>
+
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+@if (Model == null)
+{
+    <p>No item in the cart.</p>
+}
+else
+{
+    <table align="right">
+        <tr>
+            <td>Total:</td>
+            <td id="cart-total">@Model.Sum(item => item.Price * item.Quantity).ToString("F2")</td>
+        </tr>
+    </table>
+    <br>
+
+    <table>
+        <thead style="text-align:center">
+            <tr>
+                <th>Product Name</th>
+                <th>Product Image</th>
+                <th>Product Description</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td><img src="@item.ProductImage" alt="@item.ProductName" height="60" width="60" /></td>
+                    <td>@item.ProductDescription</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <input type="number" class="quantity" value="@item.Quantity" min="0" step="1"
+                       onchange="updateTotalPrice(this, @item.Price)"
+                       onkeyup="updateTotalPrice(this, @item.Price)">
+                    </td>
+                    <td class="total-price">@((item.Price * item.Quantity).ToString("F2"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

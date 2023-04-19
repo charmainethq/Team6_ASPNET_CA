@@ -19,10 +19,21 @@ public class HomeController : Controller
 
     public IActionResult Index(string? searchStr)
     {
-
         // return gallery of products, including search https://www.w3schools.com/howto/howto_js_filter_lists.asp
-        if (String.IsNullOrWhiteSpace(searchStr)) { }
-        else { }
+        List<Product> products = ProductData.GetAllProducts();
+        if (String.IsNullOrWhiteSpace(searchStr))
+            ViewBag.products = products;
+        else
+        {
+            List<Product> filterProducts = new List<Product>();
+            foreach (Product product in products)
+            {
+                if (product.Name.ToLower().Contains(searchStr.ToLower()) 
+                    || product.Description.ToLower().Contains(searchStr.ToLower()))
+                    filterProducts.Add(product);
+            }
+            ViewBag.products = filterProducts;
+        }
         //clicking on a product bring to Product page?
 
         return View();
