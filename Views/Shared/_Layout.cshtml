@@ -27,7 +27,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid topnavbar">
-                <a class="navbar-brand" asp-area="" asp-controller="Gallery" asp-action="Index">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <b>.NET Software Shop</b>
                 </a>
 
@@ -65,4 +65,10 @@
 
 </body>
 </html>
+
+<script>
+    function updateCartCount(count) {
+  document.getElementById("cart-count").value = count;
+}
+</script>
 
