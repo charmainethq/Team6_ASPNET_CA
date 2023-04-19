@@ -58,10 +58,11 @@ namespace Team6.Data
                     {
 
 
-                        ProductID=(int)reader["ProductID"],
+                        ProductId=(int)reader["ProductID"],
                         Name = (string)reader["Name"],
                         Description = (string)reader["Description"],
-                        UnitPrice = (double)reader["UnitPrice"],
+                        UnitPrice = (float)(double)reader["UnitPrice"],
+                        ProductImage = (string)reader["ProductImage"],
                         
             
                     };

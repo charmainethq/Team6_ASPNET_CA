@@ -13,39 +13,141 @@
 <head>
     <style>
         table, th, td {
-            border: 1px solid black;
+            padding-top: 100px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid white;
             border-collapse: collapse;
         }
+        body {
+            text-align: center;
+        }
+
+        .button-17 {
+            align-items: center;
+            appearance: none;
+            background-color: #fff;
+            border-radius: 24px;
+            border-style: none;
+            box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+            box-sizing: border-box;
+            color: #3c4043;
+            cursor: pointer;
+            display: inline-flex;
+            fill: currentcolor;
+            font-family: "Google Sans",Roboto,Arial,sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            height: 48px;
+            justify-content: center;
+            letter-spacing: .25px;
+            line-height: normal;
+            max-width: 100%;
+            overflow: visible;
+            padding: 2px 24px;
+            position: relative;
+            text-align: center;
+            text-transform: none;
+            transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            width: auto;
+            will-change: transform,opacity;
+            z-index: 0;
+        }
+
+        .button-17:hover {
+            background: #F6F9FE;
+            color: #174ea6;
+        }
+
+        .button-17:active {
+            box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+            outline: none;
+        }
+
+        .button-17:focus {
+            outline: none;
+            border: 2px solid #4285f4;
+        }
+
+        .button-17:not(:disabled) {
+            box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+        }
+
+            .button-17:not(:disabled):hover {
+                box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+            }
+
+            .button-17:not(:disabled):focus {
+                box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+            }
+
+            .button-17:not(:disabled):active {
+                box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+            }
+
+        .button-17:disabled {
+            box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+        } 
+
+        .product-card {
+           
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .product-image {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .product-description {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
+     
+
+        
     </style>
 </head>
-<body>
+<center><body>
 
-    <h2>Cell that spans two rows</h2>
-    <p>To make a cell span more than one row, use the rowspan attribute.</p>
-
-    <table style="width:100%">
-        <tr>
-            <th>ProductPicture</th>
-            <td><img src="/images/SearchIcon.png"/></td>
-        </tr>
-        
-        <tr>
-            <th>ProductName</th>
-            <td>@product.Name</td>
-        </tr
-        
-        <tr>
-            <th>ProductDescription</th>
-            <td>@product.Description</td>
-        </tr>
-
-        <tr>
-            <th>ProductPrice</th>
-            <td>@product.UnitPrice</td>
-        </tr>
-        
-        
-    </table>
+    <div class="product-card" style= "padding-top: 100px" >
+        <img src="@product.ProductImage" alt="@product.Name" class="product-image">
+        <div class="product-info" style="padding-left : 80px">
+            <h3 class="product-name">@product.Name</h3>
+            <p class="product-description">@product.Description</p>
+            <p class="product-price">$@product.UnitPrice</p>
+            </br>
+            <button class="button-17" role="button">Add To Cart</button>
+        </div>
+    </div>
+     
 </body>
+</center>
 </html>
 
