@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    string error = (string)ViewData["error"];
+
+
+}
+<head>
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
+
+<body>
+    <h2>Login</h2>   
+    <br/>
+
+    <form>
+    <div class="container" align="center">
+        <div class="col-md-6" align="left">
+            <div class="form-group" align="left">
+                <label for="username">Username</label><br/>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+            </div>
+
+            <br />
+
+            <div class="form-group" align="left">
+                 <label for="password">Password</label><br/>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                </small>
+            </div>
+
+            <br/>
+
+                <button type="submit" class="button-3" onclick="loginCheck()">Login</button>
+
+        </div>
+    </div>
+    </form>
+
+    <br/>
+
+    @if (!String.IsNullOrEmpty(error))
+    {
+        @:
+        <script type="text/javascript">alert('@error')</script>
+    }
+
+</body>
+

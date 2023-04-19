@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
 using Castle.Core.Resource;
+using System.Linq;
 
 namespace Team6.Controllers
 {
@@ -28,6 +29,8 @@ namespace Team6.Controllers
         public IActionResult Details(int productId, int quantity)
         {
             Product product = CartData.GetProductById(productId);
+            Debug.WriteLine("Product Image: " + product.ProductImage);
+            
             if (productId == null)
             {
                 return View();
@@ -47,6 +50,7 @@ namespace Team6.Controllers
                 {
                     cartItem = new OrderItem
                     {
+
                         ProductID = product.ProductId,
                         ProductName = product.Name,
                         ProductImage = product.ProductImage,
@@ -80,36 +84,62 @@ namespace Team6.Controllers
                     HttpContext.Session.SetObjectAsJson("cart", cart);
                 }
             }
-
             return RedirectToAction("Index", "Cart");
         }
 
-        //TODO: Checkout Cart. Create Order with OrderItems 
-        //same as my purchases?
-        [HttpGet]
-        public IActionResult Checkout(int customerId)
-        {
-            // Check if the customer is logged in
-            int? currentCustomerId = HttpContext.Session.GetInt32("CustomerId");
 
-            if (currentCustomerId == null)
+       public IActionResult Checkout()
+        {
+
+            int? customerId = HttpContext.Session.GetInt32("customerId");
+
+            if (!customerId.HasValue)
             {
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
-            // Create new order
+            else
+            {
+                var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+
+                //dictionary of OrderItemId :  Quantity
+                Dictionary<int, int> qtyPerOid = new Dictionary<int, int>();
+                
+                foreach (OrderItem cartItem in cart)
+                {
+                    cartItem.OrderID = NewId();
+                    cartItem.OrderItemId = NewId();
+
+                    //insert into Orders table
+                    CartData.CreateOrder(cartItem, customerId, DateTime.Now);
+
+                    //insert into OrderItem table
+                    CartData.CreateOrderItem(cartItem);
+
+                    qtyPerOid.Add(cartItem.OrderItemId, cartItem.Quantity);
+
+                }
+
+                foreach(KeyValuePair<int,int> OidQtyPair in qtyPerOid)
+                {
+                    for (int i = 0; i < OidQtyPair.Value; i++)
+                    {
+                        CartData.AddActivationCode(OidQtyPair.Key, Guid.NewGuid().ToString());
+                    }
+                }
 
 
-            // Add cart items as order items to the new order
-
-
-
-            // Get all orders for current customer
-            List<Order> pastOrders = OrderData.GetOrdersByCustomer(customerId);
-
-            // Display past orders to user
-            return View(pastOrders);
+                // Display past orders to user
+                return RedirectToAction("Index", "OrderHistory");
+            }
         }
 
+        public int NewId()
+        {
+            string guidString = Guid.NewGuid().ToString().Replace("-", "");
+            int guidNumber = int.Parse(guidString.Substring(0, 8), System.Globalization.NumberStyles.HexNumber);
+
+            return guidNumber;
+        }
     }
 }
