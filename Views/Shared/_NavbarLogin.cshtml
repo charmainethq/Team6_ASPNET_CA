@@ -4,9 +4,15 @@
 @{
     var fullname = TempData["fullName"];
     var sessionId = TempData["sessionId"];
+    var custId = TempData["customerId"];
+    TempData.Keep();
 }
 
-@if (sessionId != null)
+<li class="nav-item">
+    <a class="nav-link text-dark"> sessionid: @sessionId </a>
+</li>
+
+@if (custId != null)
 {
     <li class="nav-item">
         <a class="nav-link text-dark"> Hi, @fullname! </a>
