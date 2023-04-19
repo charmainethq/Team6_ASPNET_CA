@@ -9,8 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
-using Castle.Core.Resource;
+
 using System.Linq;
+
 
 namespace Team6.Controllers
 {
@@ -30,7 +31,7 @@ namespace Team6.Controllers
         {
             Product product = CartData.GetProductById(productId);
             Debug.WriteLine("Product Image: " + product.ProductImage);
-            
+
             if (productId == null)
             {
                 return View();
@@ -74,21 +75,21 @@ namespace Team6.Controllers
         public IActionResult RemoveFromCart(int productId)
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
-
             if (cart != null)
             {
-                var cartItem = cart.FirstOrDefault(ci => ci.ProductID == productId);
-                if (cartItem != null)
+                var itemToRemove = cart.FirstOrDefault(item => item.ProductID == productId);
+                if (itemToRemove != null)
                 {
-                    cart.Remove(cartItem);
-                    HttpContext.Session.SetObjectAsJson("cart", cart);
+                    cart.Remove(itemToRemove);
                 }
+                HttpContext.Session.SetObjectAsJson("cart", cart);
             }
-            return RedirectToAction("Index", "Cart");
+            return RedirectToAction("Index");
         }
 
 
-       public IActionResult Checkout()
+
+        public IActionResult Checkout()
         {
 
             int? customerId = HttpContext.Session.GetInt32("customerId");

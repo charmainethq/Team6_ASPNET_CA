@@ -72,6 +72,7 @@ namespace Team6.Data
                 }
             }
             return orders;
+        }
 
         public static List<OrderHistory> OrderList(int customerID)
         {
