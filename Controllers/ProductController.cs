@@ -31,9 +31,12 @@ namespace Team6.Controllers
                 //test sample update
                 OrderItemId = 20081;
                 ProductData.submitReview(ratingStars, reviewDescription, OrderItemId);
-                //return View();
+
                 // Redirect back to Order History after review has been submitted
-                return RedirectToAction("Index", "OrderHistory");
+                // return RedirectToAction("Index", "OrderHistory");
+
+                // test redirect to 
+                return RedirectToAction("ProductReview", "Home");
             }
         }
     }
