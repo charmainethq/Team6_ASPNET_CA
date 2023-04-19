@@ -64,7 +64,7 @@ namespace Team6.Controllers
                 }
                 HttpContext.Session.SetObjectAsJson("cart", cart);
             }
-            return RedirectToAction("Index","Cart");
+            return RedirectToAction("Index", "Cart");
         }
 
 

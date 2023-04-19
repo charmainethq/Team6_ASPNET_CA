@@ -22,10 +22,8 @@
                     <img src="@product.ProductImage" alt="@product.Name">
                     <h3>@product.Name</h3>
                     <p style="text-align:left">@product.Description</p>
-                    <form action="/Cart/Index" method="POST">
-                        <input type="hidden" name="productId" value="@product.ProductId" />
-                        <button class="button">$@product.UnitPrice - Add To Cart</button>
-                    </form>
+                    <button class="button">$@product.UnitPrice - Add To Cart</button>
+
                 </div>
             }
         </div>
