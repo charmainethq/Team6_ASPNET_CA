@@ -1,45 +1,38 @@
+this is my site.css
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 1500px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 table {
     margin: 0 auto;
     border: 2px solid grey;
     border-collapse: collapse;
-
 }
 
-th{
+th {
     background-color: aliceblue;
 }
 
 
-
-tr, td {
-  border: 1px solid #efefef;
-  text-align: center;
-}
-
-
 .cell {
-  width: 100px;
-  height: 100px;
-  cursor: pointer;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
 }
 
 .quantity {
@@ -51,6 +44,7 @@ tr, td {
 .total-price {
     font-weight: bold;
 }
+
 .myInput {
     background-image: url('/css/searchicon.png');
     background-position: 10px 12px;
@@ -68,22 +62,17 @@ tr, td {
     margin: 0;
 }
 
-.myUL li a {
-    border: 1px solid #ddd;
-    margin-top: -1px; /* Prevent double borders */
-    background-color: #f6f6f6;
-    padding: 12px;
-    text-decoration: none;
-    font-size: 18px;
-    color: black;
-    display: block
-}
+    .myUL li a {
+        border: 1px solid #ddd;
+        margin-top: -1px; /* Prevent double borders */
+        background-color: #f6f6f6;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        color: black;
+        display: block
+    }
 
-.myUL li a:hover:not(.header) {
-    background-color: #eee;
-
-.center_button{
-    text-align:center
-
-}
-
+        .myUL li a:hover:not(.header) {
+            background-color:   #eee;
+        }

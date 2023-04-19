@@ -1,7 +1,6 @@
 @model List<OrderItem>
 
-
-<link rel="stylesheet" type="text/css" href="/css/site.css">
+<link rel="stylesheet" type="text/css" href="/css/cart.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 <style>
@@ -90,6 +89,7 @@ else
         row.querySelector(".total-price").textContent = "$" + totalPrice.toFixed(2);
         updateCartTotal();
     }
+
     function updateCartTotal() {
         var cartTotal = 0;
         var totalPrices = document.querySelectorAll(".total-price");
