@@ -5,17 +5,18 @@ namespace Team6.Data
 {
     public class CustomerData
     {
-        public static Customer GetCustomerById(string custId)
+
+        public static Customer GetCustomerByUsername(string username)
+
         {
 
             string connectionString = ConnectString.connectionString;
-;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 string sql = @"SELECT [CustomerID], [Username] ,[Password],[FirstName], [LastName]
                                FROM [ShoppingDB].[dbo].[Customers]
-                               WHERE CustomerID='" + custId + "'";
+                               WHERE Username='" + username + "'";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();

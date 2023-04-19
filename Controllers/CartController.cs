@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
+
+using System.Linq;
+
 
 namespace Team6.Controllers
 {
@@ -25,8 +30,9 @@ namespace Team6.Controllers
         public IActionResult Details(int productId, int quantity)
         {
             Product product = CartData.GetProductById(productId);
+            Debug.WriteLine("Product Image: " + product.ProductImage);
 
-            if(productId == null)
+            if (productId == null)
             {
                 return View();
             }
@@ -45,11 +51,13 @@ namespace Team6.Controllers
                 {
                     cartItem = new OrderItem
                     {
+
                         ProductID = product.ProductId,
                         ProductName = product.Name,
+                        ProductImage = product.ProductImage,
                         Quantity = quantity,
                         ProductDescription = product.Description,
-                        Price = product.UnitPrice,
+                        UnitPrice = product.UnitPrice,
                     };
                     cart.Add(cartItem);
                 }
@@ -80,23 +88,59 @@ namespace Team6.Controllers
         }
 
 
-        //TODO: Checkout Cart. Create Order with OrderItems
 
         public IActionResult Checkout()
         {
-            return View();
+
+            int? customerId = HttpContext.Session.GetInt32("customerId");
+
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            else
+            {
+                var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+
+                //dictionary of OrderItemId :  Quantity
+                Dictionary<int, int> qtyPerOid = new Dictionary<int, int>();
+                
+                foreach (OrderItem cartItem in cart)
+                {
+                    cartItem.OrderID = NewId();
+                    cartItem.OrderItemId = NewId();
+
+                    //insert into Orders table
+                    CartData.CreateOrder(cartItem, customerId, DateTime.Now);
+
+                    //insert into OrderItem table
+                    CartData.CreateOrderItem(cartItem);
+
+                    qtyPerOid.Add(cartItem.OrderItemId, cartItem.Quantity);
+
+                }
+
+                foreach(KeyValuePair<int,int> OidQtyPair in qtyPerOid)
+                {
+                    for (int i = 0; i < OidQtyPair.Value; i++)
+                    {
+                        CartData.AddActivationCode(OidQtyPair.Key, Guid.NewGuid().ToString());
+                    }
+                }
+
+
+                // Display past orders to user
+                return RedirectToAction("Index", "OrderHistory");
+            }
         }
 
+        public int NewId()
+        {
+            string guidString = Guid.NewGuid().ToString().Replace("-", "");
+            int guidNumber = int.Parse(guidString.Substring(0, 8), System.Globalization.NumberStyles.HexNumber);
 
-
-
-
-
-
-        //TODO: Calculator function for product total (2x Office 365 is $500)
-
-        //TODO: Calculator function for cart total
-
-
+            return guidNumber;
+        }
     }
 }
