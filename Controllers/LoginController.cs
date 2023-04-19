@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.InteropServices;
 using Team6.Data;
+using Team6.Extension;
 using Team6.Models;
 
 namespace Team6.Controllers
@@ -26,33 +27,19 @@ namespace Team6.Controllers
             {
                 Customer user = GetCustomer(username);
 
-                //create session object
-                Session session = new Session() 
-                {
-                    SessionID = Guid.NewGuid().ToString(),
-                    CustomerID = user.CustomerID
-                };
-
-
-                // set session cookies
-                HttpContext.Session.SetString("SessionId", session.SessionID);
                 HttpContext.Session.SetInt32("customerId", user.CustomerID);
                 HttpContext.Session.SetString("fullName", user.FirstName + " " + user.LastName);
 
-                TempData["fullName"] = user.FirstName + " " + user.LastName;
-                TempData["sessionId"] = HttpContext.Session.GetString("SessionId");
-
-
                 //add or update user's session in database
-                if (SessionData.GetSessionByCustomerId(user.CustomerID) == null)
-                {
-                    SessionData.AddSession(session);
-                }
-                else 
-                {
-                    SessionData.DeleteSession(user.CustomerID);
-                    SessionData.AddSession(session);
-                }
+                /* if (SessionData.GetSessionByCustomerId(user.CustomerID) == null)
+                 {
+                     SessionData.AddSession(session);
+                 }
+                 else 
+                 {
+                     SessionData.DeleteSession(user.CustomerID);
+                     SessionData.AddSession(session);
+                 }*/
 
                 return RedirectToAction("Index", "Home");
             }

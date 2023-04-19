@@ -19,6 +19,7 @@ public class HomeController : Controller
 
     public IActionResult Index(string? searchStr)
     {
+
         // return gallery of products, including search https://www.w3schools.com/howto/howto_js_filter_lists.asp
         List<Product> products = ProductData.GetAllProducts();
         if (String.IsNullOrWhiteSpace(searchStr))

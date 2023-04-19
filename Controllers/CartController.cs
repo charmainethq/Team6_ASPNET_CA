@@ -43,6 +43,7 @@ namespace Team6.Controllers
                 if (cart == null)
                 {
                     cart = new List<OrderItem>();
+                    HttpContext.Session.SetInt32("cartCount", 0);
                 }
 
                 //check if item already in cart
@@ -60,12 +61,17 @@ namespace Team6.Controllers
                         UnitPrice = product.UnitPrice,
                     };
                     cart.Add(cartItem);
+                    HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") + cartItem.Quantity);
                 }
                 else
                 {
                     cartItem.Quantity += quantity;
+                    HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") + quantity);
                 }
+                ;
                 HttpContext.Session.SetObjectAsJson("cart", cart);
+
+
             }
             return RedirectToAction("Index","Cart");
         }
@@ -83,6 +89,7 @@ namespace Team6.Controllers
                     cart.Remove(itemToRemove);
                 }
                 HttpContext.Session.SetObjectAsJson("cart", cart);
+                HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") - 1);
             }
             return RedirectToAction("Index");
         }
