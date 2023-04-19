@@ -62,7 +62,8 @@ else
                 <td>
                     <input type="number" class="quantity" value="@item.Quantity" min="0" step="1"
                            onchange="updateTotalPrice(this, @item.UnitPrice)"
-                           onkeyup="updateTotalPrice(this, @item.UnitPrice)">
+                           onkeyup="updateTotalPrice(this, @item.UnitPrice)"
+                           data-product-id="@item.ProductID.ToString()">
                 </td>
 
                 <td>Total Price:</td>
@@ -80,22 +81,52 @@ else
     }
 
 }
-
 <script>
     function updateTotalPrice(input, price) {
         var quantity = parseInt(input.value);
+        console.log("quantity: ", quantity);
+        console.log("price: ", price);
         var totalPrice = quantity * price;
+        console.log("totalPrice: ", totalPrice);
         var row = input.closest("tr");
         row.querySelector(".total-price").textContent = "$" + totalPrice.toFixed(2);
         updateCartTotal();
+        var productId = input.getAttribute("data-product-id");// Save the updated quantity to localStorage
+        savedQuantities[productId] = quantity;
+        localStorage.setItem("savedQuantities", JSON.stringify(savedQuantities));
     }
+
+
+    // Get the saved item quantities from localStorage
+    var savedQuantities = JSON.parse(localStorage.getItem("savedQuantities")) || {};
+
+    // Initialize the quantities and total prices when the page loads
+    window.onload = function () {
+        var quantityInputs = document.querySelectorAll(".quantity");
+        for (var i = 0; i < quantityInputs.length; i++) {
+            var input = quantityInputs[i];
+            var productId = input.getAttribute("data-product-id");
+            var savedQuantity = savedQuantities[productId];
+            if (savedQuantity != null) {
+                input.value = savedQuantity;
+                updateTotalPrice(input, input.getAttribute("data-unit-price"));
+            }
+        }
+        updateCartTotal();
+    };
 
     function updateCartTotal() {
         var cartTotal = 0;
         var totalPrices = document.querySelectorAll(".total-price");
         for (var i = 0; i < totalPrices.length; i++) {
-            cartTotal += parseFloat(totalPrices[i].textContent.replace("$", ""));
+            var total = parseFloat(totalPrices[i].textContent.replace("$", ""));
+            if (!isNaN(total)) {
+                cartTotal += total;
+            }
         }
         document.querySelector("#cart-total").textContent = "$" + cartTotal.toFixed(2);
     }
 </script>
+
+
+
