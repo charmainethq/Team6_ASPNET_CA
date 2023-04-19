@@ -27,7 +27,8 @@ namespace Team6.Controllers
             }
 
             ViewData["ordersbycustomer"] = ordersByCustomer;
-
+            TempData["fullName"] = HttpContext.Session.GetString("fullName");
+            TempData["sessionId"] = HttpContext.Session.GetString("SessionId");
             return View();
         }
         [Route("OrderHistory/OrderItem/ActivationCode")]

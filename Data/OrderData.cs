@@ -13,7 +13,6 @@ namespace Team6.Data
 
     public class OrderData
     {
-
         public static Order GetOrderById(int orderId) //Retrieves an order by its ID from the Orders table.
         {
             Order order = null;
@@ -93,13 +92,14 @@ namespace Team6.Data
 							WHERE 
 								O.OrderID=OI.OrderID 
 								AND OI.ProductID = P.ProductId
-								ANd O.CustomerID =" + customerID;
+								ANd O.CustomerID ='" + customerID+"'";
 
                 List<OrderHistory> allOrdersByCustomer = new List<OrderHistory>();
                 using (var cmd = new SqlCommand(sql, conn))
                 {
-                    using (var reader = cmd.ExecuteReader())
-                    {
+                    //SqlDataReader reader = cmd.ExecuteReader();
+                     using (var reader = cmd.ExecuteReader())
+                     {
                         while (reader.Read())
                         {
                             OrderHistory order = new OrderHistory()
@@ -115,7 +115,7 @@ namespace Team6.Data
                             };
                             allOrdersByCustomer.Add(order);
                         }
-                    }
+                     }
                     return allOrdersByCustomer;
                 }
 

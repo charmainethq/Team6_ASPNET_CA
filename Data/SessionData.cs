@@ -5,7 +5,7 @@ namespace Team6.Data
 {
     public class SessionData
     {
-        public static Session GetSessionByCustomerId(int custId)
+        public static SessionResult GetSessionByCustomerId(int custId)
         {
 
             string connectionString = ConnectString.connectionString;
@@ -14,17 +14,17 @@ namespace Team6.Data
                 conn.Open();
                 string sql = @"SELECT [CustomerID], [SessionID], [Timestamp]
                                FROM [ShoppingDB].[dbo].[Sessions]
-                               WHERE CustomerID =" + custId;
+                               WHERE CustomerID ="+ custId;
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    Session session = new Session()
+                    SessionResult session = new SessionResult()
                     {
                         SessionID = (string)reader["SessionID"],
-                        CustomerID = (int)reader["CustomerID"],
+                        CustomerID = (string)reader["CustomerID"],
                         Timestamp = (DateTime)reader["Timestamp"]
                     };
                     return session;
