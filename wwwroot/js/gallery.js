@@ -1,4 +1,4 @@
-﻿/*dynamic search*/
+﻿/*the 1st search function (dynamic search)*/
 function search() {
     var input = document.getElementById("search-box");
     var filter = input.value.toUpperCase();
@@ -13,7 +13,7 @@ function search() {
     }
 }
 
-/*add to cart*/
+/*add to cart: increment by one with a click*/
 function addToCart(productId) {
     var quantityInput = document.getElementById('quantity-' + productId);
     var quantity = parseInt(quantityInput.value) || 0;
