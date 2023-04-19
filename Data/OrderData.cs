@@ -74,7 +74,7 @@ namespace Team6.Data
             return orders;
         }
 
-        public static List<OrderHistory> OrderList(int customerID)
+        public static List<OrderHistory> OrderList(int? customerID)
         {
 
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))

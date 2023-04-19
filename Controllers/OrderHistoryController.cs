@@ -9,8 +9,9 @@ namespace Team6.Controllers
         public IActionResult Index()
         {
 
-			//retrieve a list of all order made by the customer, with empty Activation_Code list
-			List<OrderHistory> ordersByCustomer = OrderData.OrderList(1001);    
+            int? custId = HttpContext.Session.GetInt32("customerId");
+
+            List<OrderHistory> ordersByCustomer = OrderData.OrderList(custId);    
             
             foreach (OrderHistory order in ordersByCustomer)
             {
