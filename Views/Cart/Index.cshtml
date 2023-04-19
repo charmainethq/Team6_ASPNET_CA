@@ -1,5 +1,107 @@
-﻿@model List<OrderItem>
+@model List<OrderItem>
 
+
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+<style>
+    table {
+        width: 100%;
+        border-color: #eeee;
+        line-height: 2;
+        font-size: 16px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    td,
+    tr {
+        padding-left: 20px;
+        font-size: 16px;
+    }
+</style>
+
+@if (Model == null)
+{
+    <h1>No items in the cart.</h1>
+}
+else
+{
+    <form method="post" action="@Url.Action("Checkout", "Cart")">
+        <button type="submit" class="btn btn-outline-primary">Checkout</button>
+    </form>
+    <br />
+    <table style="background-color: aliceblue">
+        <tr style="font-weight:bold">
+            <td>Cart Total:</td>
+            <td id="cart-total">@("$" + Model.Sum(item => item.UnitPrice * item.Quantity).ToString("F2"))</td>
+
+        </tr>
+    </table>
+    <br />
+    @foreach (var item in Model)
+    {
+        <table>
+            <tr>
+                <td rowspan="6">
+                    <div class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="@item.ProductImage" alt="@item.ProductName">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.ProductName</h5>
+                            <p class="card-text">@item.ProductDescription</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>Price:</td>
+                <td>$@item.UnitPrice</td>
+            </tr>
+            <tr>
+                <td>Quantity:</td>
+                <td>
+                    <input type="number" class="quantity" value="@item.Quantity" min="0" step="1"
+                           onchange="updateTotalPrice(this, @item.UnitPrice)"
+                           onkeyup="updateTotalPrice(this, @item.UnitPrice)">
+                </td>
+
+                <td>Total Price:</td>
+                <td class="total-price">@("$" + (item.UnitPrice * item.Quantity).ToString("F2"))</td>
+            </tr>
+            <tr>
+                <td>
+                    <form method="post" action="@Url.Action("RemoveFromCart", "Cart")">
+                        <input type="hidden" name="productId" value="@item.ProductID" />
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    }
+
+}
+
+<script>
+    function updateTotalPrice(input, price) {
+        var quantity = parseInt(input.value);
+        var totalPrice = quantity * price;
+        var row = input.closest("tr");
+        row.querySelector(".total-price").textContent = "$" + totalPrice.toFixed(2);
+        updateCartTotal();
+    }
+
+    function updateCartTotal() {
+        var cartTotal = 0;
+        var totalPrices = document.querySelectorAll(".total-price");
+        for (var i = 0; i < totalPrices.length; i++) {
+            cartTotal += parseFloat(totalPrices[i].textContent.replace("$", ""));
+        }
+        document.querySelector("#cart-total").textContent = "$" + cartTotal.toFixed(2);
+    }
+</script>
+
+/**
 <script>
     function updateTotalPrice(input, price) {
         var quantity = parseInt(input.value);
@@ -65,5 +167,5 @@ else
         </tbody>
     </table>
 }
-
+**/
 

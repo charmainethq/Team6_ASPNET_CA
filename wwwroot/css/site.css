@@ -13,7 +13,6 @@ html {
   min-height: 100%;
 }
 
-
 body {
   margin-bottom: 60px;
 }
@@ -30,12 +29,13 @@ th{
 }
 
 
+
 tr, td {
   border: 1px solid #efefef;
   text-align: center;
 }
 
-=======
+
 .cell {
   width: 100px;
   height: 100px;
@@ -81,9 +81,9 @@ tr, td {
 
 .myUL li a:hover:not(.header) {
     background-color: #eee;
-}
 
 .center_button{
     text-align:center
+
 }
 

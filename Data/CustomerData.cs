@@ -5,11 +5,12 @@ namespace Team6.Data
 {
     public class CustomerData
     {
+
         public static Customer GetCustomerByUsername(string username)
+
         {
 
             string connectionString = ConnectString.connectionString;
-;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();

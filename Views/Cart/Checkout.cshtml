@@ -43,7 +43,8 @@ else
                         <td>@orderItem.ProductName</td>
                         <td>@orderItem.ProductDescription</td>
                         <td>@orderItem.Quantity</td>
-                        <td>@orderItem.Price</td>
+
+                        <td>@orderItem.UnitPrice</td>
                         <td>
                             @foreach (var code in orderItem.ActivationCodes)
                             {
@@ -52,7 +53,8 @@ else
                                 <br />
                             }
                         </td>
-                        <td>@(orderItem.Quantity * orderItem.Price)</td>
+                        <td>@(orderItem.Quantity * orderItem.UnitPrice)</td>
+
                     </tr>
                 }
             }

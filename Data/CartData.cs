@@ -11,26 +11,7 @@ namespace Team6.Data
 {
     public class CartData
     {
-        public static int CreateOrder(int customerId) //Inserts a new order into the Orders table with the given customerId and returns the ID of the new order.
-        {
-            int orderId = 0;
 
-            using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
-            {
-                string sql = "INSERT INTO Orders (CustomerId) VALUES (@customerId);" +
-                               "SELECT CAST(SCOPE_IDENTITY() AS INT)";
-
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@customerId", customerId);
-
-                    conn.Open();
-                    orderId = (int)cmd.ExecuteScalar();
-                }
-            }
-
-            return orderId;
-        }
 
         public static List<Order> GetOrdersByCustomer(int customerId) //Retrieves all orders for the given customerId from the Orders table.
         {
@@ -62,6 +43,7 @@ namespace Team6.Data
             }
             return orders;
         }
+
         public static List<OrderItem> GetOrderItemsByOrder(int orderId) //Retrieves all order items for the given orderId from the OrderItems table.
         {
             List<OrderItem> orderItems = new List<OrderItem>();
@@ -85,8 +67,8 @@ namespace Team6.Data
                             OrderID = Convert.ToInt32(reader["OrderId"]),
                             ProductID = Convert.ToInt32(reader["ProductId"]),
                             Quantity = Convert.ToInt32(reader["Quantity"]),
-                            Price = (float)(double)(reader["UnitPrice"]),
-                            ActivationCodes = (List<ActivationCode>)(reader["ActivationCodes"]), //not sure 
+                            UnitPrice = (float)(double)(reader["UnitPrice"]),
+                            ActivationCodes = (List<ActivationCode>)(reader["ActivationCodes"]),
                         };
 
                         orderItems.Add(orderItem);
@@ -97,9 +79,7 @@ namespace Team6.Data
             return orderItems;
         }
 
-
         public static void CreateOrderItem(OrderItem orderItem) //Inserts a new order item into the OrderItems table based on the provided OrderItem object.
-
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
@@ -113,13 +93,34 @@ namespace Team6.Data
                     cmd.Parameters.AddWithValue("@ProductId", orderItem.ProductID);
                     cmd.Parameters.AddWithValue("@Quantity", orderItem.Quantity);
                     cmd.Parameters.AddWithValue("@OrderId", orderItem.OrderID);
-
-
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+        
+        /**public static int CreateOrder(int customerId) //Inserts a new order into the Orders table with the given customerId and returns the ID of the new order.
+        {
+            int orderId = 0;
+
+            using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
+            {
+                string sql = "INSERT INTO Orders (CustomerId) VALUES (@customerId);" +
+                               "SELECT CAST(SCOPE_IDENTITY() AS INT)";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@customerId", customerId);
+
+                    conn.Open();
+                    orderId = (int)cmd.ExecuteScalar();
+                }
+            }
+
+            return orderId;
+        }**/
+
+
 
 
         public static void CreateOrder(OrderItem orderItem, int? customerId, DateTime time) //Inserts a new order  into the Orders table based on the provided OrderItem object.
@@ -209,6 +210,7 @@ namespace Team6.Data
                 return orders;
             }
         }
+
         public static Product GetProductById(int productId) //Retrieves a product from the Products table based on the provided productId.
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
@@ -241,6 +243,24 @@ namespace Team6.Data
                 }
             }
         }
+
+        public static void ClearCart(int customerId)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
+            {
+                string sql = "DELETE FROM CartItems WHERE CustomerID = @customerId";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@customerId", customerId);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
 
     }
 }
