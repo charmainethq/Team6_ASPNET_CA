@@ -3,10 +3,15 @@
     var products = ViewBag.products;
 }
 
+@section Scripts
+    {
+    <script src="/js/gallery.js"></script>
+}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" initial-scale=1.0>
-    <link rel="stylesheet" href="/css/galleryStyle.css">
+    <link rel="stylesheet" href="/css/gallery.css">
 </head>
 
 <body>
@@ -22,31 +27,14 @@
                     <img src="@product.ProductImage" alt="@product.Name">
                     <h3>@product.Name</h3>
                     <p style="text-align:left">@product.Description</p>
-
-                    <form action="/Cart/Index" method="POST">
+                    <form id="addToCartForm-@product.ProductId" method="post" action="@Url.Action("Details", "Cart")">
+                        <button class="button" type="button" onclick="addToCart(@product.ProductId)">$@product.UnitPrice - Add to Cart</button>
                         <input type="hidden" name="productId" value="@product.ProductId" />
-                        <button class="button">$@product.UnitPrice - Add To Cart</button>
+                        <input type="number" id="quantity-@product.ProductId" name="quantity" value="1" style="display: none;" />
                     </form>
                 </div>
             }
         </div>
     </div>
-
-    @*js dynamic search*@
-    <script>
-        function search() {
-            var input = document.getElementById("search-box");
-            var filter = input.value.toUpperCase();
-            var images = document.getElementsByClassName("image");
-            for (var i = 0; i < images.length; i++) {
-                var title = images[i].getAttribute("data-title");
-                if (title.toUpperCase().indexOf(filter) > -1) {
-                    images[i].style.display = "";
-                } else {
-                    images[i].style.display = "none";
-                }
-            }
-        }
-    </script>
 
 </body>
