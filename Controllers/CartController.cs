@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Team6.Controllers
 {
