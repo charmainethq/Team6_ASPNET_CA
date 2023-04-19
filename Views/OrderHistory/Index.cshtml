@@ -1,120 +1,71 @@
 @{
-	ViewData["Title"] = "Purchase Order History";
-  	var orders = (List < OrderHistory >) ViewData["ordersbycustomer"];
+    ViewData["Title"] = "Purchase Order History";
+    var orders = (List<OrderHistory>)ViewData["ordersbycustomer"];
 }
 
 
 
 <head>
-	<style>
-		table{
-			margin-left: auto;
-			margin-right: auto;
-			width: 80%;
-			border-collapse: collapse;
-		}
+    <style>
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+            border-collapse: collapse;
+        }
 
-		td{
-			border: none;
-			font-size: 20px;
-		}
-	</style>
+        td {
+            border: none;
+            font-size: 20px;
+        }
+    </style>
 </head>
 
-@if(orders==null)
+@if (orders == null)
 {
-	<h5>Your Purchase History is empty</h5>
-	
+    <h5>Your Purchase History is empty</h5>
+
 }
 @foreach (var cc in orders)
-{			
-	<table>
-		<tr>
-			<td rowspan="3">
-				<div class="col">
-					<div class="card text-center mb-3" style="width: 15rem;">
-						<img src="@cc.ProductImage" class="card-img-top" alt="...">
-						<div class="card-body border-0">
-							<h5 class="card-title">@cc.ProductName</h5>
-							<p class="card-text">@cc.ProductDescription</p>
-							<a href="#" class="btn btn-primary">Download</a>
-						</div>
-					</div>
-				</div>
-			</td> <!--keep rowspan 1 less than number of rows on the right so that the description stays on the left -->				
-		</tr>
-		<tr>
-		  <td style="vertical-align: central; padding-right: 10px;">
-			<div style="margin-bottom: 5px;">Purchased on:</div>
-			<div style="margin-bottom: 5px;">Quantity:</div>
-			<label for="activation-code-@cc.Activation_Code">Activation Code:</label>
-		  </td>
-		  <td style="vertical-align: central;">
-			<div style="margin-bottom: 5px;">@cc.PurchaseOn</div>
-			<div style="margin-bottom: 5px;">@cc.Qty</div>
-				<select class="form-select" aria-label="Default select example">
-					@foreach (var ac in cc.Activation_Code)
-					{
-						<option value="@ac">@ac</option>
-					}
-				</select>					
-		  </td>
-		</tr>
-	</table>
-}*@
-@foreach (var cc in orders)
 {
-	@*<div class="row">
-		<div class="col">
-			<div class="card text-center mb-3" style="width: 18rem;">
-				<img src="@cc.ProductImage" class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title">@cc.Name</h5>
-					<p class="card-text">@cc.Description</p>
-					<a href="#" class="btn btn-primary ">Download</a>
-				</div>
-			</div>
-		</div>
-	</div>
-		<div class="col-md-8 d-flex flex-column  align-items-between justify-content-center m-11">
-			<div class="mb-2">Purchased on:@cc.PurchaseOn</div>
-			<div>Quantity: @cc.Qty</div>
-				<div class="form-group col-md-4 d-flex flex-row align-items-start justify-content-between">
-                <label for="inputState">Activation Code</label>
-                <select id="inputState" class="form-control">
-				<option value="1">@cc.Activation_Code</option>
-				<option value="2">@cc.Activation_Code</option>
-                </select>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-center mb-3">
+                <img src="@cc.ProductImage" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@cc.ProductName</h5>
+                    <p class="card-text">@cc.ProductDescription</p>
+                    <a href="#" class="btn btn-primary">Download</a>
+                    <br>
+                    <a href="@Url.Action("Index", "Product")">Leave a Review</a>
+                </div>
             </div>
-        </div>*@
-
-			<div class="row">
-				<div class="col">
-					<div class="card text-center mb-3" style="width: 14rem;">
-				<img src="@cc.ProductImage" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">@cc.ProductName</h5>
-							<p class="card-text">@cc.ProductDescription</p>
-							<a href="#" class="btn btn-primary">Download</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-8 d-flex flex-column align-items-between justify-content-center m-11">
-					<div class="mb-2">Purchased on: @cc.PurchaseOn</div>
-					<div>Quantity: @cc.Qty</div>
-					<div class="form-group col-md-4 d-flex flex-row align-items-start justify-content-between">
-						<label for="activation-code-@cc.Activation_Code">Activation Code</label>
-						<select id="activation-code-@cc.Activation_Code" name="activation-code" class="form-control">
-							<option select value="@cc.Activation_Code">@cc.Activation_Code</option>
-							<option value ="1">@cc.Activation_Code</option>
-							<option value="2">@cc.Activation_Code</option>
-							
-							<!-- Add additional options here if needed -->
-						</select>
-					</div>
-				</div>
-			</div>
-	
+        </div>
+        <div class="col-md-9">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Purchased on:</td>
+                        <td>@cc.PurchaseOn</td>
+                    </tr>
+                    <tr>
+                        <td>Quantity:</td>
+                        <td>@cc.Qty</td>
+                    </tr>
+                    <tr>
+                        <td>Activation Code:</td>
+                        <td>
+                            <select class="form-select" aria-label="Default select example">
+                                @foreach (var ac in cc.Activation_Code)
+                                {
+                                    <option value="@ac">@ac</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 }
-
