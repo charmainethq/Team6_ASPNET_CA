@@ -115,7 +115,7 @@ else
     <table align="right">
         <tr>
             <td>Total:</td>
-            <td id="cart-total">@Model.Sum(item => item.Price * item.Quantity).ToString("F2")</td>
+            <td id="cart-total">@Model.Sum(item => item.UnitPrice * item.Quantity).ToString("F2")</td>
         </tr>
     </table>
     <br>
@@ -138,13 +138,13 @@ else
                     <td>@item.ProductName</td>
                     <td><img src="@item.ProductImage" alt="@item.ProductName" height="60" width="60" /></td>
                     <td>@item.ProductDescription</td>
-                    <td>@item.Price</td>
+                    <td>@item.UnitPrice</td>
                     <td>
                         <input type="number" class="quantity" value="@item.Quantity" min="0" step="1"
-                       onchange="updateTotalPrice(this, @item.Price)"
-                       onkeyup="updateTotalPrice(this, @item.Price)">
+                       onchange="updateTotalPrice(this, @item.UnitPrice)"
+                       onkeyup="updateTotalPrice(this, @item.UnitPrice)">
                     </td>
-                    <td class="total-price">@((item.Price * item.Quantity).ToString("F2"))</td>
+                    <td class="total-price">@((item.UnitPrice * item.Quantity).ToString("F2"))</td>
                 </tr>
             }
         </tbody>
