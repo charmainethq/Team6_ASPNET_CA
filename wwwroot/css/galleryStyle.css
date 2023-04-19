@@ -17,7 +17,9 @@ body {
     }
 
     .container #search-box {
+
         background-image: url('/images/SearchIcon.png'); /*no suitable image yet*/
+
         background-position: 10px 12px;
         background-repeat: no-repeat; /* Do not repeat the icon image */
         width: 600px;
@@ -53,6 +55,7 @@ body {
                 box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
                 opacity: 1;
             }
+
 
 @keyframes fadeIn {
     0% {

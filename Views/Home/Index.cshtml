@@ -1,7 +1,8 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
     var products = ViewBag.products;
 }
+
 
 <head>
     <meta charset="UTF-8">
@@ -14,6 +15,7 @@
         <form>
             <input type="text" id="search-box" name="searchStr" onkeyup="search()" placeholder="Enter your search here...">
         </form>
+
 
         <div class="image-container" id="container">
             @foreach (Product product in products)
@@ -31,7 +33,9 @@
         </div>
     </div>
 
+
     @*js dynamic search*@
+
     <script>
         function search() {
             var input = document.getElementById("search-box");

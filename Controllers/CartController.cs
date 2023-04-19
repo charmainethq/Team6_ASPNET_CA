@@ -9,7 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
+
 using System.Linq;
+
 
 namespace Team6.Controllers
 {
@@ -49,6 +51,7 @@ namespace Team6.Controllers
                 {
                     cartItem = new OrderItem
                     {
+
                         ProductID = product.ProductId,
                         ProductName = product.Name,
                         ProductImage = product.ProductImage,
@@ -90,19 +93,56 @@ namespace Team6.Controllers
 
         public IActionResult Checkout(int customerId)
         {
-            // Get current customer ID
-            
-            // Create new order
 
-            // Add cart items as order items to the new order
-            
+            int? customerId = HttpContext.Session.GetInt32("customerId");
 
-            // Get all orders for current customer
-            List<Order> pastOrders = CartData.GetOrdersByCustomer(customerId);
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Index", "Login");
+            }
 
-            // Display past orders to user
-            return View(pastOrders);
-            
+            else
+            {
+                var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+
+                //dictionary of OrderItemId :  Quantity
+                Dictionary<int, int> qtyPerOid = new Dictionary<int, int>();
+                
+                foreach (OrderItem cartItem in cart)
+                {
+                    cartItem.OrderID = NewId();
+                    cartItem.OrderItemId = NewId();
+
+                    //insert into Orders table
+                    CartData.CreateOrder(cartItem, customerId, DateTime.Now);
+
+                    //insert into OrderItem table
+                    CartData.CreateOrderItem(cartItem);
+
+                    qtyPerOid.Add(cartItem.OrderItemId, cartItem.Quantity);
+
+                }
+
+                foreach(KeyValuePair<int,int> OidQtyPair in qtyPerOid)
+                {
+                    for (int i = 0; i < OidQtyPair.Value; i++)
+                    {
+                        CartData.AddActivationCode(OidQtyPair.Key, Guid.NewGuid().ToString());
+                    }
+                }
+
+
+                // Display past orders to user
+                return RedirectToAction("Index", "OrderHistory");
+            }
+        }
+
+        public int NewId()
+        {
+            string guidString = Guid.NewGuid().ToString().Replace("-", "");
+            int guidNumber = int.Parse(guidString.Substring(0, 8), System.Globalization.NumberStyles.HexNumber);
+
+            return guidNumber;
         }
     }
 }

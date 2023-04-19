@@ -13,6 +13,7 @@ html {
   min-height: 100%;
 }
 
+
 body {
   margin-bottom: 60px;
 }
@@ -27,6 +28,7 @@ table {
 th{
     background-color: aliceblue;
 }
+
 
 tr, td {
   border: 1px solid #efefef;

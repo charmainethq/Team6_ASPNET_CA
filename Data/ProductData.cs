@@ -1,4 +1,6 @@
+
 using Microsoft.Data.SqlClient;
+
 using Team6.Models;
 
 namespace Team6.Data
@@ -11,7 +13,7 @@ namespace Team6.Data
             List<Product> products = new List<Product>();
 
             string connectionString = ConnectString.connectionString;
-            
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -28,7 +30,9 @@ namespace Team6.Data
                         Name = (string)reader["Name"],
                         Description = (string)reader["Description"],
                         UnitPrice = (float)(double)reader["UnitPrice"],
+
                         ProductImage = (string)reader["ProductImage"],
+
                     };
                     products.Add(product);
                     
@@ -37,6 +41,7 @@ namespace Team6.Data
 
             return products;
         }
+
         
         public static Product GetProductById(string Id)
         {

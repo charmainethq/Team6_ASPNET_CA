@@ -1,10 +1,11 @@
-﻿using Azure.Core;
+using Azure.Core;
 using Azure;
 using Microsoft.Data.SqlClient;
 using Team6.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore.Storage;
+using Castle.Core.Resource;
 
 namespace Team6.Data
 {
@@ -96,38 +97,65 @@ namespace Team6.Data
             return orderItems;
         }
 
-        public void CreateOrderItem(OrderItem orderItem) //Inserts a new order item into the OrderItems table based on the provided OrderItem object.
+
+        public static void CreateOrderItem(OrderItem orderItem) //Inserts a new order item into the OrderItems table based on the provided OrderItem object.
+
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
-                string sql = "INSERT INTO OrderItems (OrderId, ProductId, Quantity, Price, ActivationCodes) " +
-                               "VALUES (@orderId, @productId, @quantity, @price, @activationCodes)";
+                string sql = @"
+                       INSERT INTO OrderItems (OrderItemId, OrderId, ProductId, Quantity)
+                       VALUES(@OrderItemId, @OrderId, @ProductId, @Quantity)";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@orderId", orderItem.OrderID);
-                    cmd.Parameters.AddWithValue("@productId", orderItem.ProductID);
-                    cmd.Parameters.AddWithValue("@quantity", orderItem.Quantity);
-                    cmd.Parameters.AddWithValue("@price", orderItem.Price);
-                    cmd.Parameters.AddWithValue("@activationCodes", orderItem.ActivationCodes);
+                    cmd.Parameters.AddWithValue("@OrderItemId", orderItem.OrderItemId);
+                    cmd.Parameters.AddWithValue("@ProductId", orderItem.ProductID);
+                    cmd.Parameters.AddWithValue("@Quantity", orderItem.Quantity);
+                    cmd.Parameters.AddWithValue("@OrderId", orderItem.OrderID);
+
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
         }
-        public void UpdateProductActivationCodes(int productId, int orderId, string activationCodes) //Updates the activation codes for a product in the ActivationCode table based on the provided productId and orderId.
+
+
+        public static void CreateOrder(OrderItem orderItem, int? customerId, DateTime time) //Inserts a new order  into the Orders table based on the provided OrderItem object.
+
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
-                conn.Open();
+                string sql = @"
+                       INSERT INTO Orders (OrderId, CustomerId, OrderDate)
+                       VALUES(@OrderId, @ProductId, @OrderDate)";
 
-                using (var cmd = new SqlCommand("UPDATE ActivationCode SET Code = @activationCodes WHERE ProductID = @productId AND OrderID = @orderId", conn))
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@activationCodes", activationCodes);
-                    cmd.Parameters.AddWithValue("@productId", productId);
-                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@OrderId", orderItem.OrderID);
+                    cmd.Parameters.AddWithValue("@ProductId", customerId);
+                    cmd.Parameters.AddWithValue("@OrderDate", time);
 
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public static void AddActivationCode(int orderItemId, string activationCode) //Updates the activation codes for a product in the ActivationCode table based on the provided productId and orderId.
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
+            {
+                string sql = @"
+                       INSERT INTO ActivationCodes (OrderItemID, ActivationCode)
+                       VALUES(@OrderItemID, @ActivationCode)";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@OrderItemID", orderItemId);
+                    cmd.Parameters.AddWithValue("@ActivationCode", activationCode);
+
+                    conn.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
