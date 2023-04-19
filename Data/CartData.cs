@@ -1,4 +1,4 @@
-﻿using Azure.Core;
+using Azure.Core;
 using Azure;
 using Microsoft.Data.SqlClient;
 using Team6.Models;
@@ -97,7 +97,9 @@ namespace Team6.Data
             return orderItems;
         }
 
+
         public static void CreateOrderItem(OrderItem orderItem) //Inserts a new order item into the OrderItems table based on the provided OrderItem object.
+
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
@@ -119,7 +121,9 @@ namespace Team6.Data
             }
         }
 
+
         public static void CreateOrder(OrderItem orderItem, int? customerId, DateTime time) //Inserts a new order  into the Orders table based on the provided OrderItem object.
+
         {
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {

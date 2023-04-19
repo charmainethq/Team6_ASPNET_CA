@@ -1,4 +1,4 @@
-﻿html {
+html {
   font-size: 14px;
 }
 
@@ -13,11 +13,29 @@ html {
   min-height: 100%;
 }
 
+
+body {
+  margin-bottom: 60px;
+}
+
+table {
+    margin: 0 auto;
+    border: 2px solid grey;
+    border-collapse: collapse;
+
+}
+
+th{
+    background-color: aliceblue;
+}
+
+
 tr, td {
   border: 1px solid #efefef;
   text-align: center;
 }
 
+=======
 .cell {
   width: 100px;
   height: 100px;
@@ -64,6 +82,8 @@ tr, td {
 .myUL li a:hover:not(.header) {
     background-color: #eee;
 }
+
 .center_button{
     text-align:center
 }
+

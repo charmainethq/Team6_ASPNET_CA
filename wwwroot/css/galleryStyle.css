@@ -17,13 +17,16 @@ body {
     }
 
     .container #search-box {
-        background-image: url('/images/SearchIcon.png');
+
+        background-image: url('/images/SearchIcon.png'); /*no suitable image yet*/
+
         background-position: 10px 12px;
         background-repeat: no-repeat; /* Do not repeat the icon image */
         width: 600px;
         font-size: 16px;
         padding: 12px 15px;
         border: 1.5px solid #ddd;
+        border-radius: 5px;
         margin-bottom: 12px; /* Add some space below the input */
     }
 
@@ -38,12 +41,21 @@ body {
         .container .image-container .image {
             padding: 15px;
             background-color: #fff;
-            box-shadow: 0 5px 10px rgba(0,0,0,.1);
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
             border: 1px solid #ddd;
             width: 280px;
             border-radius: 5px;
             animation: fadeIn .2s linear;
         }
+            .container .image-container .image:not(:hover) {
+                opacity: 0.8;
+            }
+            .container .image-container .image:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                opacity: 1;
+            }
+
 
 @keyframes fadeIn {
     0% {
@@ -60,13 +72,14 @@ body {
     border-radius: 5px;
 }
 
+
 .container .image-container .image h3 {
     font-size: 20px;
     font-weight: bold;
 }
 
 .container .image-container .image button {
-    background-color: #f8f9fa;
+    background-color: #eee;
     border: 1px solid #f8f9fa;
     border-radius: 4px;
     color: #3c4043;
@@ -82,6 +95,7 @@ body {
     -webkit-user-select: none;
     touch-action: manipulation;
     white-space: pre;
+    opacity: 1;
 }
 
     .container .image-container .image button:hover {

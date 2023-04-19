@@ -27,39 +27,46 @@
 	
 }
 @foreach (var cc in orders)
-{			
-	<table>
-		<tr>
-			<td rowspan="3">
-				<div class="col">
-					<div class="card text-center mb-3" style="width: 15rem;">
-						<img src="@cc.ProductImage" class="card-img-top" alt="...">
-						<div class="card-body border-0">
-							<h5 class="card-title">@cc.ProductName</h5>
-							<p class="card-text">@cc.ProductDescription</p>
-							<a href="#" class="btn btn-primary">Download</a>
-						</div>
-					</div>
-				</div>
-			</td> <!--keep rowspan 1 less than number of rows on the right so that the description stays on the left -->				
-		</tr>
-		<tr>
-		  <td style="vertical-align: central; padding-right: 10px;">
-			<div style="margin-bottom: 5px;">Purchased on:</div>
-			<div style="margin-bottom: 5px;">Quantity:</div>
-			<label for="activation-code-@cc.Activation_Code">Activation Code:</label>
-		  </td>
-		  <td style="vertical-align: central;">
-			<div style="margin-bottom: 5px;">@cc.PurchaseOn</div>
-			<div style="margin-bottom: 5px;">@cc.Qty</div>
-				<select class="form-select" aria-label="Default select example">
-					@foreach (var ac in cc.Activation_Code)
-					{
-						<option value="@ac">@ac</option>
-					}
-				</select>					
-		  </td>
-		</tr>
-	</table>
+{
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-center mb-3">
+                <img src="@cc.ProductImage" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@cc.ProductName</h5>
+                    <p class="card-text">@cc.ProductDescription</p>
+                    <a href="#" class="btn btn-primary">Download</a>
+                    <br>
+                    <a href="@Url.Action("Index", "Product")">Leave a Review</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Purchased on:</td>
+                        <td>@cc.PurchaseOn</td>
+                    </tr>
+                    <tr>
+                        <td>Quantity:</td>
+                        <td>@cc.Qty</td>
+                    </tr>
+                    <tr>
+                        <td>Activation Code:</td>
+                        <td>
+                            <select class="form-select" aria-label="Default select example">
+                                @foreach (var ac in cc.Activation_Code)
+                                {
+                                    <option value="@ac">@ac</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 }
 

@@ -10,6 +10,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
 
+using System.Linq;
+
+
 namespace Team6.Controllers
 {
     public class CartController : Controller
@@ -88,8 +91,9 @@ namespace Team6.Controllers
         //TODO: Checkout Cart. Create Order with OrderItems 
         //same as my purchases?
 
-        public IActionResult Checkout()
+        public IActionResult Checkout(int customerId)
         {
+
             int? customerId = HttpContext.Session.GetInt32("customerId");
 
             if (!customerId.HasValue)

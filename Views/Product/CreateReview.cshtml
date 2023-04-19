@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Create Review";
+    //sample customer name
+    var customerName = ViewData["customerName"];
+}
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/stars.css">
+</head>
+
+<body>
+    <form>
+        <h2>Dear @customerName,</h2> <br />
+        <h4 class="title">We appreciate your review. Your review will help us to improve our products</h4> <br />
+        
+        <label> How is the product: </label> <br /> <br />
+        @*insert the product image*@
+
+
+        @*star selector*@
+        <div class="ratingStars">
+            <header> Rating: (Required) </header>
+            <input type="radio" id="star5" name="ratingStars" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="ratingStars" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="ratingStars" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="ratingStars" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="ratingStars" value="1" />
+            <label for="star1" title="text">1 star</label>
+        </div> <br /> <br /> <br />
+
+        @*text box to enter description*@
+        <div class="reviewDescription">
+            <header>Enter your review: </header>
+            <input type="text" name="reviewDescription" id="reviewDescription" required> <br>
+        </div> <br>
+
+        @*submit button*@
+        <div class="submitReviewButton">
+            <input type="submit" name="submitReviewButton" style="padding:5px">
+        </div>
+    </form>
+</body>

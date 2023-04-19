@@ -40,8 +40,6 @@ namespace Team6.Data
                     {
                         while (reader.Read())
                         {
-
-
                             OrderHistory order = new OrderHistory()
                             {
                                 OrderItemId = (int)reader["OrderItemId"],
@@ -50,13 +48,10 @@ namespace Team6.Data
                                 ProductDescription = (string)reader["Description"],
                                 ProductImage = (string)reader["Image"],
                                 PurchaseOn = (DateTime)reader["OrderDate"],
-                                Qty = (int)reader["Quantity"],
-                                
+                                Qty = (int)reader["Quantity"],                                
 
                             };
-
                             allOrdersByCustomer.Add(order);
-
                         }
                     }
                     return allOrdersByCustomer;
