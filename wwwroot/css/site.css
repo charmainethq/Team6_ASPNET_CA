@@ -1,4 +1,4 @@
-﻿html {
+html {
   font-size: 14px;
 }
 
@@ -26,6 +26,13 @@ table {
 
 th{
     background-color: aliceblue;
+}
+
+
+
+tr, td {
+  border: 1px solid #efefef;
+  text-align: center;
 }
 
 
@@ -74,5 +81,9 @@ th{
 
 .myUL li a:hover:not(.header) {
     background-color: #eee;
+
+.center_button{
+    text-align:center
+
 }
 

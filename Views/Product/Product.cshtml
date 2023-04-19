@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var product = ViewBag.product;
+}
+
+@model Product
+
+
+
+<html>
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Cell that spans two rows</h2>
+    <p>To make a cell span more than one row, use the rowspan attribute.</p>
+
+    <table style="width:100%">
+        <tr>
+            <th>ProductPicture</th>
+            <td><img src="/images/SearchIcon.png"/></td>
+        </tr>
+        
+        <tr>
+            <th>ProductName</th>
+            <td>@product.Name</td>
+        </tr
+        
+        <tr>
+            <th>ProductDescription</th>
+            <td>@product.Description</td>
+        </tr>
+
+        <tr>
+            <th>ProductPrice</th>
+            <td>@product.UnitPrice</td>
+        </tr>
+        
+        
+    </table>
+</body>
+</html>
+

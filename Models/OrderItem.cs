@@ -18,8 +18,11 @@ namespace Team6.Models
         public string ProductImage { get; set; }
         public OrderItem() 
         {
-            ActivationCodes = new List<ActivationCode>();   
-        }
+            ActivationCodes = new List<ActivationCode>();
+            ActivationCodes.Add(new ActivationCode());
+
+
+		}
 
 
     }
