@@ -65,6 +65,10 @@
             <table class="table align-middle">
                 <tbody>
                     <tr>
+                        <td>OrderID:</td>
+                        <td>@cc.OrderId<td>
+                    </tr>
+                    <tr>
                         <td>Purchased on:</td>
                         <td>@cc.PurchaseOn</td>
                     </tr>
@@ -83,9 +87,18 @@
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a href="@Url.Action("CreateReview", "Product", new {id = cc.ProductId})" class="btn btn-primary">
+                                Submit Review
+                            </a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
+
     </div>
 
     <br />

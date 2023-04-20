@@ -146,8 +146,8 @@ namespace Team6.Data
                     {
                         CustomerName = (string)reader["FirstName"] + " " + (string)reader["LastName"],
                         // add in date later (optional)
-                        Rating = (int)reader["Rating"],
-                        ReviewText = (string)reader["Review"]
+                        Rating = Convert.IsDBNull(reader["Rating"]) ? null : (int?)reader["Rating"],
+                        ReviewText = Convert.IsDBNull(reader["Review"]) ? null : (string?)reader["Review"]
                     };
                     reviewDetails.Add(reviewDetail);
                 }

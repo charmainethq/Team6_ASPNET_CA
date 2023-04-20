@@ -151,7 +151,7 @@ namespace Team6.Controllers
         public int NewId()
         {
             string guidString = Guid.NewGuid().ToString().Replace("-", "");
-            int guidNumber = int.Parse(guidString.Substring(0, 8), System.Globalization.NumberStyles.HexNumber);
+            int guidNumber = Math.Abs(int.Parse(guidString.Substring(0, 8), System.Globalization.NumberStyles.HexNumber));
 
             return guidNumber;
         }

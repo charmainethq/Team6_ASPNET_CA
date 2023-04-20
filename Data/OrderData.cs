@@ -104,6 +104,7 @@ namespace Team6.Data
                         {
                             OrderHistory order = new OrderHistory()
                             {
+                                OrderId = (int)reader["OrderId"],
                                 OrderItemId = (int)reader["OrderItemId"],
                                 ProductId = (int)reader["ProductID"],
                                 ProductName = (string)reader["Name"],

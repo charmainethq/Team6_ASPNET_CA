@@ -178,7 +178,7 @@
 
             <div class="ReviewDetails">
                 <h4> Review Details: </h4> <br />
-                @foreach (var reviewDetail in reviewDetails)
+                @foreach (var reviewDetail in reviewDetails.Where(g => g.Rating.HasValue))
                 {
                     <div>
                         <div>
