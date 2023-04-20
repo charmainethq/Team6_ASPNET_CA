@@ -161,5 +161,22 @@ namespace Team6.Controllers
             return Json(cartCount);
         }
 
+        [HttpPost]
+        public IActionResult UpdateCartItem(int cartItemId, int productId, int quantity)
+        {
+            var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+            if (cart != null)
+            {
+                var cartItem = cart.FirstOrDefault(ci => ci.OrderItemId == cartItemId && ci.ProductID == productId);
+                if (cartItem != null)
+                {
+                    cartItem.Quantity = quantity;
+                    HttpContext.Session.SetObjectAsJson("cart", cart);
+                }
+            }
+
+            return Ok();
+        }
+
     }
 }
