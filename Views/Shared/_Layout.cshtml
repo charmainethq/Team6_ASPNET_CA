@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor HttpContextAccessor;
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,6 +11,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Team6.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="~/js/cart.js"></script>
+
 
     <style>
         .rightalign {
@@ -24,33 +28,35 @@
 
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-
             <div class="container-fluid topnavbar">
-
-                <a class="navbar-brand" asp-area="" asp-controller="Gallery" asp-action="Index">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <b>.NET Software Shop </b>
-                </a>
 
+                </a>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         @Html.Partial("_NavbarLogin")
                     </ul>
                 </div>
-
-
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse rightalign">
-
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
-                        <i class="fa fa-shopping-cart" style="font-size:28px"></i>
-                    </a>
-                    @**TODO: Add cart count**@
-
-                </div>
+                @if (ViewContext.RouteData.Values["Controller"].ToString() != "Car")
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <div class="d-flex align-items-center">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
+                                <i class="fa fa-shopping-cart" style="font-size:28px"></i>
+                            </a>
+                            <span id="cart-count">@HttpContextAccessor.HttpContext.Session.GetInt32("cartCount")</span>
+                            
+                        </div>
+                    </div>
+                }
 
 
             </div>
         </nav>
+
+
     </header>
 
     <div class="container">
@@ -68,3 +74,26 @@
 </body>
 </html>
 
+<script>
+    $(function () {
+        function updateCartCount() {
+            $.ajax({
+                url: "/cart/getcount",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $("#cart-count").text(data);
+                }
+            });
+        }
+
+        updateCartCount();
+
+        setInterval(function () {
+            updateCartCount();
+        }, 500);
+    });
+
+
+
+</script>

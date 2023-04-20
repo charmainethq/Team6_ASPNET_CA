@@ -17,7 +17,12 @@ namespace Team6.Data
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"SELECT * FROM products";
+                string sql = @"SELECT p.ProductID, p.Name, p.Description, p.UnitPrice, p.ProductImage, 
+                               COALESCE(AVG(oi.Rating), 0) AS AverageRating, 
+                               COALESCE(COUNT(oi.Rating), 0) AS ReviewCount
+                               FROM Products p
+                               LEFT JOIN OrderItems oi ON p.ProductID = oi.ProductID
+                               GROUP BY p.ProductID, p.Name, p.Description, p.UnitPrice, p.ProductImage;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -30,8 +35,9 @@ namespace Team6.Data
                         Name = (string)reader["Name"],
                         Description = (string)reader["Description"],
                         UnitPrice = (float)(double)reader["UnitPrice"],
-
                         ProductImage = (string)reader["ProductImage"],
+                        AverageRating = (int)reader["AverageRating"],
+                        ReviewCount = (int)reader["ReviewCount"],
 
                     };
                     products.Add(product);
@@ -43,7 +49,7 @@ namespace Team6.Data
         }
 
         
-        public static Product GetProductById(string Id)
+        public static Product GetProductById(int Id)
         {
 
             string connectionString = ConnectString.connectionString;
@@ -66,8 +72,8 @@ namespace Team6.Data
                         Name = (string)reader["Name"],
                         Description = (string)reader["Description"],
                         UnitPrice = (float)(double)reader["UnitPrice"],
-                        
-            
+                        ProductImage = (string)reader["ProductImage"]
+
                     };
                     return product;
                 }
@@ -140,8 +146,8 @@ namespace Team6.Data
                     {
                         CustomerName = (string)reader["FirstName"] + " " + (string)reader["LastName"],
                         // add in date later (optional)
-                        Rating = (int)reader["Rating"],
-                        ReviewText = (string)reader["Review"]
+                        Rating = Convert.IsDBNull(reader["Rating"]) ? null : (int?)reader["Rating"],
+                        ReviewText = Convert.IsDBNull(reader["Review"]) ? null : (string?)reader["Review"]
                     };
                     reviewDetails.Add(reviewDetail);
                 }
@@ -154,7 +160,8 @@ namespace Team6.Data
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
                 conn.Open();
-                string sql = @"UPDATE OrderItems SET Rating = @ratingStars, Review = @reviewdescription WHERE OrderItemId = @OrderItemId";
+                string sql = @"UPDATE OrderItems 
+                              SET Rating = @ratingStars, Review = @reviewdescription WHERE OrderItemId = @OrderItemId";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ratingStars", ratingStars);
                 cmd.Parameters.AddWithValue("@reviewdescription", reviewDescription);
@@ -162,6 +169,7 @@ namespace Team6.Data
                 cmd.ExecuteNonQuery();
             }
         }
+
     }
 }
 

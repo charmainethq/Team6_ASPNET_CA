@@ -14,6 +14,7 @@ namespace Team6.Models
 		public DateTime PurchaseOn { get; set; }
 		public int Qty { get; set; }
 		public List<string> Activation_Code { get; set; }
+		public int? Rating { get; set; }
     
 		public OrderHistory()
 		{

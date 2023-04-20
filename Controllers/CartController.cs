@@ -43,6 +43,7 @@ namespace Team6.Controllers
                 if (cart == null)
                 {
                     cart = new List<OrderItem>();
+                    HttpContext.Session.SetInt32("cartCount", 0);
                 }
 
                 //check if item already in cart
@@ -60,14 +61,20 @@ namespace Team6.Controllers
                         UnitPrice = product.UnitPrice,
                     };
                     cart.Add(cartItem);
+                    HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") + cartItem.Quantity);
                 }
                 else
                 {
                     cartItem.Quantity += quantity;
+                    HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") + quantity);
                 }
+
+                GetCartCount();
                 HttpContext.Session.SetObjectAsJson("cart", cart);
+
+
             }
-            return RedirectToAction("Index","Cart");
+            return RedirectToAction("Index", "Cart");
         }
 
 
@@ -83,6 +90,7 @@ namespace Team6.Controllers
                     cart.Remove(itemToRemove);
                 }
                 HttpContext.Session.SetObjectAsJson("cart", cart);
+                HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") - 1);
             }
             return RedirectToAction("Index");
         }
@@ -105,7 +113,7 @@ namespace Team6.Controllers
 
                 //dictionary of OrderItemId :  Quantity
                 Dictionary<int, int> qtyPerOid = new Dictionary<int, int>();
-                
+
                 foreach (OrderItem cartItem in cart)
                 {
                     cartItem.OrderID = NewId();
@@ -121,7 +129,7 @@ namespace Team6.Controllers
 
                 }
 
-                foreach(KeyValuePair<int,int> OidQtyPair in qtyPerOid)
+                foreach (KeyValuePair<int, int> OidQtyPair in qtyPerOid)
                 {
                     for (int i = 0; i < OidQtyPair.Value; i++)
                     {
@@ -129,6 +137,10 @@ namespace Team6.Controllers
                     }
                 }
 
+                //reset cart on checkout
+                cart = new List<OrderItem>();
+                HttpContext.Session.SetInt32("cartCount", 0);
+                HttpContext.Session.SetObjectAsJson("cart", cart);
 
                 // Display past orders to user
                 return RedirectToAction("Index", "OrderHistory");
@@ -138,9 +150,33 @@ namespace Team6.Controllers
         public int NewId()
         {
             string guidString = Guid.NewGuid().ToString().Replace("-", "");
-            int guidNumber = int.Parse(guidString.Substring(0, 8), System.Globalization.NumberStyles.HexNumber);
+            int guidNumber = Math.Abs(int.Parse(guidString.Substring(0, 8), System.Globalization.NumberStyles.HexNumber));
 
             return guidNumber;
         }
+
+        public JsonResult GetCartCount()
+        {
+            int cartCount = HttpContext.Session.GetInt32("cartCount") ?? 0;
+            return Json(cartCount);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCartItem(int cartItemId, int productId, int quantity)
+        {
+            var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
+            if (cart != null)
+            {
+                var cartItem = cart.FirstOrDefault(ci => ci.OrderItemId == cartItemId && ci.ProductID == productId);
+                if (cartItem != null)
+                {
+                    cartItem.Quantity = quantity;
+                    HttpContext.Session.SetObjectAsJson("cart", cart);
+                }
+            }
+
+            return Ok();
+        }
+
     }
 }

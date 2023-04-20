@@ -3,14 +3,21 @@
     var products = ViewBag.products;
 }
 
+@inject IHttpContextAccessor HttpContextAccessor
+@section Scripts
+    {
+    <script src="/js/gallery.js"></script>
+}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" initial-scale=1.0>
-    <link rel="stylesheet" href="/css/galleryStyle.css">
+    <link rel="stylesheet" href="/css/gallery.css">
 </head>
 
 <body>
     <div class="container">
+
         <form>
             <input type="text" id="search-box" name="searchStr" onkeyup="search()" placeholder="Enter your search here...">
         </form>
@@ -23,30 +30,29 @@
                     <h3>@product.Name</h3>
                     <p style="text-align:left">@product.Description</p>
 
-                    <form action="/Cart/Index" method="POST">
-                        <input type="hidden" name="productId" value="@product.ProductId" />
-                        <button class="button">$@product.UnitPrice - Add To Cart</button>
+                    <form id="addToCartForm" method="post" action="@Url.Action("Details", "Cart")">
+                        <input type="hidden" id="productId" name="productId" value="" />
+                        <input type="hidden" id="quantity" name="quantity" value="1" />
+
+                        <button class="button" type="submit" onclick="event.preventDefault(); addToCart();">$@product.UnitPrice - Add to Cart</button>
                     </form>
+
+
                 </div>
             }
         </div>
     </div>
 
-    @*js dynamic search*@
-    <script>
-        function search() {
-            var input = document.getElementById("search-box");
-            var filter = input.value.toUpperCase();
-            var images = document.getElementsByClassName("image");
-            for (var i = 0; i < images.length; i++) {
-                var title = images[i].getAttribute("data-title");
-                if (title.toUpperCase().indexOf(filter) > -1) {
-                    images[i].style.display = "";
-                } else {
-                    images[i].style.display = "none";
-                }
-            }
-        }
-    </script>
-
 </body>
+
+<script>
+    function addToCart() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetCartCount", "Cart")",
+            success: function (data) {
+                $("#cartCount").html(data);
+            }
+        });
+    }
+</script>

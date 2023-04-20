@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -29,7 +30,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
+app.MapControllerRoute(
+    name: "GetCartCount",
+    pattern: "cart/getcount",
+    defaults: new { controller = "Cart", action = "GetCartCount" });
 
 app.Run();
 

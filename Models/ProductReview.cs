@@ -11,8 +11,8 @@ namespace Team6.Models
         public string CustomerId { get; set; }
         public int OrderId { get; set; }
 
-        public int Rating { get; set; } 
-        public string ReviewText { get; set; }   
+        public int? Rating { get; set; } 
+        public string? ReviewText { get; set; }   
 
     }
 }

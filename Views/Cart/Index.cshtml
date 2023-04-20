@@ -6,7 +6,7 @@
 <style>
     table {
         width: 100%;
-        border-color: #eeee;
+        border-color: #0000;
         line-height: 2;
         font-size: 16px;
         margin-left: auto;
@@ -15,20 +15,33 @@
 
     td,
     tr {
-        padding-left: 20px;
-        font-size: 16px;
+        padding-left: 80px;
+        font-size: 20px;
     }
+
+    .label {
+        width: 100px;
+    }
+
+    .rightalign {
+        float: right;
+    }
+
 </style>
 
 @if (Model == null)
 {
-    <h1>No items in the cart.</h1>
+    <h2 style="text-align:center">No items in the cart.</h2>
 }
 else
 {
-    <form method="post" action="@Url.Action("Checkout", "Cart")">
-        <button type="submit" class="btn btn-outline-primary">Checkout</button>
-    </form>
+    <div class="rightalign">
+        <form method="post" action="@Url.Action("Checkout", "Cart")">
+            <button type="submit" class="btn btn-primary" style="font-size: 20px;">Checkout</button>
+        </form>
+        <br>
+    </div>
+
     <br />
     <table style="background-color: aliceblue">
         <tr style="font-weight:bold">
@@ -42,60 +55,125 @@ else
     {
         <table>
             <tr>
-                <td rowspan="6">
-                    <div class="card" style="width: 20rem;">
-                        <img class="card-img-top" src="@item.ProductImage" alt="@item.ProductName">
+                <td rowspan="6" width="400px">
+                    <div class="card" width="300px">
+                        <img class="card-img-top" src=@item.ProductImage alt="image not found" height="200" style="object-fit: contain;" title="View Product Details">
+                        <h5 class="card-header"><b>@item.ProductName</b></h5>
                         <div class="card-body">
-                            <h5 class="card-title">@item.ProductName</h5>
-                            <p class="card-text">@item.ProductDescription</p>
+                            <p class="card-text d-flex justify-content-between">
+                            </p>
+                            <p class="card-text font-weight-light">
+                                @item.ProductDescription
+                            </p>
+                            <p></p>
                         </div>
                     </div>
+
                 </td>
             </tr>
-            <tr></tr>
+
+
+
             <tr>
-                <td>Price:</td>
+                <td class="label">Price:</td>
                 <td>$@item.UnitPrice</td>
             </tr>
             <tr>
-                <td>Quantity:</td>
+                <td class="label">Quantity:</td>
                 <td>
-                    <input type="number" class="quantity" value="@item.Quantity" min="0" step="1"
+                    <input type="number" class="quantity" value="@item.Quantity" min="1" step="1"
                            onchange="updateTotalPrice(this, @item.UnitPrice)"
-                           onkeyup="updateTotalPrice(this, @item.UnitPrice)">
+                           onkeyup="updateTotalPrice(this, @item.UnitPrice)"
+                           data-product-id="@item.ProductID.ToString()"
+                           data-cart-item-id="@item.OrderItemId.ToString()">
                 </td>
 
-                <td>Total Price:</td>
+                <td width="180px">Total Price:</td>
                 <td class="total-price">@("$" + (item.UnitPrice * item.Quantity).ToString("F2"))</td>
             </tr>
             <tr>
                 <td>
                     <form method="post" action="@Url.Action("RemoveFromCart", "Cart")">
                         <input type="hidden" name="productId" value="@item.ProductID" />
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                        <button type="submit" class="btn btn-outline-secondary"><i class="fas fa-trash"></i></button>
                     </form>
                 </td>
             </tr>
+
+            <br>
         </table>
     }
 
-}
 
+
+}
 <script>
+    // Get the saved item quantities, prices and total prices from localStorage
+    var savedQuantities = JSON.parse(localStorage.getItem("savedQuantities")) || {};
+    var savedPrices = JSON.parse(localStorage.getItem("savedPrices")) || {};
+    var savedTotalPrices = JSON.parse(localStorage.getItem("savedTotalPrices")) || {};
     function updateTotalPrice(input, price) {
         var quantity = parseInt(input.value);
+        updateCart(input);
         var totalPrice = quantity * price;
         var row = input.closest("tr");
         row.querySelector(".total-price").textContent = "$" + totalPrice.toFixed(2);
-        updateCartTotal();
+        // Save the updated quantity, price and total price to localStorage
+        var productId = input.getAttribute("data-product-id");
+        savedQuantities[productId] = quantity;
+        savedPrices[productId] = price;
+        savedTotalPrices[productId] = totalPrice;
+        localStorage.setItem("savedQuantities", JSON.stringify(savedQuantities));
+        localStorage.setItem("savedPrices", JSON.stringify(savedPrices));
+        localStorage.setItem("savedTotalPrices", JSON.stringify(savedTotalPrices));
+        updateCartTotal(); // Recalculate cart total immediately after updating item total price
     }
-
+    // Initialize the quantities and total prices when the page loads
+    window.onload = function () {
+        var quantityInputs = document.querySelectorAll(".quantity");
+        for (var i = 0; i < quantityInputs.length; i++) {
+            var input = quantityInputs[i];
+            var productId = input.getAttribute("data-product-id");
+            var savedQuantity = savedQuantities[productId];
+            var savedPrice = savedPrices[productId];
+            var savedTotalPrice = savedTotalPrices[productId];
+            if (savedQuantity != null) {
+                input.value = savedQuantity;
+                input.setAttribute("data-unit-price", savedPrice);
+                updateTotalPrice(input, savedPrice);
+            }
+        }
+        updateCartTotal();
+    };
     function updateCartTotal() {
         var cartTotal = 0;
         var totalPrices = document.querySelectorAll(".total-price");
         for (var i = 0; i < totalPrices.length; i++) {
-            cartTotal += parseFloat(totalPrices[i].textContent.replace("$", ""));
+            var productId = totalPrices[i].closest("tr").querySelector(".quantity").getAttribute("data-product-id");
+            var savedTotalPrice = savedTotalPrices[productId];
+            if (savedTotalPrice !== undefined) {
+                cartTotal += parseFloat(savedTotalPrice);
+            }
         }
         document.querySelector("#cart-total").textContent = "$" + cartTotal.toFixed(2);
+    }
+
+    function updateCart(quantityInput) {
+        var quantity = quantityInput.value;
+        var orderItemId = quantityInput.dataset.orderItemId;
+        var productId = quantityInput.dataset.productId;
+        var url = "/Cart/UpdateCartItem";
+
+        $.ajax({
+            url: url,
+            data: { orderItemId: orderItemId, productId: productId, quantity: quantity },
+            method: "POST",
+            success: function (data) {
+                // handle success
+            },
+            error: function (error) {
+                // handle error
+            }
+        });
     }
 </script>

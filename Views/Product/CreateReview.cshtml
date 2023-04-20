@@ -2,22 +2,26 @@
     ViewData["Title"] = "Create Review";
     //sample customer name
     var customerName = ViewData["customerName"];
-}
+    var OrderItemId = ViewData["orderItemId"];
+    var productName = ViewData["productName"];
 
+}
+@model Product
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/css/stars.css">
 </head>
 
 <body>
-    <form>
-        <h2>Dear @customerName,</h2> <br />
-        <h4 class="title">We appreciate your review. Your review will help us to improve our products</h4> <br />
+
+
+    <form method="post" action="@Url.Action("CreateReview", "Product")">
+
+        <h4 class="title">We appreciate your input. Your review will help us to improve our products</h4> <br />
         
-        <label> How is the product: </label> <br /> <br />
-        @*insert the product image*@
-
-
+        <p style="font-size:18px;"> How was Purchase #@OrderItemId : <b>@productName</b>? </p>
+        
+        <input type="hidden" name="OrderItemId" value="@OrderItemId" />
         @*star selector*@
         <div class="ratingStars">
             <header> Rating: (Required) </header>
@@ -36,7 +40,7 @@
         @*text box to enter description*@
         <div class="reviewDescription">
             <header>Enter your review: </header>
-            <input type="text" name="reviewDescription" id="reviewDescription" required> <br>
+            <textarea name="reviewDescription" id="reviewDescription" rows="5" cols="120"></textarea> <br> <br>
         </div> <br>
 
         @*submit button*@
