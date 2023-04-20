@@ -14,11 +14,17 @@ namespace Team6.Controllers
 };
 
 
-        public IActionResult Product(string Id)
+        public IActionResult Product(int Id)
 
         {
             Product product = ProductData.GetProductById(Id);
+            int averageRating = ProductData.AverageRating(Id);
+            int ratingCounts = ProductData.CountRating(Id);
+            List<ProductReview> reviewDetails = ProductData.ReviewDetails(Id);
             ViewBag.product = product;
+            ViewData["avgRtg"] = averageRating;
+            ViewData["rtgCnts"] = ratingCounts;
+            ViewData["rvDts"] = reviewDetails;
             return View();
         }
         

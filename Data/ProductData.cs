@@ -43,7 +43,7 @@ namespace Team6.Data
         }
 
         
-        public static Product GetProductById(string Id)
+        public static Product GetProductById(int Id)
         {
 
             string connectionString = ConnectString.connectionString;
