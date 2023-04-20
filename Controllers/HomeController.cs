@@ -20,10 +20,12 @@ public class HomeController : Controller
     public IActionResult Index(string? searchStr)
     {
 
-        // return gallery of products, including search https://www.w3schools.com/howto/howto_js_filter_lists.asp
         List<Product> products = ProductData.GetAllProducts();
+
+        // the 2nd search function (by pressing enter) otther than js dynamic search
         if (String.IsNullOrWhiteSpace(searchStr))
             ViewBag.products = products;
+
         else
         {
             List<Product> filterProducts = new List<Product>();
@@ -35,7 +37,6 @@ public class HomeController : Controller
             }
             ViewBag.products = filterProducts;
         }
-        //clicking on a product bring to Product page?
 
         return View();
     }

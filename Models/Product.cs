@@ -13,6 +13,8 @@ namespace Team6.Models
         public float UnitPrice { get; set; }
         public string ProductImage { get; set; }
 
+        public int AverageRating { get; set; }
+        public int ReviewCount { get; set; }
 
     }
 }

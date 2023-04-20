@@ -17,7 +17,12 @@ namespace Team6.Data
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = @"SELECT * FROM products";
+                string sql = @"SELECT p.ProductID, p.Name, p.Description, p.UnitPrice, p.ProductImage, 
+                               COALESCE(AVG(oi.Rating), 0) AS AverageRating, 
+                               COALESCE(COUNT(oi.Rating), 0) AS ReviewCount
+                               FROM Products p
+                               LEFT JOIN OrderItems oi ON p.ProductID = oi.ProductID
+                               GROUP BY p.ProductID, p.Name, p.Description, p.UnitPrice, p.ProductImage;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -30,8 +35,9 @@ namespace Team6.Data
                         Name = (string)reader["Name"],
                         Description = (string)reader["Description"],
                         UnitPrice = (float)(double)reader["UnitPrice"],
-
                         ProductImage = (string)reader["ProductImage"],
+                        AverageRating = (int)reader["AverageRating"],
+                        ReviewCount = (int)reader["ReviewCount"],
 
                     };
                     products.Add(product);
