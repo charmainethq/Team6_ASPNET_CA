@@ -30,7 +30,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
+app.MapControllerRoute(
+    name: "GetCartCount",
+    pattern: "cart/getcount",
+    defaults: new { controller = "Cart", action = "GetCartCount" });
 
 app.Run();
 

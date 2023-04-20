@@ -26,6 +26,7 @@ namespace Team6.Controllers
         }
 
 
+        [HttpPost]
         //TODO: Add to cart - linked to button input from gallery
         public IActionResult Details(int productId, int quantity)
         {
@@ -68,9 +69,10 @@ namespace Team6.Controllers
                     cartItem.Quantity += quantity;
                     HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") + quantity);
                 }
-                ;
-                HttpContext.Session.SetObjectAsJson("cart", cart);
 
+                GetCartCount();
+                HttpContext.Session.SetObjectAsJson("cart", cart);
+                
 
             }
             return RedirectToAction("Index","Cart");
@@ -153,5 +155,12 @@ namespace Team6.Controllers
 
             return guidNumber;
         }
+
+        public JsonResult GetCartCount()
+        {
+            int cartCount = HttpContext.Session.GetInt32("cartCount") ?? 0;
+            return Json(cartCount);
+        }
+
     }
 }

@@ -11,6 +11,8 @@
         font-size: 16px;
         margin-left: auto;
         margin-right: auto;
+        border-collapse: collapse;
+        border: none;
     }
 
     td,
@@ -80,19 +82,19 @@ else
         </table>
     }
 
+
+
 }
 <script>
     // Get the saved item quantities, prices and total prices from localStorage
     var savedQuantities = JSON.parse(localStorage.getItem("savedQuantities")) || {};
     var savedPrices = JSON.parse(localStorage.getItem("savedPrices")) || {};
     var savedTotalPrices = JSON.parse(localStorage.getItem("savedTotalPrices")) || {};
-
     function updateTotalPrice(input, price) {
         var quantity = parseInt(input.value);
         var totalPrice = quantity * price;
         var row = input.closest("tr");
         row.querySelector(".total-price").textContent = "$" + totalPrice.toFixed(2);
-
         // Save the updated quantity, price and total price to localStorage
         var productId = input.getAttribute("data-product-id");
         savedQuantities[productId] = quantity;
@@ -101,11 +103,8 @@ else
         localStorage.setItem("savedQuantities", JSON.stringify(savedQuantities));
         localStorage.setItem("savedPrices", JSON.stringify(savedPrices));
         localStorage.setItem("savedTotalPrices", JSON.stringify(savedTotalPrices));
-        HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") + savedQuantities)
         updateCartTotal(); // Recalculate cart total immediately after updating item total price
     }
-
-
     // Initialize the quantities and total prices when the page loads
     window.onload = function () {
         var quantityInputs = document.querySelectorAll(".quantity");
@@ -123,7 +122,6 @@ else
         }
         updateCartTotal();
     };
-
     function updateCartTotal() {
         var cartTotal = 0;
         var totalPrices = document.querySelectorAll(".total-price");
@@ -137,6 +135,3 @@ else
         document.querySelector("#cart-total").textContent = "$" + cartTotal.toFixed(2);
     }
 </script>
-
-
-
