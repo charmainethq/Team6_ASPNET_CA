@@ -1,19 +1,48 @@
 ﻿@{
-    ViewData["Title"] = "Submit a Review";
+    ViewData["Title"] = "Edit your Review";
 
+    var retrieveReviews = (List<ProductReview>)ViewData["rtvRv"];
 }
 
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/css/stars.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
     <form>
         <br /><br />
         <h4 class="title">We appreciate your review. Your review will help us to improve our products</h4> <br />
+
+        @*display the current customer rating*@
+        <label> This is your current review: </label> <br />
+        <div class="ReviewDetails">
+            @foreach (var retrieveReview in retrieveReviews)
+            {
+                <div>
+                    <div>
+                        @*display invididual review star rating*@
+                        <div> Rating:
+                            @for (int i = 0; i < (int)@retrieveReview.Rating; i++)
+                            {
+                                <i class="fa fa-star checked" style="font-size:15px;color:gold;"></i>
+                            }
+                            @for (int i = (int)@retrieveReview.Rating; i < 5; i++)
+                            {
+                                <i class="fa fa-star checked" style="font-size:15px;color:lightgrey;"></i>
+                            }
+                        </div>
+                        @*display individual review description*@
+                        <p>Review: @retrieveReview.ReviewText</p>
+                        <br />
+                    </div>
+                </div>
+            }
+        </div>
         
-        <label> How is the product: </label> <br /> <br />
+
+        <label> This is the new review: </label> <br />
 
         @*star selector*@
         <div class="ratingStars">

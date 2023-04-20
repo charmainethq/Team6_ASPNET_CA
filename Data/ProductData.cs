@@ -1,6 +1,5 @@
 
 using Microsoft.Data.SqlClient;
-
 using Team6.Models;
 
 namespace Team6.Data
@@ -76,10 +75,10 @@ namespace Team6.Data
             return null;
         }
 
-    
-    
-    
-        //calculates the average rating of the product
+
+
+
+        //calculates the average rating of the product (in the product page)
         public static int AverageRating(int ProductID)
         {
             int productAverageRatings = 0;
@@ -100,7 +99,7 @@ namespace Team6.Data
             }
             return productAverageRatings;
         }
-        //counts the number of ratings of the product
+        //counts the number of ratings of the product (in the product page)
         public static int CountRating(int ProductID)
         {
             int ratingCounts = 0;
@@ -121,7 +120,7 @@ namespace Team6.Data
             }
             return ratingCounts;
         }
-        //details of the product review (customer name, rating, description, date of review)
+        //details of the product reviews (in the product page)
         public static List<ProductReview> ReviewDetails(int ProductID)
         {
             List<ProductReview> reviewDetails = new List<ProductReview>();
@@ -147,6 +146,29 @@ namespace Team6.Data
                 }
             }
             return reviewDetails;
+        }
+
+        //retrieve customer reviews (from order history). May return null
+        public static List<ProductReview> RetrieveCustomerReview(int OrderItemId)
+        {
+            List<ProductReview>? retrieveReviews = new List<ProductReview>();
+            using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
+            {
+                conn.Open();
+                string sql = "SELECT Rating, Review FROM OrderItems WHERE OrderItemId = " + OrderItemId;
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ProductReview retrieveReview = new ProductReview()
+                    {
+                        Rating = Convert.IsDBNull(reader["Rating"]) ? null : (int)reader["Rating"],
+                        ReviewText = Convert.IsDBNull(reader["Review"]) ? null : (string)reader["Review"]
+                    };
+                    retrieveReviews.Add(retrieveReview);
+                }
+            }
+            return retrieveReviews;
         }
         //update product review into database
         public static void submitReview(int ratingStars, string reviewDescription, int OrderItemId)

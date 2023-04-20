@@ -32,16 +32,27 @@ namespace Team6.Controllers
         //return view of the individual product based on product Id or name
             
         
+        //checks if customer has review before and redirect accordingly
+        public IActionResult CheckCustomerReview(int OrderItemId)
+        {
+            List<ProductReview> checkCustomerReview = ProductData.RetrieveCustomerReview(OrderItemId);
+            foreach (ProductReview reviewDetails in checkCustomerReview)
+            {
+                if (reviewDetails.Rating == null && reviewDetails.ReviewText == null)
+                {
+                    return RedirectToAction("CreateReview");
+                }
+                else
+                {
+                    return RedirectToAction("EditReview");
+                }
+            }
+            return View();
+        }
 
-
-        
-
-
+        //create review (for first time reviews)
         public IActionResult CreateReview(string? submitReviewButton, int ratingStars, string? reviewDescription, int OrderItemId, string customerName) 
         {
-            //sample test to display customerName
-            customerName = "Johnny Walked";
-            ViewData["customerName"] = customerName;
             //when "submit" button page is clicked on the create review page
             if (submitReviewButton == null)
             {
@@ -49,15 +60,29 @@ namespace Team6.Controllers
             }
             else
             {
-                //test sample update
-                OrderItemId = 20081;
                 ProductData.submitReview(ratingStars, reviewDescription, OrderItemId);
 
                 // Redirect back to Order History after review has been submitted
-                // return RedirectToAction("Index", "OrderHistory");
+                return RedirectToAction("Index", "OrderHistory");
+            }
+        }
 
-                // test redirect to 
-                return RedirectToAction("ProductReview", "Home");
+        //edit review (for subsequent reviews)
+        public IActionResult EditReview(string? submitReviewButton, int ratingStars, string? reviewDescription, int OrderItemId, string customerName)
+        {
+            //when "submit" button page is clicked on the create review page
+            if (submitReviewButton == null)
+            {
+                List<ProductReview> retrieveReviews = ProductData.RetrieveCustomerReview(OrderItemId);
+                ViewData["rtvRv"] = retrieveReviews;
+                return View();
+            }
+            else
+            {
+                ProductData.submitReview(ratingStars, reviewDescription, OrderItemId);
+
+                // Redirect back to Order History after review has been submitted
+                return RedirectToAction("Index", "OrderHistory");
             }
         }
     }
