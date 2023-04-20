@@ -160,7 +160,8 @@ namespace Team6.Data
             using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
             {
                 conn.Open();
-                string sql = @"UPDATE OrderItems SET Rating = @ratingStars, Review = @reviewdescription WHERE OrderItemId = @OrderItemId";
+                string sql = @"UPDATE OrderItems 
+                              SET Rating = @ratingStars, Review = @reviewdescription WHERE OrderItemId = @OrderItemId";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ratingStars", ratingStars);
                 cmd.Parameters.AddWithValue("@reviewdescription", reviewDescription);
