@@ -1,4 +1,3 @@
-
 @model List<OrderItem>
 
 <link rel="stylesheet" type="text/css" href="/css/cart.css">
@@ -7,7 +6,7 @@
 <style>
     table {
         width: 100%;
-        border-color: #eeee;
+        border-color: #0000;
         line-height: 2;
         font-size: 16px;
         margin-left: auto;
@@ -16,20 +15,33 @@
 
     td,
     tr {
-        padding-left: 20px;
-        font-size: 16px;
+        padding-left: 80px;
+        font-size: 20px;
     }
+
+    .label {
+        width: 100px;
+    }
+
+    .rightalign {
+        float: right;
+    }
+
 </style>
 
 @if (Model == null)
 {
-    <h1>No items in the cart.</h1>
+    <h2 style="text-align:center">No items in the cart.</h2>
 }
 else
 {
-    <form method="post" action="@Url.Action("Checkout", "Cart")">
-        <button type="submit" class="btn btn-outline-primary">Checkout</button>
-    </form>
+    <div class="rightalign">
+        <form method="post" action="@Url.Action("Checkout", "Cart")">
+            <button type="submit" class="btn btn-primary" style="font-size: 20px;">Checkout</button>
+        </form>
+        <br>
+    </div>
+
     <br />
     <table style="background-color: aliceblue">
         <tr style="font-weight:bold">
@@ -43,23 +55,31 @@ else
     {
         <table>
             <tr>
-                <td rowspan="6">
-                    <div class="card" style="width: 20rem;">
-                        <img class="card-img-top" src="@item.ProductImage" alt="@item.ProductName">
+                <td rowspan="6" width="400px">
+                    <div class="card" width="300px">
+                        <img class="card-img-top" src=@item.ProductImage alt="image not found" height="200" style="object-fit: contain;" title="View Product Details">
+                        <h5 class="card-header"><b>@item.ProductName</b></h5>
                         <div class="card-body">
-                            <h5 class="card-title">@item.ProductName</h5>
-                            <p class="card-text">@item.ProductDescription</p>
+                            <p class="card-text d-flex justify-content-between">
+                            </p>
+                            <p class="card-text font-weight-light">
+                                @item.ProductDescription
+                            </p>
+                            <p></p>
                         </div>
                     </div>
+
                 </td>
             </tr>
-            <tr></tr>
+
+
+
             <tr>
-                <td>Price:</td>
+                <td class="label">Price:</td>
                 <td>$@item.UnitPrice</td>
             </tr>
             <tr>
-                <td>Quantity:</td>
+                <td class="label">Quantity:</td>
                 <td>
                     <input type="number" class="quantity" value="@item.Quantity" min="0" step="1"
                            onchange="updateTotalPrice(this, @item.UnitPrice)"
@@ -67,19 +87,23 @@ else
                            data-product-id="@item.ProductID.ToString()">
                 </td>
 
-                <td>Total Price:</td>
+                <td width="180px">Total Price:</td>
                 <td class="total-price">@("$" + (item.UnitPrice * item.Quantity).ToString("F2"))</td>
             </tr>
             <tr>
                 <td>
                     <form method="post" action="@Url.Action("RemoveFromCart", "Cart")">
                         <input type="hidden" name="productId" value="@item.ProductID" />
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                        <button type="submit" class="btn btn-outline-secondary"><i class="fas fa-trash"></i></button>
                     </form>
                 </td>
             </tr>
+
+            <br>
         </table>
     }
+
+
 
 }
 <script>
