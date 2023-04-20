@@ -128,13 +128,21 @@
             margin-top: auto;
             margin-bottom: 0;
         }
+
+        .product-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <center>
     <body>
 
         <div class="product-card" style="padding-top: 100px">
+
             <img src="@product.ProductImage" alt="@product.Name" class="product-image">
+
             <div class="product-info" style="padding-left : 80px">
                 <h3 class="product-name">@product.Name</h3>
                 <p class="product-description">@product.Description</p>

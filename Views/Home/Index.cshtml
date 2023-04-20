@@ -34,6 +34,7 @@
                     <h3>@product.Name</h3>
                     <p style="text-align:left">@product.Description</p>
 
+
                     @*display rating*@
                     <div class="stars" style="padding-bottom: 10px;">
                         @for (int i = 0; i < product.AverageRating; i++)
@@ -52,6 +53,7 @@
                     @*add-to-cart button*@
                     <form id="addToCartForm-@product.ProductId" method="post" action="@Url.Action("Details", "Cart")">
                         <button class="button" type="button" onclick="addToCart(@product.ProductId)">$@product.UnitPrice - Add to Cart</button>
+
                         <input type="hidden" name="productId" value="@product.ProductId" />
                         <input type="number" id="quantity-@product.ProductId" name="quantity" value="1" style="display: none;" />
                     </form>

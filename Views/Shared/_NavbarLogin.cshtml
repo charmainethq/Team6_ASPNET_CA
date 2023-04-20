@@ -1,24 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
+@inject IHttpContextAccessor HttpContextAccessor
 @{
-    var fullname = TempData["fullName"];
-    var sessionId = TempData["sessionId"];
+
 }
 
-@if (sessionId != null)
+
+@if (HttpContextAccessor.HttpContext.Session.GetString("customerId") != null)
 {
     <li class="nav-item">
-        <a class="nav-link text-dark"> Hi, @fullname! </a>
+        <a class="nav-link text-dark"> Hi, @HttpContextAccessor.HttpContext.Session.GetString("fullName")! </a>
     </li>
 
-    //TODO: Add Purchase History Action
     <li class="nav-item pl-4" style="display: inline-block;">
         <a class="nav-link text-dark" asp-controller="OrderHistory" asp-action="Index">My Purchases</a>
     </li>
 
+
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Login" asp-action="Logout">| Log Out</a>
+        <a class="nav-link text-dark"> | </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="Login" asp-action="Logout"> Log Out</a>
     </li>
 
 }
@@ -33,8 +36,6 @@ else
         <a class="nav-link text-dark"> | </a>
     </li>
 
-
-    //TODO: Add login action
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="Login" asp-action="Index"> Login </a>
     </li>

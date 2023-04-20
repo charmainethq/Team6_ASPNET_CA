@@ -11,38 +11,58 @@
 			margin-left: auto;
 			margin-right: auto;
 			width: 80%;
-			border-collapse: collapse;
+            border-collapse: collapse;
+            border: none;
 		}
 
 		td{
 			border: none;
 			font-size: 20px;
 		}
+
+        .midalign{
+            float:center;
+            text-align: center;
+        }
 	</style>
 </head>
+
+
+<h3> My Purchases</h3>
+<br />
 
 @if(orders==null)
 {
 	<h5>Your Purchase History is empty</h5>
 	
 }
+
+
 @foreach (var cc in orders)
 {
     <div class="row">
-        <div class="col-md-3">
-            <div class="card text-center mb-3">
-                <img src="@cc.ProductImage" class="card-img-top" alt="...">
+        <div class="col-md-3 midalign">
+            <div class="card">
+                <img class="card-img-top" src=@cc.ProductImage alt="image not found" height="200" style="object-fit: contain;" title="View Product Details">
+                <h5 class="card-header">@cc.ProductName</h5>
                 <div class="card-body">
-                    <h5 class="card-title">@cc.ProductName</h5>
-                    <p class="card-text">@cc.ProductDescription</p>
-                    <a href="#" class="btn btn-primary">Download</a>
-                    <br>
-                    <a href="@Url.Action("Index", "Product")">Leave a Review</a>
+                    <p class="card-text d-flex justify-content-between">
+                    </p>
+                    <p class="card-text font-weight-light">
+                        @cc.ProductDescription
+                    </p>
+                    <p></p>
+                </div>
+                <div class="card-footer bg-transparent text-center">
+                    <button type="button" class="btn btn-outline-primary" id="@cc.ProductId" value="@cc.ProductId">
+                        <span class="fa-solid fa-cart-arrow-down"></span> Download
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
-            <table class="table">
+
+        <div class="col-md-5">
+            <table class="table align-middle">
                 <tbody>
                     <tr>
                         <td>Purchased on:</td>
@@ -68,5 +88,9 @@
         </div>
     </div>
 
+    <br />
+
 }
+
+</div>
 
