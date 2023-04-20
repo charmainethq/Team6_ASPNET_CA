@@ -37,11 +37,9 @@ namespace Team6.Controllers
         
 
 
-        public IActionResult CreateReview(string? submitReviewButton, int ratingStars, string? reviewDescription, int OrderItemId, string customerName) 
+        public IActionResult CreateReview(string? submitReviewButton, int ratingStars, string? reviewDescription, int OrderItemId) 
         {
-            //sample test to display customerName
-            customerName = "Johnny Walked";
-            ViewData["customerName"] = customerName;
+            
             //when "submit" button page is clicked on the create review page
             if (submitReviewButton == null)
             {
@@ -60,5 +58,6 @@ namespace Team6.Controllers
                 return RedirectToAction("ProductReview", "Home");
             }
         }
+
     }
 }

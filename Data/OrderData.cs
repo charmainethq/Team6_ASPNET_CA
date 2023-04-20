@@ -86,6 +86,7 @@ namespace Team6.Data
 								OI.ProductID AS ProductID,
 								OI.Quantity AS Quantity,
 								OI.OrderItemId AS OrderItemID,
+                                OI.Rating AS Rating,
 								O.OrderId AS OrderID,
 								O.OrderDate AS OrderDate
 							FROM 
@@ -111,7 +112,8 @@ namespace Team6.Data
                                 ProductDescription = (string)reader["Description"],
                                 ProductImage = (string)reader["Image"],
                                 PurchaseOn = (DateTime)reader["OrderDate"],
-                                Qty = (int)reader["Quantity"],                                
+                                Qty = (int)reader["Quantity"],
+                                Rating = Convert.IsDBNull(reader["Rating"]) ? null : (int?)reader["Rating"]
 
                             };
                             allOrdersByCustomer.Add(order);

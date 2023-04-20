@@ -40,6 +40,7 @@
 
 @foreach (var cc in orders)
 {
+    @** display product image and description **@
     <div class="row">
         <div class="col-md-3 midalign">
             <div class="card">
@@ -61,12 +62,14 @@
             </div>
         </div>
 
-        <div class="col-md-5">
+        @** display order details**@
+        <div class="col-md-6">
             <table class="table align-middle">
                 <tbody>
                     <tr>
-                        <td>OrderID:</td>
-                        <td>@cc.OrderId<td>
+                        <td>Order Item ID:</td>
+                        <td>@cc.OrderItemId
+                        <td>
                     </tr>
                     <tr>
                         <td>Purchased on:</td>
@@ -87,21 +90,45 @@
                             </select>
                         </td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <a href="@Url.Action("CreateReview", "Product", new {id = cc.ProductId})" class="btn btn-primary">
-                                Submit Review
-                            </a>
-                        </td>
-                    </tr>
+
+                    @**if not rated, display submit review button**@
+                    @if (cc.Rating == null)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("CreateReview", "Product", new {OrderItemId = cc.OrderItemId})" class="btn btn-primary">
+                                    Submit Review
+                                </a>
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+
+                    @**if already rated, display edit review button**@
+                    else
+                    {
+                        <tr>
+                            <td>Rating:</td>
+                            <td>@cc.Rating</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("UpdateReview", "Product", new {OrderItemId = cc.OrderItemId})" class="btn btn-outline-success">
+                                    Edit Review
+                                </a>
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+
                 </tbody>
             </table>
         </div>
 
     </div>
 
-    <br />
+    <br/>
 
 }
 

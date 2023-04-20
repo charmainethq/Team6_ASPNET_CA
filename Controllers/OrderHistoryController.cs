@@ -15,6 +15,8 @@ namespace Team6.Controllers
             
             foreach (OrderHistory order in ordersByCustomer)
             {
+
+
 				//Each order has multiple OrderItemIDs. For each OrderItemID, retrieve a list of activation codes. 
 				List<string> codesPerOrderItemId = OrderData.GetListOfCodes(order.OrderItemId);
 
@@ -27,15 +29,13 @@ namespace Team6.Controllers
             }
 
             ViewData["ordersbycustomer"] = ordersByCustomer;
+            
 
             return View();
         }
-        [Route("OrderHistory/OrderItem/ActivationCode")]
-        public IActionResult ActivationCode() 
-        {
-            //test edit 
-            return View();
-        }
+        
+
+
 
     }
 }
