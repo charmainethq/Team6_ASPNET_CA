@@ -101,7 +101,7 @@ else
         localStorage.setItem("savedQuantities", JSON.stringify(savedQuantities));
         localStorage.setItem("savedPrices", JSON.stringify(savedPrices));
         localStorage.setItem("savedTotalPrices", JSON.stringify(savedTotalPrices));
-
+        HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") + savedQuantities)
         updateCartTotal(); // Recalculate cart total immediately after updating item total price
     }
 

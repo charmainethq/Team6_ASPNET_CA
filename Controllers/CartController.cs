@@ -136,6 +136,10 @@ namespace Team6.Controllers
                     }
                 }
 
+                //reset cart on checkout
+                cart = new List<OrderItem>();
+                HttpContext.Session.SetInt32("cartCount", 0);
+                HttpContext.Session.SetObjectAsJson("cart", cart);
 
                 // Display past orders to user
                 return RedirectToAction("Index", "OrderHistory");
