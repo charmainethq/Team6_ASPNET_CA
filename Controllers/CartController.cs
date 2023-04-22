@@ -17,7 +17,7 @@ namespace Team6.Controllers
 {
     public class CartController : Controller
     {
-        //TODO: View all items in cart
+        //View all items in cart
         public IActionResult Index()
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
@@ -26,7 +26,7 @@ namespace Team6.Controllers
         }
 
 
-        //TODO: Add to cart - linked to button input from gallery
+        //Add to cart - linked to button inputs
         public IActionResult Details(int productId, int quantity)
         {
             Product product = CartData.GetProductById(productId);
@@ -129,6 +129,7 @@ namespace Team6.Controllers
 
                 }
 
+                //generate a list of activation codes for each order item based on quantity
                 foreach (KeyValuePair<int, int> OidQtyPair in qtyPerOid)
                 {
                     for (int i = 0; i < OidQtyPair.Value; i++)
@@ -146,7 +147,8 @@ namespace Team6.Controllers
                 return RedirectToAction("Index", "OrderHistory");
             }
         }
-
+        
+        //function for generating numerical GUIDs
         public int NewId()
         {
             string guidString = Guid.NewGuid().ToString().Replace("-", "");
@@ -172,6 +174,7 @@ namespace Team6.Controllers
                 {
                     cartItem.Quantity = quantity;
                     HttpContext.Session.SetObjectAsJson("cart", cart);
+                    //HttpContext.Session.SetInt32("cartCount", (int)HttpContext.Session.GetInt32("cartCount") + quantity);
                 }
             }
 

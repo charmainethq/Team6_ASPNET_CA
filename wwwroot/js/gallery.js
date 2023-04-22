@@ -21,6 +21,7 @@ function addToCart(productId) {
     var form = document.getElementById('addToCartForm-' + productId);
     var formData = new FormData(form);
 
+
     fetch(form.action, {
         method: form.method,
         body: formData
@@ -38,3 +39,4 @@ function addToCart(productId) {
             alert(error.message);
         });
 }
+
