@@ -9,6 +9,7 @@ namespace Team6.Controllers
 {
     public class LoginController : Controller
     {
+
         public IActionResult Index(string username, string password)
         {
             
