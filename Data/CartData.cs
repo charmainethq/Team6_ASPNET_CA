@@ -244,21 +244,21 @@ namespace Team6.Data
             }
         }
 
-        public static void ClearCart(int customerId)
-        {
-            using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
-            {
-                string sql = "DELETE FROM CartItems WHERE CustomerID = @customerId";
+        //public static void ClearCart(int customerId)
+        //{
+        //    using (SqlConnection conn = new SqlConnection(ConnectString.connectionString))
+        //    {
+        //        string sql = "DELETE FROM CartItems WHERE CustomerID = @customerId";
 
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@customerId", customerId);
+        //        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        //        {
+        //            cmd.Parameters.AddWithValue("@customerId", customerId);
 
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
+        //            conn.Open();
+        //            cmd.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
 
 
 
