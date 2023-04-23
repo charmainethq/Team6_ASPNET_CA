@@ -11,11 +11,11 @@ namespace Team6.Controllers
 
             int? custId = HttpContext.Session.GetInt32("customerId");
 
+            //retrieve all orders by customer
             List<OrderHistory> ordersByCustomer = OrderData.OrderList(custId);    
             
             foreach (OrderHistory order in ordersByCustomer)
             {
-
 
 				//Each order has multiple OrderItemIDs. For each OrderItemID, retrieve a list of activation codes. 
 				List<string> codesPerOrderItemId = OrderData.GetListOfCodes(order.OrderItemId);

@@ -19,28 +19,16 @@ namespace Team6.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            //TODO?: Generate error message for empty username
             else if (username == null)
                 return View();          
 
 
             else if (AuthenticateUser(username, password) == true)
             {
-                Customer user = GetCustomer(username);
+                Customer user = CustomerData.GetCustomerByUsername(username);
 
                 HttpContext.Session.SetInt32("customerId", user.CustomerID);
                 HttpContext.Session.SetString("fullName", user.FirstName + " " + user.LastName);
-
-                //add or update user's session in database
-                /* if (SessionData.GetSessionByCustomerId(user.CustomerID) == null)
-                 {
-                     SessionData.AddSession(session);
-                 }
-                 else 
-                 {
-                     SessionData.DeleteSession(user.CustomerID);
-                     SessionData.AddSession(session);
-                 }*/
 
                 return RedirectToAction("Index", "Home");
             }
@@ -48,11 +36,7 @@ namespace Team6.Controllers
             return View();
         }
 
-        public Customer GetCustomer(string username)
-        {
-            return CustomerData.GetCustomerByUsername(username);
-        }
-
+        //authentication method including error messages
         public bool AuthenticateUser(string username, string password)
         {
             bool authenticateFlag = false;
@@ -76,7 +60,6 @@ namespace Team6.Controllers
         public IActionResult Logout()
         {
             int? custId = HttpContext.Session.GetInt32("customerId");
-            SessionData.DeleteSession(custId);  //delete from database
             HttpContext.Session.Clear();        //clear session cookies
 
             return RedirectToAction("Index", "Home");

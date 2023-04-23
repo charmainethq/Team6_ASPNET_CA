@@ -17,7 +17,7 @@ namespace Team6.Controllers
 {
     public class CartController : Controller
     {
-        //TODO: View all items in cart
+        //View all items in cart
         public IActionResult Index()
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
@@ -26,7 +26,7 @@ namespace Team6.Controllers
         }
 
 
-        //TODO: Add to cart - linked to button input from gallery
+        //Add to cart - linked to button inputs
         public IActionResult Details(int productId, int quantity)
         {
             Product product = CartData.GetProductById(productId);
@@ -78,7 +78,7 @@ namespace Team6.Controllers
         }
 
 
-        //TODO: Remove from cart - linked to buttons from cart view
+        //Remove from cart - linked to buttons from cart view
         public IActionResult RemoveFromCart(int productId)
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
@@ -109,6 +109,7 @@ namespace Team6.Controllers
 
             else
             {
+                //get current cart
                 var cart = HttpContext.Session.GetObjectFromJson<List<OrderItem>>("cart");
 
                 //dictionary of OrderItemId :  Quantity
@@ -129,6 +130,7 @@ namespace Team6.Controllers
 
                 }
 
+                //generate a list of activation codes (key) for each orderitemid (value), based on the quantity
                 foreach (KeyValuePair<int, int> OidQtyPair in qtyPerOid)
                 {
                     for (int i = 0; i < OidQtyPair.Value; i++)
@@ -147,6 +149,7 @@ namespace Team6.Controllers
             }
         }
 
+        //helper function to generate positive numeric GUIDs
         public int NewId()
         {
             string guidString = Guid.NewGuid().ToString().Replace("-", "");
@@ -155,6 +158,7 @@ namespace Team6.Controllers
             return guidNumber;
         }
 
+        
         public JsonResult GetCartCount()
         {
             int cartCount = HttpContext.Session.GetInt32("cartCount") ?? 0;
